@@ -1,0 +1,18 @@
+package_sources.txt
+
+------
+Name: django
+Source: https://anaconda.org/anaconda/django
+Action: add
+Date: 21 Jun 2016
+User: Otto
+Reason: interation with django, our web development platform
+
+---------
+Name: Git
+Source: https://anaconda.org/anaconda/git
+Action: add
+Date: 21 Jun 2016
+User: Otto
+Reason: interation with Github, our version control software
+
