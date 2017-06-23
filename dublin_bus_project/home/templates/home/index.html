@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dublin Bus Travel Time Prediction</title>
+</head>
+<body>
+    {% load keyvalue_lat %} <!-- activating filter functions for accessing dictionary values, used below -->
+    {% load keyvalue_long %}
+
+    {% if selected_route %} <!-- if selected_route has been rendered, ie a stop has been selected -->
+        <h1> You are viewing route {{ selected_route }}</h1>
+    {% else %}
+        <h1>Hi, please select a route to view from the dropdown menu</h1>
+    {% endif %}
+
+    <form action="selected_route"> {% csrf_token %} <!-- token needed to avoid Cross-Site Request Forgery attacks, built-in security feature -->
+        <select name="selected_route" onchange="this.form.submit()">
+            {% if selected_route %}
+               <option value={{ selected_route }} selected>{{ selected_route }}</option>
+            {% else %}
+                <option value="" selected disabled>---Select---</option>
+            {% endif %}
+            {% for route in routes %}
+                <option value={{ route }} >{{ route }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <div id="map" style="width:100%; height:500px;"></div>
+
+    <script>
+    function googleMap() {
+       var canvas=document.getElementById("map");
+       myCenter=new google.maps.LatLng(53.4, -6.3);
+       var options={center: myCenter,zoom:10};
+       var map=new google.maps.Map(canvas,options);
+
+       {% if stops_on_routes and stop_coordinates %} <!-- if this data has been rendered, that is a route has been selected -->
+            setMarkers();
+       function setMarkers(){
+           var latSum=0; <!-- variables used to calculate the avg latlong of a route -->
+           var longSum=0;
+           var stopCount=0;
+           {% for stop in stops_on_routes %}
+                var lat={{ stop_coordinates|keyvalue_lat:stop }}; <!-- filter functions used to access dictionary values with key=stop -->
+                var long={{ stop_coordinates|keyvalue_long:stop }};
+                var myPosition= new google.maps.LatLng(lat,long);
+                var marker = new google.maps.Marker({position: myPosition});
+                marker.setMap(map);
+                latSum+=lat;
+                longSum+=long;
+                stopCount+=1;
+           {% endfor %}
+           map.setCenter(new google.maps.LatLng(latSum/stopCount, longSum/stopCount)); <!-- resetting centre of map to avg latlong -->
+           map.setZoom(11);
+       }
+       {% endif %}
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap"></script>
+</body>
+</html>
