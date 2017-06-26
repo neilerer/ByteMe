@@ -15,4 +15,3 @@ class route_and_stop(models.Model):
 
     def __str__(self):
         return "Route "+str(self.route_id)+" and its associated stops"
-
