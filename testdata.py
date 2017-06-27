@@ -171,6 +171,17 @@ def stops_on_routes_with_direction():
         except:
             continue
     return routes_and_stops
+	
+def concatenate_data():
+	"""Function which concatenates all data files"""
+    #os.chdir("../Data") # redirecting to directory where data files are saved
+    with open("big_data_file.csv", "w", newline="") as result_file: # creating new master csv file
+        wr = csv.writer(result_file, dialect='excel')
+        for file in glob.glob("*.csv"):
+            # print(file) # useful for monitoring progress of script
+            reader = csv.reader(open(file))
+            for line in reader:
+				wr.writerow(line)
 
 ### BELOW CODE USED TO TEST/RUN ABOVE FUNCTIONS AND OBTAIN DATA ###
 
