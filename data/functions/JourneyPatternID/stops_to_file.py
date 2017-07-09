@@ -26,7 +26,11 @@ def record_stops():
 			try:
 				data_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
 			except:
+<<<<<<< HEAD
 				data_holder.append(None)
+=======
+				data_holder.append("NoRoute")
+>>>>>>> data
 		# change directory to the source file
 		os.chdir("../../")
 		os.chdir("data/JourneyPatternID/")
