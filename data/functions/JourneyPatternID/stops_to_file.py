@@ -23,7 +23,10 @@ def record_stops():
 		os.chdir("functions/JourneyPatternID/")
 		# collect the data
 		for i in range(0, 7, 1):
-			data_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
+			try:
+				data_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
+			except:
+				data_holder.append("NoRoute")
 		# change directory to the source file
 		os.chdir("../../")
 		os.chdir("data/JourneyPatternID/")
