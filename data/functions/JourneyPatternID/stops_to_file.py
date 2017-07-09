@@ -43,6 +43,7 @@ def record_stops():
 	# return to the starting directory
 	os.chdir("../../../")
 	os.chdir("functions/JourneyPatternID/")
+	#
 
 
 if __name__ == "__main__":
