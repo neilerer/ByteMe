@@ -76,7 +76,9 @@ def record_stops():
 	for jpi in jpi_array:
 		write_route_to_file(jpi)
 
+print(stops_refined.route_for_jpi_on_weekday("00010001.csv", 0))
 print(route_data_to_write("00010001.csv"))
+
 # if __name__ == "__main__":
 # 	record_stops()
 
