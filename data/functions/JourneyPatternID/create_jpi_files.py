@@ -81,7 +81,7 @@ def create_destination_files():
 """
 This function populates each jpi file by accessing the the source information from the combined data file
 """
-def populate_jpi_data(file_name):
+def populate_jpi_data():
 	# change directories
 	jpif_to_combined()
 	# index list
@@ -91,12 +91,12 @@ def populate_jpi_data(file_name):
 	timestamp_index = headers_full.index("Timestamp")
 	jpi_index = headers_full.index("JourneyPatternID")
 	# open source
-	with open(file_name, "r") as source:
+	with open("combined.csv", "r") as source:
 		# change directory
 		combined_to_jpid()
 		# skip the first line
 		source.readline()
-		# 
+		# add to each existing file
 		for line in source:
 			try:
 				# line into a list
