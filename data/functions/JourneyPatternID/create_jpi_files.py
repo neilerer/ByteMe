@@ -63,10 +63,10 @@ def unique_journey_pattern_ids():
 This function creates a file for each jpi
 """
 def create_destination_files():
-	# go to the directory
-	jpif_to_jpid()
 	# obtain the unique jpis
 	unique_journey_pattern_id_list = unique_journey_pattern_ids()
+	# go to the directory
+	jpif_to_jpid()
 	# iteratively create the jpis
 	for ujpi in unique_journey_pattern_id_list:
 		# create the file
