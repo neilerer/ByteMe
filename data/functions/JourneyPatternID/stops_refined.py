@@ -3,6 +3,12 @@ import os
 import stops_raw
 
 
+"""
+These functions transform the raw stop-related JourneyPatternID information into stop lists
+Presently they are organised by day of the week and JourneyPatternID
+"""
+
+
 # INITIAL REFINEMENT: STOPS ONLY (NO IDLING)
 """
 This generates all the unique ids of the triples for each weekday

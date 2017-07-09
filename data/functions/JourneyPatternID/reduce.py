@@ -4,6 +4,12 @@ import glob
 import headers
 
 
+"""
+These functions take the raw JourneyPatternID files and transforms them into containing only the features desired
+Note: after a reduced file is made, the raw file is deleted (economics of storage)
+"""
+
+
 # global variables
 headers_list = headers.headers
 headers_reduced_list = headers.headers_reduced
@@ -76,14 +82,14 @@ def jpi_reduce_all():
 	# create the reduced files
 	for file in source_files:
 		jpi_reduce_individual(file)
-		# os.remove(file)
+		os.remove(file)
 	# change directory
 	jpid_to_jpif()
 
-# if __name__ == "__main__":
-# 	jpi_reduce_all()
+if __name__ == "__main__":
+	jpi_reduce_all()
 
-# testing just one file for development
+# #testing just one file for development
 # jpif_to_jpid()
-# jpi_reduce_individual("00010001.csv")
+# jpi_reduce_individual("00010002.csv")
 # jpid_to_jpif()

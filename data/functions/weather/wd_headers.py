@@ -1,3 +1,7 @@
+"""
+This file contains the headers used in the weather files
+"""
+
 raw = [
 'Time (GMT)', 
 'Temp.', 

@@ -1,3 +1,8 @@
+"""
+This file contains headres used by the bus data functions
+"""
+
+
 # global variables
 headers = [
 "Timestamp", # 0: Timestamp micro since 1970 01 01 00:00:00 GMT

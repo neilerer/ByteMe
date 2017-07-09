@@ -3,6 +3,12 @@ import os
 import glob
 
 
+"""
+Purpose: change the names of the raw bus files
+Input: none
+Output: none
+Effect: file names will be changed and ready for use by other programs
+"""
 def change_file_names():
 	# go to the directory with the source data
 	os.chdir("../../")

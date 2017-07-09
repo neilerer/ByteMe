@@ -2,6 +2,10 @@
 import os
 import stops_raw
 
+"""
+These functions are used to extract raw information from the JourneyPatternID files that are then refined by other functions
+"""
+
 
 """
 This functions searches the relevant file and identifies all the unique weekday values

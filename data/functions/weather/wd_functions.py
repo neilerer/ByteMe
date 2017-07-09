@@ -3,6 +3,10 @@ import os
 import glob
 import wd_headers
 
+"""
+This file contains some general functions used in various files in the weather section
+"""
+
 
 # General
 def csv_line_to_list(line):

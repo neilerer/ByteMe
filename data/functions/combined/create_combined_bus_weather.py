@@ -2,6 +2,11 @@
 import os
 import glob
 
+"""
+These functions take the combined bus and combined weather files and create a single file with all information.
+Note: the two source files are deleted once the combined file is created (economics of storage)
+"""
+
 # global variables
 headers_bus = ['Year', 'Month', 'Day', 'Hours', 'Minute', 'Second', 'WeekDay', 'YearDay', 'Timestamp', 'LineID', 'Direction', 'JourneyPatternID', 'TimeFrame', 'VehicleJourneyID', 'Operator', 'Congestion', 'Longitude', 'Latitude', 'BusDelay', 'BlockID', 'VehicleID', 'StopID', 'AtStop']
 

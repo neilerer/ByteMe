@@ -3,6 +3,11 @@ import os
 import glob
 import headers
 
+"""
+These functions convert the clean individual files into a combined bus data file
+Note: once a clean file has contributed to the combined file, the clean file is deleted (economics of storage)
+"""
+
 
 def create():
 	# go to the directory with the source data

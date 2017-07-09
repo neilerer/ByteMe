@@ -6,6 +6,12 @@ import wd_headers
 import wd_functions
 
 
+"""
+These functions combine the clean weather files into a combined weather file
+Note: once the individual files have contributed to the combined file, they are deleted (economics of storage)
+"""
+
+
 # Date and Time
 def date_elements(file_name):
 	# [Year, Month, Day]

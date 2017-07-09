@@ -5,6 +5,12 @@ import wd_headers
 import wd_functions
 
 
+"""
+These functions convert the original weather files into clean files
+Note: the orignal files are deleted after a clean file is create (economics of storage)
+"""
+
+
 def get_headers(file_name):
 	return wd_functions.csv_line_to_list(file_name.readline())
 

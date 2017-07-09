@@ -4,6 +4,11 @@ import glob
 import headers
 
 
+"""
+This file was used to a few tests and quick views while developing.
+"""
+
+
 # utility functions
 def jpif_to_jpid():
 	os.chdir("../../")

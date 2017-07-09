@@ -4,6 +4,11 @@ import glob
 from time import gmtime, strftime
 import headers
 
+"""
+These fucntions are used to convert the original bus files into individual, clean files.
+Note: after making the clean file, the original file is deleted (necessity due to economics of storage)
+"""
+
 
 # Timestamp
 def utc_to_struct_time_list(utc):
