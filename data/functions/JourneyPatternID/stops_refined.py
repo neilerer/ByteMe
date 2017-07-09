@@ -361,13 +361,10 @@ def route_for_jpi_on_weekday(file_name, weekday):
 	return final_array
 
 
-
-print(unique_journeys_stop_ids_only("00010001.csv"))
-
 """
 Below here is where I futz about with the code while in development
 """
-file_name = "00010001reduced.csv"
+# file_name = "00010001reduced.csv"
 
 # uj_data = unique_journeys_stop_ids_only(file_name)
 # for i in range(0, 10, 1):
