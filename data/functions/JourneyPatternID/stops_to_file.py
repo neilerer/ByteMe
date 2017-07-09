@@ -9,41 +9,71 @@ import stops_refined
 These functions will use the end-function of stops_refined to generate bus route and save them to file
 """
 
-
-def record_stops():
+"""
+This function generates an array of each jpi file to use
+"""
+def files_to_use():
+	# file_name_holder
+	file_name_holder = []
 	# go to directory
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/")
 	# iterate over the source files
 	for file in glob.glob("*.csv"):
-		# create data holder
-		data_holder = []
-		# change directory to collect data
-		os.chdir("../../")
-		os.chdir("functions/JourneyPatternID/")
-		# collect the data
-		for i in range(0, 7, 1):
-			try:
-				data_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
-			except:
-				data_holder.append("NoRoute")
-		# change directory to the source file
-		os.chdir("../../")
-		os.chdir("data/JourneyPatternID/")
-		# open the source file
-		with open(file, "r") as source:
-			# go to the approprite directory
-			os.chdir("stops/")
-			# open the destination file
-			with open(file, "w") as destination:
-				# iterate over the routes
-				for route in data_holder:
-					# write to the destination
-					destination.write(",".join(route) + "\n")
+		# add the file name
+		file_name_holder.append(file)
+	# return to the starting directory
+	os.chdir("../../")
+	os.chdir("functions/JourneyPatternID/")
+	# return
+	return file_name_holder
+
+
+"""
+This function generates the route data to write to file
+"""
+def route_data_to_write(file):
+	# array to hold routes for each day of the week
+	route_holder = []
+	# iterate over the weekdays
+	for i in range(0, 7, 1):
+		try:
+			# record the route
+			route_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
+		except:
+			# or record that no route exists
+			route_holder.append("NoRoute")
+	# reutrn the route holder
+	return route_holder
+
+
+"""
+This function writes the generated data to file
+"""
+def write_route_to_file(file):
+	# data
+	route_holder = route_data_to_write(file)
+	# change directories
+	os.chdir("../../")
+	os.chdir("data/JourneyPatternID/stops/")
+	# record the data
+	with open(file, "w") as destination:
+		for route in route_holder:
+			destination.write(",".join(route) + "\n")
 	# return to the starting directory
 	os.chdir("../../../")
 	os.chdir("functions/JourneyPatternID/")
-	#
+
+
+"""
+This file aggregates the prior functions
+"""
+def record_stops():
+	# generate the array of JourneyPatternIDs
+	jpi_array = files_to_use()
+	# iterate over them
+	for jpi in jpi_array:
+		write_route_to_file(jpi)
 
 
 if __name__ == "__main__":
