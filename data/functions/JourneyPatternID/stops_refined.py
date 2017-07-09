@@ -360,6 +360,10 @@ def route_for_jpi_on_weekday(file_name, weekday):
 	# return
 	return final_array
 
+
+
+print(unique_journeys_stop_ids_only("00010001.csv"))
+
 """
 Below here is where I futz about with the code while in development
 """
