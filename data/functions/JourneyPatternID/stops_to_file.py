@@ -39,7 +39,8 @@ def route_data_to_write(file):
 	for i in range(0, 7, 1):
 		try:
 			# record the route
-			route_holder.append(stops_refined.route_for_jpi_on_weekday(file, i))
+			data = stops_refined.route_for_jpi_on_weekday(file, i)
+			route_holder.append(data)
 		except:
 			# or record that no route exists
 			route_holder.append("NoRoute")
