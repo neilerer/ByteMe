@@ -70,7 +70,7 @@ def create_destination_files():
 	# iteratively create the jpis
 	for ujpi in unique_journey_pattern_id_list:
 		# create the file
-		with open(upi + ".csv", "w") as source:
+		with open(ujpi + ".csv", "w") as source:
 			# write the header
 			source.write(",".join(headers.headers_reduced) + "\n")
 	# return to the starting point
