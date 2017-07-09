@@ -227,7 +227,7 @@ def not_in_primary_details(primary_array, secondary_array):
 
 
 # PAIRWISE CREATION OF A STOPID LIST
-# 
+# determines if in a details list, there is a stop_detail with length 2
 def primary_range_length_no_2(details):
 	for stop_details in details:
 		if stop_details[4] == 2:
@@ -385,14 +385,14 @@ file_name = "00010001reduced.csv"
 # 	print(final_array)
 # 	print("")
 
-import time
-start = time.time()
-for i in range(0, 7, 1):
-	data = route_for_jpi_on_weekday(file_name, i)
-	print("Weekday:", i)
-	print("Lenght:", len(data))
-	print(data)
-	print("")
-print(time.time() - start)
+# import time
+# start = time.time()
+# for i in range(0, 7, 1):
+# 	data = route_for_jpi_on_weekday(file_name, i)
+# 	print("Weekday:", i)
+# 	print("Length:", len(data))
+# 	print(data)
+# 	print("")
+# print(time.time() - start)
 
 # c_list = [226, 228, 229, 227, 230, 231, 1641, 1642, 213, 214, 4432, 119, 44, 45, 46,47,48,49,50,51,52,265,271,340,350,351,352,353,354,355,356,357,390,372,373,374,375,380,2804,376, 377, 378]
