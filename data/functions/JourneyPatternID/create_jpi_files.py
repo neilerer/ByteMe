@@ -116,7 +116,7 @@ def populate_jpi_data():
 				# note: as this is a one-off run, run-time minimisation is not a priority, but crashing a computer is a concern
 				with open(destination_file, "a") as destination:
 					# write to the file
-					destination.write(",".join(reduced_list))
+					destination.write(",".join(reduced_list) + "\n")
 			except:
 				# the line did not have the data
 				pass
