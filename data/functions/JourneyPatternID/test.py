@@ -37,7 +37,7 @@ def jpi_preview(file_name):
 	jpid_to_jpif()
 
 
-jpi_preview("00010001reduced.csv")
+jpi_preview("00010001.csv")
 
 # jpif_to_jpid()
 # with open("00010001reduced.csv", "r") as file:
