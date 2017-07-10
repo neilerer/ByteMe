@@ -129,5 +129,5 @@ def populate_jpi_data():
 Run the program
 """
 if __name__ == "__main__":
-	# create_destination_files()
+	create_destination_files()
 	populate_jpi_data()
