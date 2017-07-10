@@ -104,7 +104,7 @@ def populate_jpi_data():
 				# variable to open the apprpriate file
 				jpi = line_list[jpi_index]
 				# modify the timestampt so that in future it will not need to be divided by 10**6
-				line_list[timestamp_index] = str(int(line_list[timestamp_index]) / 10**6)
+				line_list[timestamp_index] = str(int(int(line_list[timestamp_index]) / 10**6))
 				# reduced list
 				reduced_list = []
 				for i in headers_index:
