@@ -117,7 +117,7 @@ def create_route_files(file_names):
 		os.chdir("data/JourneyPatternID/routes")
 		with open(file_name, "w") as destination:
 			for route in routes:
-				destination.write(",".join(routes) + "\n")
+				destination.write(",".join(route) + "\n")
 		# return to starting directory
 		os.chdir("../../../")
 		os.chdir("functions/JourneyPatternID")
