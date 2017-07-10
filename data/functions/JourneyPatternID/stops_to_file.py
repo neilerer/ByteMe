@@ -79,7 +79,5 @@ def record_stops():
 		write_route_to_file(jpi)
 
 
-# if __name__ == "__main__":
-# 	record_stops()
-
-write_route_to_file("00010001.csv")
+if __name__ == "__main__":
+	record_stops()
