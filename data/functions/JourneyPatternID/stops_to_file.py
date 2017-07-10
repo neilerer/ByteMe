@@ -54,8 +54,6 @@ This function writes the generated data to file
 def write_route_to_file(file):
 	# data
 	route_holder = route_data_to_write(file)
-	print(file) # delete
-	print(route_holder) # delete
 	# change directories
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/stops/")
