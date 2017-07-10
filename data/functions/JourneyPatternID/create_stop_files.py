@@ -91,6 +91,7 @@ def populate_files():
 				stop_id = line_list[stopid_index]
 				# if the bus is at a stop
 				if at_stop == "1":
+					print("found a stop") # DELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETE
 					# change directory
 					os.chdir(jpi + "/" + weekday + "/")
 					# determine file name
@@ -99,9 +100,11 @@ def populate_files():
 					# if the file exists
 					if os.path.exists(file_name):
 						# append the StopID
+						print("wrote something") # DELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETE
 						with open(file_name, "a") as destination:
 							destination.write(stop_id + ",")
 					else:
+						print("wrote something") # DELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETE
 						# otherwise create the file and add the StopID
 						with open(file_name, "w") as destination:
 							destination.write(stop_id + ",")
