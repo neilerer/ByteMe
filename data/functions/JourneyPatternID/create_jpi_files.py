@@ -85,12 +85,7 @@ This function populates each jpi file by accessing the the source information fr
 """
 def populate_jpi_data():
 	# change directories
-	jpif_to_combined()
-	# index list
-	headers_full = headers.headers
-	headers_reduced = headers.headers_reduced
-	headers_index = [headers_full.index(x) for x in headers_reduced]
-	
+	jpif_to_combined()	
 	# open source
 	with open("combined.csv", "r") as source:
 		# create headers
@@ -121,7 +116,7 @@ def populate_jpi_data():
 				# the line did not have the data
 				pass
 	# return to the starting directory
-	combined_to_jpif()
+	jpid_to_jpif()
 
 
 """
