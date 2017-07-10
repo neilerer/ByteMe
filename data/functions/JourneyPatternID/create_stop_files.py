@@ -116,9 +116,26 @@ def populate_files():
 
 
 """
+This function creates the README.txt file
+"""
+def read_me():
+	# change directory
+	os.chdir("../../")
+	os.chdir("data/JourneyPatternID/stops/")
+	# create the file
+	with open("README.txt", "w") as destination:
+		first_line = "First line contains every AtStop == 1 measure for the vjid_vid combination"
+		destination.write(first_line + "\n")
+	# return to starting directory
+	os.chdir("../../../")
+	os.chdir("functions/JourneyPatternID/")
+
+
+"""
 This function aggregates all the elements of this file
 """
 def all_recorded_stops():
+	read_me()
 	create_directories()
 	populate_files()
 
