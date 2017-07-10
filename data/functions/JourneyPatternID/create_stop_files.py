@@ -1,7 +1,6 @@
 # imports
 import os
 import glob
-import headers
 
 
 """
@@ -12,14 +11,14 @@ def files_to_use():
 	file_name_holder = []
 	# go to directory
 	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/")
+	os.chdir("data/JourneyPatternID")
 	# iterate over the source files
 	for file in glob.glob("*.csv"):
 		# add the file name
 		file_name_holder.append(file)
 	# return to the starting directory
 	os.chdir("../../")
-	os.chdir("functions/JourneyPatternID/")
+	os.chdir("functions/JourneyPatternID")
 	# return
 	return file_name_holder
 
@@ -32,7 +31,7 @@ def create_directories():
 	source_of_names = files_to_use()
 	# change directory
 	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/stops")
+	os.chdir("data/JourneyPatternID/stop_and_idle")
 	# create the files: one for each jpi and weekday combination
 	for file in source_of_names:
 		# name of the directory
@@ -53,22 +52,13 @@ def create_directories():
 			os.chdir("../")
 	# change directory
 	os.chdir("../../../")
-	os.chdir("functions/JourneyPatternID/")
+	os.chdir("functions/JourneyPatternID")
 
 
 """
 This function populates the appropriate files: a sequential order of stops taken by a bus on a jpi on a weekday
 """
 def populate_files():
-	# index list
-	headers_reduced = headers.headers
-	weekday_index = headers_reduced.index("WeekDay")
-	jpi_index = headers_reduced.index("JourneyPatternID")
-	atstop_index = headers_reduced.index("AtStop")
-	stopid_index = headers_reduced.index("StopID")
-	vjid_index = headers_reduced.index("VehicleJourneyID")
-	vid_index = headers_reduced.index("VehicleID")
-	timestamp_index = headers_reduced.index("Timestamp")
 	# change directory
 	os.chdir("../../")
 	os.chdir("data/combined/")
@@ -76,9 +66,19 @@ def populate_files():
 	with open("combined.csv", "r") as source:
 		# change directory
 		os.chdir("../")
-		os.chdir("JourneyPatternID/stops/")
-		# skip the first line
-		source.readline()
+		os.chdir("JourneyPatternID/stop_and_idle/")
+		# define headers
+		headers = source.readline().strip().split(",")
+		# index list
+		weekday_index = headers.index("WeekDay")
+		jpi_index = headers.index("JourneyPatternID")
+		atstop_index = headers.index("AtStop")
+		stopid_index = headers.index("StopID")
+		vjid_index = headers.index("VehicleJourneyID")
+		vid_index = headers.index("VehicleID")
+		timestamp_index = headers.index("Timestamp")
+		length = len(headers)
+		length_range = range(0, length, 1)
 		# iterate over data in the combined file
 		for line in source:
 			line_list = line.strip().split(",")
@@ -89,8 +89,6 @@ def populate_files():
 				weekday = line_list[weekday_index]
 				vjid = line_list[vjid_index]
 				vid = line_list[vid_index]
-				stop_id = line_list[stopid_index]
-				time_stamp = line_list[timestamp_index]
 				# if the bus is at a stop
 				if at_stop == "1":
 					# change directory
@@ -100,21 +98,23 @@ def populate_files():
 					file_name = name + ".csv"
 					# if the file exists
 					if os.path.exists(file_name):
-						# store the current information
-						stop_line = ""
-						time_line = ""
+						# create and populate a storage list for existing information
+						storage_list = []
 						with open(file_name, "r") as temp_source:
-							stop_line = temp_source.readline() + stop_id + ","
-							time_line = temp_source.readline() + time_stamp + ","
-						# append the StopID
-						with open(file_name, "a") as destination:
-							destination.write(stop_line)
-							destination.write(time_line)
-					else:
-						# otherwise create the file and add the StopID
+							for i in length_range:
+								storage_list.append(readline())
+						# add the new information to the stored informaiton
+						for i in length_range:
+							storage_list[i] = storage_list[i] + line_list[i] + ","
+						# write the information back to file
 						with open(file_name, "w") as destination:
-							destination.write(stop_id + ",")
-							destination.write(time_stamp + ",")
+							for item in storage_list:
+								destination.write(item + "\n")
+					else:
+						# otherwise create the file and add the data
+						with open(file_name, "w") as destination:
+							for item in line_list:
+								destination.write(item + ",")
 					# change directory
 					os.chdir("../../")
 			except:
@@ -131,18 +131,26 @@ This function creates the README.txt file
 def read_me():
 	# change directory
 	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/stops/")
+	os.chdir("data/JourneyPatternID/stop_and_idle")
 	# create the file
 	with open("README.txt", "w") as destination:
-		# stop_line
-		stop_line = "First line contains every AtStop == 1 measure for the vjid_vid combination"
-		destination.write(stop_line + "\n")
-		# time_line
-		time_line = "Second line contains the timestamp for every AtStop == 1 measure i.e. data on line above"
-		destination.write(time_line + "\n")
+		# intro lines
+		first_line = "Each line contains all the recorded AtStop==1 information for a UID = VJID_VID\n"
+		second_line = "The rows represent:\n"
+		destination.write(first_line)
+		destination.write(second_line)
+		# data lines
+		os.chdir("../../")
+		os.chdir("combined")
+		# get headers
+		headers = []
+		with open("combined.csv", "r") as source:
+			headers = source.readline().strip().split(",")
+		for h in headers:
+			destination.write(h + "\n")
 	# return to starting directory
-	os.chdir("../../../")
-	os.chdir("functions/JourneyPatternID/")
+	os.chdir("../../")
+	os.chdir("functions/JourneyPatternID")
 
 
 """
