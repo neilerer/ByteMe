@@ -129,7 +129,7 @@ def create_bus_routes():
 
 
 if __name__ == "__main__":
-	create_route_files()
+	create_bus_routes()
 
 # """
 # Quick testing section
