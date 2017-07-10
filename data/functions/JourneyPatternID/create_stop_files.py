@@ -61,7 +61,7 @@ This function populates the appropriate files: a sequential order of stops taken
 """
 def populate_files():
 	# index list
-	headers_reduced = headers.headers_reduced
+	headers_reduced = headers.headers
 	weekday_index = headers_reduced.index("WeekDay")
 	jpi_index = headers_reduced.index("JourneyPatternID")
 	atstop_index = headers_reduced.index("AtStop")
