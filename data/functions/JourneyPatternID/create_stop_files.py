@@ -27,7 +27,7 @@ def files_to_use():
 """
 This function creates the files to save each record of the bus being at a stop for a given jpi and weekday combination
 """
-def create_raw_files():
+def create_directories():
 	# source of names
 	source_of_names = files_to_use()
 	# change directory
@@ -35,16 +35,22 @@ def create_raw_files():
 	os.chdir("data/JourneyPatternID/stops")
 	# create the files: one for each jpi and weekday combination
 	for file in source_of_names:
-		# make a directory for the jpi
+		# name of the directory
 		name = file.strip().split(".")[0]
-		os.mkdir(name)
-		# change directory
-		os.chdir(name + "/")
-		# make a directory for each weekday
-		for i in range(0, 7, 1):
-			os.mkdir(str(i))
-		# change directory
-		os.chdir("../")
+		# check if the directory alredy exists
+		if os.path.exists(name + "/"):
+			# directory already exists
+			pass
+		else:
+			# make a directory for the jpi
+			os.mkdir(name)
+			# change directory
+			os.chdir(name + "/")
+			# make a directory for each weekday
+			for i in range(0, 7, 1):
+				os.mkdir(str(i))
+			# change directory
+			os.chdir("../")
 	# change directory
 	os.chdir("../../../")
 	os.chdir("functions/JourneyPatternID/")
@@ -113,7 +119,7 @@ def populate_files():
 This function aggregates all the elements of this file
 """
 def all_recorded_stops():
-	create_raw_files()
+	create_directories()
 	populate_files()
 
 
