@@ -361,47 +361,24 @@ def route_for_jpi_on_weekday(file_name, weekday):
 	return final_array
 
 
-good_array = unique_journeys_stop_ids_only("00010001.csv")
-for item in good_array:
-	print(item)
+good_array = journeys("00010001.csv")
+good_stop_list = good_array[0]
+good_weekdays = good_array[1]
+print("Length of stop list:", len(good_stop_list))
+print("Length of weekdays:", len(good_weekdays))
+print("")
+bad_array = journeys("00411003.csv")
+bad_stop_list = good_array[0]
+bad_weekdays = good_array[1]
+print("Length of stop list:", len(bad_stop_list))
+print("Length of weekdays:", len(bad_weekdays))
 
-bad_array = unique_journeys_stop_ids_only("00411003.csv")
-for item in bad_array:
-	print(item)
 
-"""
-Below here is where I futz about with the code while in development
-"""
-# file_name = "00010001reduced.csv"
+# good_array = unique_journeys_stop_ids_only("00010001.csv")
+# for item in good_array:
+# 	print(item)
 
-# uj_data = unique_journeys_stop_ids_only(file_name)
-# for i in range(0, 10, 1):
-# 	primary_array = uj_data[i][0]
-# 	secondary_array = uj_data[i][1]
-# 	source = pairwise_stop_id_list_length_2(primary_array, secondary_array)
-# 	final_array = source[0]
-# 	details = source[1]
+# bad_array = unique_journeys_stop_ids_only("00411003.csv")
+# for item in bad_array:
+# 	print(item)
 
-# 	for item in uj_data[0][1::1]:
-# 		# length 2 issues
-# 		source = pairwise_stop_id_list_length_2(final_array, item)
-# 		final_array = source[0]
-# 		# length 1 issues
-# 		source = stop_id_list_length_1_fix(final_array, details)
-# 		final_array = source[0]
-
-# 	print("uid", i)
-# 	print(final_array)
-# 	print("")
-
-# import time
-# start = time.time()
-# for i in range(0, 7, 1):
-# 	data = route_for_jpi_on_weekday(file_name, i)
-# 	print("Weekday:", i)
-# 	print("Length:", len(data))
-# 	print(data)
-# 	print("")
-# print(time.time() - start)
-
-# c_list = [226, 228, 229, 227, 230, 231, 1641, 1642, 213, 214, 4432, 119, 44, 45, 46,47,48,49,50,51,52,265,271,340,350,351,352,353,354,355,356,357,390,372,373,374,375,380,2804,376, 377, 378]
