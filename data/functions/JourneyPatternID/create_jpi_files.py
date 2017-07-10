@@ -1,7 +1,6 @@
 # imports
 import os
 import glob
-import headers
 
 
 """
@@ -35,7 +34,7 @@ This function creates an array of the unique jpis
 """
 def unique_journey_pattern_ids():
 	# create the return object
-	uji_set = set()
+	ujpi_set = set()
 	# go to directory
 	jpif_to_combined()
 	# open the source
@@ -49,22 +48,25 @@ def unique_journey_pattern_ids():
 			try:
 				# if one exists, add the jpi to the set
 				jpi = line.strip().split(",")[offset]
-				uji_set.add(jpi)
+				ujpi_set.add(jpi)
 			except:
 				# otherwise, pass
 				pass
 	# return to the starting directory
 	combined_to_jpif()
 	# return
-	return uji_set
+	return [ujpi_set, headers]
 
 
 """
 This function creates a file for each jpi
 """
 def create_destination_files():
+	# data
+	data = unique_journey_pattern_ids()
 	# obtain the unique jpis
-	unique_journey_pattern_id_list = unique_journey_pattern_ids()
+	unique_journey_pattern_id_list = data[0]
+	headers = data[1]
 	# go to the directory
 	jpif_to_jpid()
 	# iteratively create the jpis
@@ -72,7 +74,7 @@ def create_destination_files():
 		# create the file
 		with open(ujpi + ".csv", "w") as source:
 			# write the header
-			source.write(",".join(headers.headers_reduced) + "\n")
+			source.write(",".join(headers) + "\n")
 	# return to the starting point
 	jpid_to_jpif()
 
@@ -88,14 +90,16 @@ def populate_jpi_data():
 	headers_full = headers.headers
 	headers_reduced = headers.headers_reduced
 	headers_index = [headers_full.index(x) for x in headers_reduced]
-	timestamp_index = headers_full.index("Timestamp")
-	jpi_index = headers_full.index("JourneyPatternID")
+	
 	# open source
 	with open("combined.csv", "r") as source:
+		# create headers
+		headers = source.readline().strip().split(",")
+		# create index variables
+		timestamp_index = headers.index("Timestamp")
+		jpi_index = headers.index("JourneyPatternID")
 		# change directory
 		combined_to_jpid()
-		# skip the first line
-		source.readline()
 		# add to each existing file
 		for line in source:
 			try:
@@ -105,10 +109,6 @@ def populate_jpi_data():
 				jpi = line_list[jpi_index]
 				# modify the timestampt so that in future it will not need to be divided by 10**6
 				line_list[timestamp_index] = str(int(int(line_list[timestamp_index]) / 10**6))
-				# reduced list
-				reduced_list = []
-				for i in headers_index:
-					reduced_list.append(line_list[i])
 				# define destination file
 				destination_file = jpi + ".csv"
 				# open the destination file
@@ -116,7 +116,7 @@ def populate_jpi_data():
 				# note: as this is a one-off run, run-time minimisation is not a priority, but crashing a computer is a concern
 				with open(destination_file, "a") as destination:
 					# write to the file
-					destination.write(",".join(reduced_list) + "\n")
+					destination.write(",".join(line_list) + "\n")
 			except:
 				# the line did not have the data
 				pass
