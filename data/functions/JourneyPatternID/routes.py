@@ -74,7 +74,7 @@ def weekday_stops(file_name):
 
 
 """
-testing
+Quick testing section
 """
 file = "00010001.csv"
 data = weekday_stops(file)
