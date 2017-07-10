@@ -1,56 +1,9 @@
 # imports
 import os
-import stops_raw
-
-"""
-These functions are used to extract raw information from the JourneyPatternID files that are then refined by other functions
-"""
+import glob
 
 
-"""
-This functions searches the relevant file and identifies all the unique weekday values
-"""
-def weekday_values(file_name):
-	# weekdays
-	weekdays = set()
-	# find source file
-	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/")
-	# open source file
-	with open(file_name, "r") as source:
-		# find the index by using the first line
-		index = source.readline().strip().split(",").index("WeekDay")
-		# iterate over the data lines
-		for line in source:
-			# convert line to list
-			line_list = source.readline().strip().split(",")
-			# try add WeekDay values to the set
-			try:
-				weekdays.add(line_list[index])
-			# if no value, skip
-			except:
-				pass
-	# convert set to an array
-	weekdays = list(weekdays)
-	# sort the list
-	weekdays.sort()
-	# go back to starting directory
-	os.chdir("../../")
-	os.chdir("functions/JourneyPatternID/")
-	# return
-	return weekdays
-
-
-"""
-This function returns two items:
-- weekday_lists: a list for each weekday that contains tuples of (Timestamp, StopID)
-- weekdays: list of weekday values from the file
-
-Use if you want raw data by weekday for a given JPI
-"""
 def weekday_data(file_name):
-	# create the files
-	weekdays = weekday_values(file_name)
 	# change directories
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/")

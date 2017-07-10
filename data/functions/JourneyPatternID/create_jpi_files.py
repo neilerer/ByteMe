@@ -101,6 +101,7 @@ def populate_jpi_data():
 			try:
 				# line into a list
 				line_list = line.strip().split(",")
+				print(line_list)
 				# check if at stop
 				if line_list[stopid_index] == "1":
 					# variable to open the apprpriate file
@@ -129,5 +130,5 @@ def populate_jpi_data():
 Run the program
 """
 if __name__ == "__main__":
-	create_destination_files()
+	# create_destination_files()
 	populate_jpi_data()
