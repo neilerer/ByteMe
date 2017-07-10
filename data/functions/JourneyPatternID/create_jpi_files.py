@@ -93,7 +93,7 @@ def populate_jpi_data():
 		# create index variables
 		timestamp_index = headers.index("Timestamp")
 		jpi_index = headers.index("JourneyPatternID")
-		stopid_index = headers.index("StopID")
+		as_index = headers.index("AtStop")
 		# change directory
 		combined_to_jpid()
 		# add to each existing file
@@ -101,9 +101,8 @@ def populate_jpi_data():
 			try:
 				# line into a list
 				line_list = line.strip().split(",")
-				print(line_list)
 				# check if at stop
-				if line_list[stopid_index] == "1":
+				if line_list[as_index] == "1":
 					# variable to open the apprpriate file
 					jpi = line_list[jpi_index]
 					# modify the timestampt so that in future it will not need to be divided by 10**6
