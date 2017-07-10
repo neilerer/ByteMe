@@ -43,7 +43,7 @@ def route_data_to_write(file):
 			route_holder.append(data)
 		except:
 			# or record that no route exists
-			route_holder.append("NoRoute")
+			route_holder.append(["NoRoute"])
 	# reutrn the route holder
 	return route_holder
 
