@@ -86,23 +86,3 @@ for i in range(0, 7, 1):
 	result = rcf.route_for_jpi_on_weekday(data, i)
 	print("Route:", result)
 	print("")
-
-
-# file_name = "00010001.csv"
-
-# data = weekday_stops(file_name)
-
-# result = rcf.route_for_jpi_on_weekday(data, 0)
-# print(result)
-# print(len(result))
-
-
-# # for item in data[0]:
-# # 	print(data[0][item])
-# uid_list = ["5461_38002", "5494_33492", "5512_33459", "5444_38001", "5425_33494"]
-# primary_array = data[0][uid_list[0]]
-# secondary_array = data[0][uid_list[2]]
-# not_in = rcf.not_in_primary_details(primary_array, secondary_array)
-# print(primary_array)
-# print(secondary_array)
-# print(not_in)
