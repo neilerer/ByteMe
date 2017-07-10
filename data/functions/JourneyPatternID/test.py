@@ -43,13 +43,15 @@ os.chdir("data/combined")
 direction_list = []
 with open("combined.csv", "r") as source:
 	index = source.readline().strip().split(",").index("Direction")
-	
 	for line in source:
-		direction = source.readline().strip().split(",")[index]
-		if direction in direction_list:
+		try:
+			direction = source.readline().strip().split(",")[index]
+			if direction in direction_list:
+				pass
+			else:
+				direction_list.append(direction)
+		except:
 			pass
-		else:
-			direction_list.append(direction)
 os.chdir("../../")
 os.chdir("functions/JourneyPatternID")
 print(direction_list)
