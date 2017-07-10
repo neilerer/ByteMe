@@ -38,21 +38,18 @@ def jpi_preview(file_name):
 	jpid_to_jpif()
 
 
-
-# my_list = ["040D0001.csv",
-# "00410001.csv",
-# "01451005.csv",
-# "066B0001.csv",
-# "01110001.csv",
-# "033X0001.csv",
-# "032B0002.csv",
-# "00830006.csv",
-# "00071001.csv",
-# "00171003.csv",
-# "00160003.csv"]
-# for data in my_list:
-# 	data = stops_raw.weekday_data(data)
-# 	print(data[1])
-
-data = stops_raw.weekday_data("00010001.csv")
-print(data[0])
+os.chdir("../../")
+os.chdir("data/combined")
+direction_list = []
+with open("combined.csv", "r") as source:
+	index = source.readline().strip().split(",").index("Direction")
+	
+	for line in source:
+		direction = source.readline().strip().split(",")[index]
+		if direction in direction_list:
+			pass
+		else:
+			direction_list.append(direction)
+os.chdir("../../")
+os.chdir("functions/JourneyPatternID")
+print(direction_list)
