@@ -128,18 +128,19 @@ def create_bus_routes():
 	create_route_files(file_names)
 
 
+if __name__ == "__main__":
+	create_route_files()
 
-
-"""
-Quick testing section
-"""
-file = "00010001.csv"
-data = weekday_stops(file)
-print("")
-print("File:", file)
-print("")
-for i in range(0, 7, 1):
-	print("Weekday:", i)
-	result = rcf.route_for_jpi_on_weekday(data, i)
-	print("Route:", result)
-	print("")
+# """
+# Quick testing section
+# """
+# file = "00010001.csv"
+# data = weekday_stops(file)
+# print("")
+# print("File:", file)
+# print("")
+# for i in range(0, 7, 1):
+# 	print("Weekday:", i)
+# 	result = rcf.route_for_jpi_on_weekday(data, i)
+# 	print("Route:", result)
+# 	print("")
