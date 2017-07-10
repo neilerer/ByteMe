@@ -74,6 +74,63 @@ def weekday_stops(file_name):
 
 
 """
+These function generates routes for each jpi and weekday combination and save them to file
+"""
+def create_list_of_files():
+	# change directory
+	os.chdir("../../")
+	os.chdir("data/JourneyPatternID")
+	# get file names
+	file_names = []
+	for file in glob.glob("*csv"):
+		file_names.append(file)
+	# return to starting directory
+	os.chdir("../../")
+	os.chdir("functions/JourneyPatternID")
+	# return
+	return file_names
+
+def create_route_directories(file_names):
+	# change directory
+	os.chdir("../../")
+	os.chdir("data/JourneyPatternID/routes")
+	# create the files
+	for file_name in file_names:
+		with open(file_name, "w") as destination:
+			pass
+	# return to starting directory
+	os.chdir("../../../")
+	os.chdir("functions/JourneyPatternID")
+
+def create_route_files(file_names):
+	for file_name in file_names:
+		data = weekday_stops(file_name)
+		routes = []
+		for i in range(0, 7, 1):
+			try:
+				result = rcf.route_for_jpi_on_weekday(data, i)
+			except:
+				result = ["NoRoute"]
+			routes.append(result)
+		# change directory
+		os.chdir("../../")
+		os.chdir("data/JourneyPatternID/routes")
+		with open(file_name, "w") as destination:
+			for route in routes:
+				destination.write(",".join(routes) + "\n")
+		# return to starting directory
+		os.chdir("../../../")
+		os.chdir("functions/JourneyPatternID")
+
+def create_bus_routes():
+	file_names = create_list_of_files()
+	create_route_directories(file_names)
+	create_route_files(file_names)
+
+
+
+
+"""
 Quick testing section
 """
 file = "00010001.csv"
