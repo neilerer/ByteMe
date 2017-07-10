@@ -63,11 +63,15 @@ def create_route(source_file, destination_file, headers):
 
 
 def create_routes():
-	#
+	# 
+	source_of_names = csf.files_to_use()
+	# 
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/stop_and_idle")
-	#
-	source_of_names = csf.files_to_use()
+	# 
+	
+	
+
 
 
 
