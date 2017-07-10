@@ -359,26 +359,3 @@ def route_for_jpi_on_weekday(file_name, weekday):
 	final_array = remove_repeats_in_list(final_array)
 	# return
 	return final_array
-
-
-good_array = journeys("00010001.csv")
-good_stop_list = good_array[0]
-good_weekdays = good_array[1]
-print("Length of stop list:", len(good_stop_list))
-print("Length of weekdays:", len(good_weekdays))
-print("")
-bad_array = journeys("00411003.csv")
-bad_stop_list = good_array[0]
-bad_weekdays = good_array[1]
-print("Length of stop list:", len(bad_stop_list))
-print("Length of weekdays:", len(bad_weekdays))
-
-
-# good_array = unique_journeys_stop_ids_only("00010001.csv")
-# for item in good_array:
-# 	print(item)
-
-# bad_array = unique_journeys_stop_ids_only("00411003.csv")
-# for item in bad_array:
-# 	print(item)
-

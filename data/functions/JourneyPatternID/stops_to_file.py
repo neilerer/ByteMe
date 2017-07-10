@@ -76,7 +76,10 @@ def record_stops():
 	jpi_array = files_to_use()
 	# iterate over them
 	for jpi in jpi_array:
-		write_route_to_file(jpi)
+		try:
+			write_route_to_file(jpi)
+		except:
+			print(jpi)
 
 
 if __name__ == "__main__":
