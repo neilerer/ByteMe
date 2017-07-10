@@ -58,7 +58,7 @@ def neighbour_count(wd_runs, unique_values, value, side):
 	return neighbours
 
 
-def neighbour_fraction(wd_runs, unique_values, value, side, occurances):
+def neighbour_fraction(wd_runs, unique_values, value, side):
 	# data
 	neighbours = neighbour_count(wd_runs, unique_values, value, side)
 	n_sum = sum(neighbours)
@@ -73,18 +73,20 @@ def neighbour_fraction(wd_runs, unique_values, value, side, occurances):
 	return neighbour_fraction
 
 
+def neighbourhood_data(file_name, weekday):
+	wd_runs = weekday_runs(file_name, weekday)
+	unique_values = find_unique_values(wd_runs)
+	return [wd_runs, unique_values]
 
-
-
+def neighbourhod_numbers(file_name, weekday, value, side):
+	# data
+	data = neighbourhood_data(file_name, weekday)
+	wd_runs = data[0]
+	unique_values = data[1]
+	# return
+	return [value, side, unique_values, neighbour_count(wd_runs, unique_values, value, side), neighbour_fraction(wd_runs, unique_values, value, side)]
 
 
 file_name = "00010001.csv"
-wd_runs = weekday_runs(file_name, 0)
-unique_values = find_unique_values(wd_runs)
-occurances = total_occurances(wd_runs, unique_values)
-n_count = neighbour_count(wd_runs, unique_values, '226', 'left')
-n_fraction = neighbour_fraction(wd_runs, unique_values, '226', 'left', occurances)
-print(unique_values)
-print(occurances)
-print(n_count)
-print(n_fraction)
+for item in neighbourhod_numbers(file_name, 0, '226', 'left'):
+	print(item)
