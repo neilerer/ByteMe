@@ -138,6 +138,29 @@ def all_weekday_neighbours(routes_weekday_output, unique_stops_output):
 	# return
 	return all_neighbours
 
+def find_max_neighbours(all_weekday_neighbours_output):
+	# 
+	left_maximum = 0
+	right_maximum = 0
+	left_location = 0
+	right_location = 0
+	count = 0
+	for neighbour_list in all_weekday_neighbours_output:
+		current_left = neighbour_list[1]
+		current_right = neighbour_list[2]
+		if current_left > left_maximum:
+			left_maximum = current_left
+			left_location = count
+		if current_right > right_maximum:
+			right_maximum = current_right
+			right_location = count
+		count += 1
+	if left_maximum > right_maximum:
+		return all_weekday_neighbours_output[left_location]
+	else:
+		return all_weekday_neighbours_output[right_location]
+
+
 
 file_name = "00010001.csv"
 all_weekday_journeys = journeys(file_name)
@@ -148,3 +171,5 @@ weekday_neighbours = all_weekday_neighbours(weekday_routes, stops)
 for item in weekday_neighbours:
 	print(item)
 	print("")
+maximum = find_max_neighbours(weekday_neighbours)
+print(maximum)
