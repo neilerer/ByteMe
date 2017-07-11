@@ -3,90 +3,115 @@ import os
 import routes
 
 
-def weekday_runs(file_name, weekday):
-	data = routes.weekday_stops(file_name)[0]
-	return [data[item] for item in data]
+# fundamental data
+def journeys(file_name):
+	# list of dictionaries, one for each weekday, where key:value is uid:stops
+	return routes.weekday_stops(file_name)
+
+def journeys_weekday(journeys_output, weekday):
+	# dictionary: key: value is uid:stops
+	return journeys_output[weekday]
+
+def routes_weekday(journeys_output, weekday):
+	weekday_journey = journeys_weekday(journeys_output, weekday)
+	# list of lists where each list is the stops from a related journey
+	return [weekday_journey[key] for key in weekday_journey]
 
 
-def find_unique_values(wd_runs):
-	unique_values = []
-	for data_list in wd_runs:
-		for d in data_list:
-			if d not in unique_values:
-				unique_values.append(d)
-	return unique_values + ["left", "right"]
+# counting utilities
+def unique_stops(routes_weekday_output):
+	# list of stops
+	stops = []
+	# iterate over the lists
+	for stop_list in routes_weekday_output:
+		# iterate over the elements in the list
+		for stop in stop_list:
+			# check for inclusion
+			if stop not in stops:
+				# add if not already there
+				stops.append(stop)
+	# add left and right
+	stops = stops + ["left", "right"]
+	# return stops
+	return stops
 
-def total_occurances(wd_runs, unique_values):
-	occurances = [0 for x in unique_values]
-	for data_list in wd_runs:
-		for d in data_list:
-			index = unique_values.index(d)
-			occurances[index] += 1
-			occurances[-2] += 1
-			occurances[-1] += 1
-	return occurances
-
-def neighbour_count(wd_runs, unique_values, value, side):
-	neighbours = [0 for x in unique_values]
-	for data_list in wd_runs:
-		d_count = 0
-		d_limit = len(data_list)
-		if d_limit == 1:
+def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
+	# count of how often a unique stop value is a side-neighbour
+	neighbours = [0 for stop in unique_stops_output]
+	# iterate over each list of stops
+	for stop_list in routes_weekday_output:
+		# initialise a count and bound
+		stop_count = 0
+		stop_bound = len(stop_list)
+		# if the list has only one entry, it has no neighbours
+		if stop_bound == 1:
 			pass
 		else:
-			for d in data_list:
-				if d == value:
+			# iterate over the stops in the stop list
+			for stop in stop_list:
+				# if you find the resident stop
+				if stop == resident_stop:
 					if side == "right":
 						try:
-							if d_count == d_limit - 1:
+							# check if the observation is the right-most element of the list
+							if stop_count == stop_bound - 1:
+								# increase the right counter in neighbours
 								neighbours[-1] += 1
 							else:
-								neighbour = data_list[d_count + 1]
-								neighbours[unique_values.index(neighbour)] += 1
+								# find and increment the value in neighbours
+								neighbour = stop_list[stop_count + 1]
+								neighbour_index = unique_stops_output.index(neighbour)
+								neighbours[neighbour_index] += 1
 						except:
 							pass
 					else:
 						try:
-							if d_count == 0:
+							# check if the observation is the left-most element of the list
+							if stop_count == 0:
+								# increment the left counter in neighbours
 								neighbours[-2] += 1
 							else:
-								neighbour = data_list[d_count - 1]
-								neighbours[unique_values.index(neighbour)] += 1
+								# find and increment the value in neighbours
+								neighbour = stop_list[stop_count - 1]
+								neighbour_index = unique_stops_output.index(neighbour)
+								neighbours[neighbour_index] += 1
 						except:
 							pass
-				d_count += 1
+				# increment the counter
+				stop_count += 1
+	# return neighbours
 	return neighbours
 
-
-def neighbour_fraction(wd_runs, unique_values, value, side):
-	# data
-	neighbours = neighbour_count(wd_runs, unique_values, value, side)
-	n_sum = sum(neighbours)
-	neighbour_fraction = []
-	# 
+def neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, side):
+	# create the count of side-neighbours
+	side_neighbours = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
+	# determine the number of neighbours
+	total_neighbours = sum(side_neighbours)
+	# holding list
+	neighbours_list = []
+	# initialise a count and count_bound
 	count = 0
-	count_bound = len(neighbours)
-	# 
+	count_bound = len(side_neighbours)
+	# iterate over side_neighbours to populate neighbours
 	while count < count_bound:
-		neighbour_fraction.append(neighbours[count] / n_sum)
+		neighbours_list.append(side_neighbours[count] / total_neighbours)
 		count += 1
-	return neighbour_fraction
-
-
-def neighbourhood_data(file_name, weekday):
-	wd_runs = weekday_runs(file_name, weekday)
-	unique_values = find_unique_values(wd_runs)
-	return [wd_runs, unique_values]
-
-def neighbourhod_numbers(file_name, weekday, value, side):
-	# data
-	data = neighbourhood_data(file_name, weekday)
-	wd_runs = data[0]
-	unique_values = data[1]
 	# return
-	return [value, side, unique_values, neighbour_count(wd_runs, unique_values, value, side), neighbour_fraction(wd_runs, unique_values, value, side)]
+	return neighbours_list
+
+def neighbours_next_door(routes_weekday_output, unique_stops_output, resident_stop):
+	left_neighbours = neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, 'left')
+	right_neighbours = neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, 'right')
+	return [left_neighbours, right_neighbours]
+
 
 
 file_name = "00010001.csv"
-for item in neighbourhod_numbers(file_name, 0, '226', 'left'):
+resident_stop = '226'
+data = journeys(file_name)
+monday = journeys_weekday(data, 0)
+monday_routes = routes_weekday(data, 0)
+stops = unique_stops(monday_routes)
+both_neighbours = neighbours_next_door(monday_routes, stops, resident_stop)
+for item in both_neighbours:
 	print(item)
