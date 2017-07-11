@@ -87,6 +87,9 @@ def neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, si
 	side_neighbours = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
 	# determine the number of neighbours
 	total_neighbours = sum(side_neighbours)
+	# exit if the count is zero
+	if total_neighbours == 0:
+		return [0 for x in side_neighbours]
 	# holding list
 	neighbours_list = []
 	# initialise a count and count_bound
@@ -105,13 +108,43 @@ def neighbours_next_door(routes_weekday_output, unique_stops_output, resident_st
 	return [left_neighbours, right_neighbours]
 
 
+# file_name = "00010001.csv"
+# resident_stop = '226'
+# data = journeys(file_name)
+# monday = journeys_weekday(data, 0)
+# monday_routes = routes_weekday(data, 0)
+# stops = unique_stops(monday_routes)
+# both_neighbours = neighbours_next_door(monday_routes, stops, resident_stop)
+# for item in both_neighbours:
+# 	print(item)
+
+
+# generate all neighbours for a weekday route
+def all_weekday_neighbours(routes_weekday_output, unique_stops_output):
+	# holding list
+	all_neighbours = []
+	# iterate over each resident stop
+	for resident_stop in unique_stops_output:
+		# create the data
+		data = neighbours_next_door(routes_weekday_output, unique_stops_output, resident_stop)
+		# articulate the data
+		left_neighbours = data[0]
+		right_neighbours = data[1]
+		# determine the maximum values
+		left_max = max(left_neighbours)
+		right_max = max(right_neighbours)
+		# append to the neighbour list
+		all_neighbours.append([resident_stop, left_max, right_max, left_neighbours, right_neighbours])
+	# return
+	return all_neighbours
+
 
 file_name = "00010001.csv"
-resident_stop = '226'
-data = journeys(file_name)
-monday = journeys_weekday(data, 0)
-monday_routes = routes_weekday(data, 0)
-stops = unique_stops(monday_routes)
-both_neighbours = neighbours_next_door(monday_routes, stops, resident_stop)
-for item in both_neighbours:
+all_weekday_journeys = journeys(file_name)
+weekday = 0
+weekday_routes = routes_weekday(all_weekday_journeys, weekday)
+stops = unique_stops(weekday_routes)
+weekday_neighbours = all_weekday_neighbours(weekday_routes, stops)
+for item in weekday_neighbours:
 	print(item)
+	print("")
