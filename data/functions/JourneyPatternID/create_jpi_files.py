@@ -101,23 +101,18 @@ def populate_jpi_data():
 			try:
 				# line into a list
 				line_list = line.strip().split(",")
-				# check if at stop
-				if line_list[as_index] == "1":
-					# variable to open the apprpriate file
-					jpi = line_list[jpi_index]
-					# modify the timestampt so that in future it will not need to be divided by 10**6
-					line_list[timestamp_index] = str(int(int(line_list[timestamp_index]) / 10**6))
-					# define destination file
-					destination_file = jpi + ".csv"
-					# open the destination file
-					# note: would be quicker to keep all files open, but in some cases this might eat up too much memory
-					# note: as this is a one-off run, run-time minimisation is not a priority, but crashing a computer is a concern
-					with open(destination_file, "a") as destination:
-						# write to the file
-						destination.write(",".join(line_list) + "\n")
-				else:
-					# we only want to record when a bus is at stop
-					pass
+				# variable to open the apprpriate file
+				jpi = line_list[jpi_index]
+				# modify the timestampt so that in future it will not need to be divided by 10**6
+				line_list[timestamp_index] = str(int(int(line_list[timestamp_index]) / 10**6))
+				# define destination file
+				destination_file = jpi + ".csv"
+				# open the destination file
+				# note: would be quicker to keep all files open, but in some cases this might eat up too much memory
+				# note: as this is a one-off run, run-time minimisation is not a priority, but crashing a computer is a concern
+				with open(destination_file, "a") as destination:
+					# write to the file
+					destination.write(",".join(line_list) + "\n")
 			except:
 				# the line did not have the data
 				pass
