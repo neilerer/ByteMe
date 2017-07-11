@@ -1,6 +1,7 @@
 # imports
 import os
 import routes
+import merge_sort
 
 
 # fundamental data
@@ -92,6 +93,8 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	# calculate the percentages
 	for key in neighbours:
 		neighbours[key][1] = neighbours[key][0] / total
+	# sort neighbours
+	neighbours = merge_sort.merge_sort_dict(neighbours)
 	# return neighbours
 	return neighbours
 
