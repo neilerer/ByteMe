@@ -4,16 +4,18 @@ import routes
 import merge_sort
 
 
-# fundamental data
+# FUNDAMENTAL DATA
 """
 These functions get generate the stops on a JourneyPatternID for each day of the week
 """
 def remove_single_values(wd_dict):
 	"""
-	Purpose: used to remove key:value pairs in which the value list has only one element (not useful in imputing route)
-	Inputs:
+	Purpose
+	- used to remove key:value pairs in which the value list has only one element (not useful in imputing route)
+	- used withing journeys()
+	Inputs
 	- wd_dict: dictionary for a given weekday containing key:value of VJID_VID:[StopID list]
-	Outputs:
+	Outputs
 	- None
 	- this function modifes the dictionary in place
 	"""
@@ -29,17 +31,94 @@ def remove_single_values(wd_dict):
 		# delete that entry from the dictionary
 		del wd_dict[item]
 
-
-
 def journeys(file_name):
-	# list of dictionaries, one for each weekday, where key:value is uid:stops
-	return routes.weekday_stops(file_name)
+	"""
+	Purpose
+	- extracts all journeys on a JourneyPatternID
+	-- list of seven dictionaries, one for each day of the week
+	-- dictionary key:value of VJID_VID:[StopID list]
+	Input
+	- name of the file containing the information
+	- stored in the data/JourneyPatternID directory
+	Output
+	- a list of seven dictionaries, one for each day of the week
+	- dictionary key:value of VJID_VID:[StopID list]
+	"""
+	# change directories
+	os.chdir("../../")
+	os.chdir("data/JourneyPatternID/")
+	# open the source
+	with open(file_name, "r") as source:
+		# header
+		header = source.readline().strip().split(",")
+		# index
+		index_wd = header.index("WeekDay")
+		index_vjid = header.index("VehicleJourneyID")
+		index_vid = header.index("VehicleID")
+		index_sid = header.index("StopID")
+		# weekday lists
+		weekday_dicts = [{} for i in range(0, 7, 1)]
+		# iterate over the source document
+		for line in source:
+			# turn line into list
+			line_list = line.strip().split(",")
+			try:
+				# values
+				wd = int(line_list[index_wd])
+				vjid = line_list[index_vjid]
+				vid = line_list[index_vid]
+				uid = vjid + "_" + vid
+				# data objects
+				uid_dict = weekday_dicts[wd]
+				stop_id = line_list[index_sid]
+				# if the uid is in the dictionary
+				if uid in uid_dict:
+					# specify the list that is the value to the uid's key
+					stop_list = uid_dict[uid]
+					# if the stop_id is different from the last element in the stop_list
+					if stop_list[-1] != stop_id:
+						# add it to the array
+						stop_list.append(stop_id)
+				else:
+					# create the dictionary
+					uid_dict[uid] = [stop_id]
+			except:
+				pass
+		# return to the starting directory
+		os.chdir("../../")
+		os.chdir("functions/JourneyPatternID")
+		# remove elements with just one entry
+		for i in range(0, 7, 1):
+			wd_dict = weekday_dicts[i]
+			remove_single_values(wd_dict)
+		# return
+		return weekday_dicts
 
 def journeys_weekday(journeys_output, weekday):
-	# dictionary: key: value is uid:stops
+	"""
+	Purpose
+	- returns a dictionary, representing all journeys on a JourneyPatternID for a given weekday
+	- taken from the output of journeys()
+	Input
+	- journeys_output: the out put of journeys()
+	- weekday: an integer in [0:6] representing [M, T, W, R, F, S U]
+	Output
+	-- dictionary key:value of VJID_VID:[StopID list]
+	-- all journeys on a JourneyPatternID for a given weekday
+	"""
 	return journeys_output[weekday]
 
 def routes_weekday(journeys_output, weekday):
+	"""
+	Purpose
+	- a list of lists, each of which is a journey for a given weekday on a JourneyPatternID
+	Input
+	- journeys_output: the out put of journeys()
+	- weekday: an integer in [0:6] representing [M, T, W, R, F, S U]
+	Output
+	- a list of lists
+	- each list is a unique journey on a JourneyPatternID for a given weekday
+	"""
 	weekday_journey = journeys_weekday(journeys_output, weekday)
 	# list of lists where each list is the stops from a related journey
 	return [weekday_journey[key] for key in weekday_journey]
