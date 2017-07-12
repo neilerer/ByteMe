@@ -90,6 +90,9 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 							pass
 				# increment the counter
 				stop_count += 1
+	# never has a neighbour check
+	if total == 0:
+		return [None]
 	# calculate the percentages
 	for key in neighbours:
 		neighbours[key][1] = neighbours[key][0] / total
@@ -102,6 +105,9 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 # fundamental unit of route finding algorithm
 def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side):
 	rank_array = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
+	# never has a neighbour array check
+	if rank_array == [None]:
+		return rank_array
 	rank_info = merge_sort.get_first_entry_of_dict(rank_array)[1]
 	n = rank_info[0]
 	n_rank = rank_info[1]
@@ -117,6 +123,26 @@ def stop_id_neighbour_information_summary(stop_id_info):
 		count += 1
 
 
+# aggregating all stop_id_neighbour_information outputs into an array sorted by neighbour rank
+def stop_id_neighbour_information_array(routes_weekday_output, unique_stops_output):
+	# array to hold stop_id_neighbour_information output
+	array_holder = []
+	# iterate to generate all stop_id_neighbour_information output result
+	for resident_stop in unique_stops_output:
+		for side in ["left", "right"]:
+			stop_id_info = stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side)
+			# never has a neighbour check
+			if stop_id_info == [None]:
+				pass
+			else:
+				array_holder.append(stop_id_info)
+	# sort array_holder
+	array_holder = merge_sort.merge_sort_array_stop_id_neighbour_information(array_holder)
+	# return
+	return array_holder
+
+
+
 file_name = "00010001.csv"
 resident_stop = '226'
 side = 'left'
@@ -125,8 +151,10 @@ monday_uid_routes_dict = journeys_weekday(journeys_for_each_weekday, 0)
 monday_routes = routes_weekday(journeys_for_each_weekday, 0)
 stops = unique_stops(monday_routes)
 # resident_stop_neighbours = neighbours(monday_routes, stops, resident_stop, side)
-stop_id_info = stop_id_neighbour_information(monday_routes, stops, resident_stop, side)
-print("")
-print(stop_id_info)
-print("")
-stop_id_neighbour_information_summary(stop_id_info)
+# stop_id_info = stop_id_neighbour_information(monday_routes, stops, resident_stop, side)
+# print("")
+# print(stop_id_info)
+# print("")
+# stop_id_neighbour_information_summary(stop_id_info)
+all_stop_id_neighbour_information_array = stop_id_neighbour_information_array(monday_routes, stops)
+print(all_stop_id_neighbour_information_array)

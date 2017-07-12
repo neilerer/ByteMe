@@ -101,10 +101,8 @@ def merge_array_stop_id_neighbour_information(a1, a2):
 		else:
 			a.append(a2.pop(0))
 	# add remaining elements
-	while len(a1) > 0:
-		a += a1
-	while len(a2) > 0:
-		a += a2
+	a += a1
+	a += a2
 	# return
 	return a
 #
