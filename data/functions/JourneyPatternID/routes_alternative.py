@@ -186,6 +186,8 @@ def change_neighbour(stop_id_neighbour_information_output):
 	return stop_id_neighbour_information_output
 
 
+# HERE ADD THE OUTPUT MECHANISMS
+
 # return [StopID, n_side, match_status, n, n_rank, rank_array, key]
 
 
