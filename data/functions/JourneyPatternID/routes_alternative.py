@@ -15,6 +15,7 @@ def remove_single_values(wd_dict):
 	- used withing journeys()
 	Inputs
 	- wd_dict: dictionary for a given weekday containing key:value of VJID_VID:[StopID list]
+	- generated within journeys()
 	Outputs
 	- None
 	- this function modifes the dictionary in place
@@ -233,8 +234,15 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	return neighbours
 
 
-# fundamental unit of route finding algorithm
+# FUNDAMENTAL UNIT OF THE ROUTE FINDING ALGORITH
 def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side):
+	"""
+	Purpose
+	- generate a seven element list that forms the unit datapoint of the route finding algorithm
+	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	Input
+	"""
+	# [StopID, n_side, match_status, n, n_rank, rank_array, key]
 	rank_array = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
 	# never has a neighbour array check
 	if rank_array == [None]:
