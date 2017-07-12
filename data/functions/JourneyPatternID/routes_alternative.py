@@ -99,6 +99,7 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	return neighbours
 
 
+# fundamental unit of route finding algorithm
 def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side):
 	rank_array = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
 	rank_info = merge_sort.get_first_entry_of_dict(rank_array)[1]
@@ -107,31 +108,13 @@ def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, re
 	# return [StopID, n_side, match_status, n, n_rank, rank_array, key]
 	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
-
-# def neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, side):
-# 	# create the count of side-neighbours
-# 	side_neighbours = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
-# 	# determine the number of neighbours
-# 	total_neighbours = sum(side_neighbours)
-# 	# exit if the count is zero
-# 	if total_neighbours == 0:
-# 		return [0 for x in side_neighbours]
-# 	# holding list
-# 	neighbours_list = []
-# 	# initialise a count and count_bound
-# 	count = 0
-# 	count_bound = len(side_neighbours)
-# 	# iterate over side_neighbours to populate neighbours
-# 	while count < count_bound:
-# 		neighbours_list.append(side_neighbours[count] / total_neighbours)
-# 		count += 1
-# 	# return
-# 	return neighbours_list
-
-# def neighbours_next_door(routes_weekday_output, unique_stops_output, resident_stop):
-# 	left_neighbours = neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, 'left')
-# 	right_neighbours = neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, 'right')
-# 	return [left_neighbours, right_neighbours]
+def stop_id_neighbour_information_summary(stop_id_info):
+	labels = ["StopID", "Neighbour Side", "Match Status", "Neighbour", "Neighbour Rank", "Rank Array", "Solution Key"]
+	count = 0
+	print("")
+	for item in stop_id_info:
+		print(labels[count] + ":", item)
+		count += 1
 
 
 file_name = "00010001.csv"
@@ -143,65 +126,4 @@ monday_routes = routes_weekday(journeys_for_each_weekday, 0)
 stops = unique_stops(monday_routes)
 # resident_stop_neighbours = neighbours(monday_routes, stops, resident_stop, side)
 stop_id_info = stop_id_neighbour_information(monday_routes, stops, resident_stop, side)
-
-print(stop_id_info)
-
-# both_neighbours = neighbours_next_door(monday_routes, stops, resident_stop)
-# for item in both_neighbours:
-# 	print(item)
-
-
-# # generate all neighbours for a weekday route
-# def all_weekday_neighbours(routes_weekday_output, unique_stops_output):
-# 	# holding list
-# 	all_neighbours = []
-# 	# iterate over each resident stop
-# 	for resident_stop in unique_stops_output:
-# 		# create the data
-# 		data = neighbours_next_door(routes_weekday_output, unique_stops_output, resident_stop)
-# 		# articulate the data
-# 		left_neighbours = data[0]
-# 		right_neighbours = data[1]
-# 		# determine the maximum values
-# 		left_max = max(left_neighbours)
-# 		right_max = max(right_neighbours)
-# 		# append to the neighbour list
-# 		all_neighbours.append([resident_stop, left_max, right_max, left_neighbours, right_neighbours])
-# 	# return
-# 	return all_neighbours
-
-# def find_max_neighbours(all_weekday_neighbours_output):
-# 	# 
-# 	left_maximum = 0
-# 	right_maximum = 0
-# 	left_location = 0
-# 	right_location = 0
-# 	count = 0
-# 	for neighbour_list in all_weekday_neighbours_output:
-# 		current_left = neighbour_list[1]
-# 		current_right = neighbour_list[2]
-# 		if current_left > left_maximum:
-# 			left_maximum = current_left
-# 			left_location = count
-# 		if current_right > right_maximum:
-# 			right_maximum = current_right
-# 			right_location = count
-# 		count += 1
-# 	if left_maximum > right_maximum:
-# 		return all_weekday_neighbours_output[left_location]
-# 	else:
-# 		return all_weekday_neighbours_output[right_location]
-
-
-
-# file_name = "00010001.csv"
-# all_weekday_journeys = journeys(file_name)
-# weekday = 0
-# weekday_routes = routes_weekday(all_weekday_journeys, weekday)
-# stops = unique_stops(weekday_routes)
-# weekday_neighbours = all_weekday_neighbours(weekday_routes, stops)
-# for item in weekday_neighbours:
-# 	print(item)
-# 	print("")
-# maximum = find_max_neighbours(weekday_neighbours)
-# print(maximum)
+stop_id_neighbour_information_summary(stop_id_info)
