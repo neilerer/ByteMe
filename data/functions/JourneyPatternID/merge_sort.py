@@ -4,7 +4,13 @@
 Implementing a merge sort algorithm for neighbours in routes_alternative
 """
 
+"""
+The next two functions allow for merge sort to be applied to the neighbours dictionary in route_alternatives
+"""
 def merge_dict(d1, d2):
+	"""
+	This functions merges two dictionaries (each of which are assumed to be sorted as desired)
+	"""
 
 	# create the return object 
 	d = {}
@@ -37,6 +43,9 @@ def merge_dict(d1, d2):
 	return d
 
 def merge_sort_dict(d):
+	"""
+	This is the recursive implementation of merge sort for a dictionary
+	"""
 
 	# objects
 	d1 = {}
@@ -61,6 +70,10 @@ def merge_sort_dict(d):
 	
 	return d
 
+
+"""
+The next two functions allow us to remove or get the first item in a dictionary
+"""
 
 def remove_first_entry_of_dict(d):
 	return d.pop(next(iter(d)))
