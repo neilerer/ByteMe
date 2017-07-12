@@ -234,15 +234,44 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	return neighbours
 
 
-# FUNDAMENTAL UNIT OF THE ROUTE FINDING ALGORITH
+# FUNDAMENTAL UNIT OF THE ROUTE FINDING ALGORITHM
+"""
+These functions transform the preliminary unit-data into the unit datapoints for the route finding algorithm
+"""
 def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side):
 	"""
 	Purpose
 	- generate a seven element list that forms the unit datapoint of the route finding algorithm
-	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
 	Input
+	- routes_weekday_output: 
+	-- a list of lists
+	-- each list is a unique journey on a JourneyPatternID for a given weekday
+	- unique_stops_output
+	-- an array containing the unique values of StopIDs for a JourneyPatternID
+	- resident_stop
+	-- StopID of interest
+	- side
+	-- which side-neighbour, "left" or "right", we care about
+	Output
+	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	-- StopID
+	-- Neighbour_Side
+	--- "left" or "right", indicating which neighbour we care about
+	-- Match_Status
+	--- True or False, indicating whether or not Neighbour is indicative or assigned
+	-- Neighbour
+	--- the StopID of the with the highest Neighbour_Rank
+	-- Neighbour_Rank
+	--- x / y
+	---- x is how often Neighbour was the side-neighbour to StopID
+	---- y is the total number of time StopID had a side-neighbour
+	-- Rank_Array
+	--- a sorted dictionary of Potential_Neighbour:[x, y] for each Potential_Neighbour of StopID
+	--- Neighbour_Rank is the highest value of y in Rank_Array and Neighbour is the assocaited Potentail Neighbour
+	-- Route_Key
+	--- None or x in [0,n] for n some integer
+	--- indicates which list in Route StopID is located
 	"""
-	# [StopID, n_side, match_status, n, n_rank, rank_array, key]
 	rank_array = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
 	# never has a neighbour array check
 	if rank_array == [None]:
@@ -254,6 +283,15 @@ def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, re
 	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
 def stop_id_neighbour_information_summary(stop_id_info):
+	"""
+	Purpose
+	- to present the result of stop_id_neighbour_information() in human readable format
+	Input
+	- the output of stop_id_neighbour_information()
+	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	Output
+	- a vertically oriented represenation of stop_id_neighbour_information() output with labels
+	"""
 	labels = ["StopID", "Neighbour Side", "Match Status", "Neighbour", "Neighbour Rank", "Neighbour Rank Array", "Solution Key"]
 	count = 0
 	print("")
