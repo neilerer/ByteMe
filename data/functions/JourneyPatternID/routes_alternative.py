@@ -94,7 +94,7 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	for key in neighbours:
 		neighbours[key][1] = neighbours[key][0] / total
 	# sort neighbours
-	neighbours = merge_sort.merge_sort_dict(neighbours)
+	neighbours = merge_sort.merge_sort_dict_neighbours(neighbours)
 	# return neighbours
 	return neighbours
 
@@ -109,7 +109,7 @@ def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, re
 	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
 def stop_id_neighbour_information_summary(stop_id_info):
-	labels = ["StopID", "Neighbour Side", "Match Status", "Neighbour", "Neighbour Rank", "Rank Array", "Solution Key"]
+	labels = ["StopID", "Neighbour Side", "Match Status", "Neighbour", "Neighbour Rank", "Neighbour Rank Array", "Solution Key"]
 	count = 0
 	print("")
 	for item in stop_id_info:
@@ -126,4 +126,7 @@ monday_routes = routes_weekday(journeys_for_each_weekday, 0)
 stops = unique_stops(monday_routes)
 # resident_stop_neighbours = neighbours(monday_routes, stops, resident_stop, side)
 stop_id_info = stop_id_neighbour_information(monday_routes, stops, resident_stop, side)
+print("")
+print(stop_id_info)
+print("")
 stop_id_neighbour_information_summary(stop_id_info)
