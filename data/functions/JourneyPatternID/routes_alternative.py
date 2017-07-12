@@ -95,7 +95,7 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 		return [None]
 	# calculate the percentages
 	for key in neighbours:
-		neighbours[key][1] = neighbours[key][0] / total
+		neighbours[key][1] = (neighbours[key][0] / total) * neighbours[key][0]
 	# sort neighbours
 	neighbours = merge_sort.merge_sort_dict_neighbours(neighbours)
 	# return neighbours
@@ -108,9 +108,9 @@ def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, re
 	# never has a neighbour array check
 	if rank_array == [None]:
 		return rank_array
-	rank_info = merge_sort.get_first_entry_of_dict(rank_array)[1]
+	rank_info = merge_sort.get_first_entry_of_dict(rank_array)
 	n = rank_info[0]
-	n_rank = rank_info[1]
+	n_rank = rank_info[1][1]
 	# return [StopID, n_side, match_status, n, n_rank, rank_array, key]
 	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
@@ -141,6 +141,10 @@ def stop_id_neighbour_information_array(routes_weekday_output, unique_stops_outp
 	# return
 	return array_holder
 
+def stop_id_neighbour_information_array_summary(array_holder):
+	for item in array_holder:
+		stop_id_neighbour_information_summary(item)
+
 
 
 file_name = "00010001.csv"
@@ -157,4 +161,4 @@ stops = unique_stops(monday_routes)
 # print("")
 # stop_id_neighbour_information_summary(stop_id_info)
 all_stop_id_neighbour_information_array = stop_id_neighbour_information_array(monday_routes, stops)
-print(all_stop_id_neighbour_information_array)
+stop_id_neighbour_information_array_summary(all_stop_id_neighbour_information_array)
