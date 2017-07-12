@@ -99,10 +99,13 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 	return neighbours
 
 
-def stop_id_neighbour_information_basic(routes_weekday_output, unique_stops_output, resident_stop, side):
+def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, resident_stop, side):
 	rank_array = neighbours(routes_weekday_output, unique_stops_output, resident_stop, side)
-	rank = merge_sort.get_first_entry_of_dict(rank_array)[1][1]
-	return [resident_stop, side, rank, rank_array]
+	rank_info = merge_sort.get_first_entry_of_dict(rank_array)[1]
+	n = rank_info[0]
+	n_rank = rank_info[1]
+	# return [StopID, n_side, match_status, n, n_rank, rank_array, key]
+	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
 
 # def neighbours_pct(routes_weekday_output, unique_stops_output, resident_stop, side):
@@ -139,9 +142,9 @@ monday_uid_routes_dict = journeys_weekday(journeys_for_each_weekday, 0)
 monday_routes = routes_weekday(journeys_for_each_weekday, 0)
 stops = unique_stops(monday_routes)
 # resident_stop_neighbours = neighbours(monday_routes, stops, resident_stop, side)
-stop_id_information_basic = stop_id_neighbour_information_basic(monday_routes, stops, resident_stop, side)
+stop_id_info = stop_id_neighbour_information(monday_routes, stops, resident_stop, side)
 
-print(stop_id_information_basic)
+print(stop_id_info)
 
 # both_neighbours = neighbours_next_door(monday_routes, stops, resident_stop)
 # for item in both_neighbours:
