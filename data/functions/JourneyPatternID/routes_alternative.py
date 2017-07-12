@@ -146,6 +146,34 @@ def stop_id_neighbour_information_array_summary(array_holder):
 		stop_id_neighbour_information_summary(item)
 
 
+# matching mechanics
+def match_index(stop_id_neighbour_information_output, array_holder):
+	# variables to find the match
+	match_stop_id = stop_id_neighbour_information_output[3]
+	match_side = None
+	if stop_id_neighbour_information_output[1] == "left":
+		match_side = "right"
+	else:
+		"left"
+	# identify match index
+	index = 0
+	for item in array_holder:
+		# define matching variables
+		item_stop_id = item[0]
+		item_side = item[1]
+		# determine if there is a match
+		if item_stop_id == match_stop_id and item_side == match_side:
+			# give the index of the match
+			return index
+		index += 1
+	# no match (should never happen unless there was an code error elsewhere)
+	return None
+#
+
+
+
+# return [StopID, n_side, match_status, n, n_rank, rank_array, key]
+
 
 file_name = "00010001.csv"
 resident_stop = '226'
@@ -161,4 +189,8 @@ stops = unique_stops(monday_routes)
 # print("")
 # stop_id_neighbour_information_summary(stop_id_info)
 all_stop_id_neighbour_information_array = stop_id_neighbour_information_array(monday_routes, stops)
-stop_id_neighbour_information_array_summary(all_stop_id_neighbour_information_array)
+# stop_id_neighbour_information_array_summary(all_stop_id_neighbour_information_array)
+
+test_stop_id_info = ['373', 'left', False, '372', 223.67871485943775, {'372': [236, 223.67871485943775], '390': [13, 0.678714859437751], 'right': [0, 0.0], 'left': [0, 0.0], '225': [0, 0.0], '385': [0, 0.0], '381': [0, 0.0], '377': [0, 0.0], '380': [0, 0.0], '378': [0, 0.0], '376': [0, 0.0], '2804': [0, 0.0], '375': [0, 0.0], '374': [0, 0.0], '373': [0, 0.0], '357': [0, 0.0], '356': [0, 0.0], '355': [0, 0.0], '354': [0, 0.0], '353': [0, 0.0], '352': [0, 0.0], '351': [0, 0.0], '350': [0, 0.0], '340': [0, 0.0], '271': [0, 0.0], '265': [0, 0.0], '52': [0, 0.0], '51': [0, 0.0], '50': [0, 0.0], '49': [0, 0.0], '48': [0, 0.0], '47': [0, 0.0], '46': [0, 0.0], '45': [0, 0.0], '44': [0, 0.0], '119': [0, 0.0], '4432': [0, 0.0], '214': [0, 0.0], '213': [0, 0.0], '1642': [0, 0.0], '1641': [0, 0.0], '231': [0, 0.0], '230': [0, 0.0], '227': [0, 0.0], '229': [0, 0.0], '228': [0, 0.0], '226': [0, 0.0]}, None]
+test_index = match_index(test_stop_id_info, all_stop_id_neighbour_information_array)
+print(all_stop_id_neighbour_information_array[test_index])
