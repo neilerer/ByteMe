@@ -4,7 +4,7 @@ import routes
 import merge_sort
 
 
-# FUNDAMENTAL DATA
+# SOURCE DATA
 """
 These functions get generate the stops on a JourneyPatternID for each day of the week
 """
@@ -124,8 +124,21 @@ def routes_weekday(journeys_output, weekday):
 	return [weekday_journey[key] for key in weekday_journey]
 
 
-# counting utilities
+# PRELIMINARY COLLECTION OF UNIT-LEVEL DATA
+"""
+These functions draw on the Source Data and create the preliminary unit-level data
+"""
 def unique_stops(routes_weekday_output):
+	"""
+	Purpose
+	- to generate an array of all unique values of stop
+	Input
+	- routes_weekday_output: 
+	-- a list of lists
+	-- each list is a unique journey on a JourneyPatternID for a given weekday
+	Output
+	- an array containing the unique values of StopIDs for a JourneyPatternID
+	"""
 	# list of stops
 	stops = []
 	# iterate over the lists
@@ -137,11 +150,30 @@ def unique_stops(routes_weekday_output):
 				# add if not already there
 				stops.append(stop)
 	# add left and right
-	stops = stops + ["left", "right"]
+	stops = stops + ["start", "end"]
 	# return stops
 	return stops
 
 def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
+	"""
+	Purpose
+	- to generate a a dictionary recording how often each StopID is the side-neighbour of a given StopID
+	Input
+	- routes_weekday_output: 
+	-- a list of lists
+	-- each list is a unique journey on a JourneyPatternID for a given weekday
+	- unique_stops_output
+	-- an array containing the unique values of StopIDs for a JourneyPatternID
+	- resident_stop
+	-- StopID of interest
+	- side
+	-- which side-neighbour, "left" or "right", we care about
+	Output
+	- a dictionary
+	- {StopID:[x, y] for StopID in unique_stops_output}
+	-- x is how often StopID was the side-neighbour
+	-- y is x / sum of all x's, which is the weighted occurance as neighbour
+	"""
 	# count of how often a unique stop value is a side-neighbour
 	neighbours = {uso:[0, 0.0] for uso in unique_stops_output}
 	# total to keep track of total occurances of neighbours
@@ -164,13 +196,10 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 							# check if the observation is the right-most element of the list
 							if stop_count == stop_bound - 1:
 								# increase the right counter in neighbours
-								# neighbours[-1] += 1
-								neighbours['right'][0] += 1
+								neighbours['end'][0] += 1
 							else:
 								# find and increment the value in neighbours
 								neighbour = stop_list[stop_count + 1]
-								# neighbour_index = unique_stops_output.index(neighbour)
-								# neighbours[neighbour_index] += 1
 								neighbours[neighbour][0] += 1
 							# increment total
 							total += 1
@@ -181,13 +210,10 @@ def neighbours(routes_weekday_output, unique_stops_output, resident_stop, side):
 							# check if the observation is the left-most element of the list
 							if stop_count == 0:
 								# increment the left counter in neighbours
-								# neighbours[-2] += 1
-								neighbours['left'][0] += 1
+								neighbours['start'][0] += 1
 							else:
 								# find and increment the value in neighbours
 								neighbour = stop_list[stop_count - 1]
-								# neighbour_index = unique_stops_output.index(neighbour)
-								# neighbours[neighbour_index] += 1
 								neighbours[neighbour][0] += 1
 							# increment total
 							total += 1
