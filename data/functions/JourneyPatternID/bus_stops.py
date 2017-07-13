@@ -198,6 +198,35 @@ def remove_element_from_list(element, array):
 		array.pop(i)
 	return array
 
+def not_in_all_weekdays(list_of_lists):
+	result = []
+	unique_values = unique_stops(list_of_lists)
+	for uv in unique_values:
+		for array in list_of_lists:
+			if uv not in array:
+				if uv not in result:
+					result.append(uv)
+				continue
+	return result
+
+def remove_non_constants(list_of_lists):
+	not_ins = not_in_all_weekdays(list_of_lists)
+	for array in list_of_lists[0:5:1]:
+		indices = []
+		for n in not_ins:
+			try:
+				indices.append(array.index(n))
+			except:
+				pass
+		try:
+			indices.reverse()
+			for i in indices:
+				array.pop(i)
+		except:
+			pass
+	return list_of_lists
+
+
 def bus_stops(all_stops, specific_weekday_routes):
 	# data
 	unique_stops = all_stops
@@ -231,7 +260,8 @@ def bus_stops(all_stops, specific_weekday_routes):
 	# return
 	return bus_stop_list
 
-def bus_stops_for_jpi(file_name):
+
+def bus_stops_for_jpi_all(file_name):
 	bus_stops_by_weekday = []
 	all_weekday_routes = routes(file_name)
 	for i in range(0, 7, 1):
@@ -240,17 +270,36 @@ def bus_stops_for_jpi(file_name):
 		bus_stops_by_weekday.append(bus_stops(all_stops, specific_weekday_routes))
 	return bus_stops_by_weekday
 
-def bus_stop_for_jpi_display(file_name):
-	bus_stops = bus_stops_for_jpi(file_name)
+def bus_stops_for_jpi_weekdays_constant(bus_stops_by_weekday):
+	return remove_non_constants(bus_stops_by_weekday)
+
+def bus_stop_for_jpi_all_display(file_name):
+	bus_stops = bus_stops_for_jpi_all(file_name)
 	day_dict = {0:"Monday", 1:"Tuesday", 2:"Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
 	name = file_name.split(".")[0]
 	print("")
 	print("")
-	print("Bus Route for JourneyPatternID", name)
+	print("Bus Route (all recorded stops) for JourneyPatternID", name)
 	print("")
 	for i in range(0, 7, 1):
 		print(day_dict[i])
 		print(bus_stops[i])
 		print("")
 
-bus_stop_for_jpi_display("00010001.csv")
+def bus_stop_for_jpi_weekdays_constant_display(file_name):
+	bus_stops = bus_stops_for_jpi_all(file_name)
+	bus_stops = remove_non_constants(bus_stops)
+	day_dict = {0:"Monday", 1:"Tuesday", 2:"Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
+	name = file_name.split(".")[0]
+	print("")
+	print("")
+	print("Bus Route (only constant weekday stops) for JourneyPatternID", name)
+	print("")
+	for i in range(0, 7, 1):
+		print(day_dict[i])
+		print(bus_stops[i])
+		print("")
+
+
+# bus_stop_for_jpi_all_display("00010001.csv")
+# bus_stop_for_jpi_weekdays_constant_display("00010001.csv")
