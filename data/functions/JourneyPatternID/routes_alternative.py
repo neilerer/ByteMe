@@ -431,18 +431,75 @@ def change_neighbour(stop_id_neighbour_information_output):
 
 
 # ROUTE
+
+def 
+
 # source information
 file_name = "00010001.csv"
 route_journeys = journeys(file_name)
-# return object
-routes = {i:[] for i in range(0,7,1)}
-for i in range(0, 7, 1):
-	# data
-	weekday_routes = routes_weekday(route_journeys, i)
-	weekday_stops = unique_stops(weekday_routes)
-	array_holder = stop_id_neighbour_information_array(weekday_routes, weekday_stops)
-	weekday_route = []
-	# matching and modification
+weekday_routes = routes_weekday(route_journeys, 0)
+weekday_stops = unique_stops(weekday_routes)
+array_holder = stop_id_neighbour_information_array(weekday_routes, weekday_stops)
+weekday_route = []
+count = 0
+count_bound = len(array_holder)
+output = {"start":[], "end":[]}
+output_index = 0
+# matching and modification
+while count < count_bound:
+	# identify the primary object
+	stop_id_info = array_holder[count]
+	# check if already matched
+	if check_match_status(stop_id_info):
+		# increment the count
+		count += 1
+		# continue the while loop
+		continue
+	else:
+		# find the neighbour
+		neighbour_index = match_index(stop_id_info, array_holder, "neighbour")
+		# check if edge case
+		if neighbour_index is in ["start", "end"]:
+			output[neighbour_index].append()
+
+			
+
+			if neighbour_index == "start":
+				start_holder.append(neighbour_index)
+			else:
+				end_holder.append(neighbour_index)
+			# increment the count
+			count += 1
+			# continue the while loop
+			continue
+		else:
+			# get the neighbours information
+			neighour_info = array_holder[neighbour_index]
+			# check if paired with a match
+			if check_match_status(neighour_info):
+				# identify where in the array_holder this info resides
+				stop_id_info_index = array_holder.index(stop_id_info)
+				# modify stop_id_info to get the appropriate neighbour
+				stop_id_info = change_neighbour(stop_id_info)
+				# update the stop_id_info entry in array_holder
+				array_holder[stop_id_info_index] = stop_id_info
+				# resort array holder
+				array_holder = merge_sort.merge_sort_array_stop_id_neighbour_information(array_holder)
+				# start the while loop from the beginning
+				count = 0
+				continue
+			else:
+				# [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+				# stop_id_info
+				stop_id_info[2] = True
+				stop_id_info[6] = output_count
+				output_count += 1
+				output[stop_id_info[6]] = 
+
+
+
+
+
 	
 
 
