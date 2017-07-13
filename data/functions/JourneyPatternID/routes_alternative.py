@@ -348,7 +348,7 @@ def stop_id_neighbour_information_array_summary(array_holder):
 		stop_id_neighbour_information_summary(item)
 
 
-# MATCHING MECHANICS
+# MATCHING AND MODIFICAIONS
 """
 These functions match and modify the output of stop_id_neighbour_information() in the process of creating the Route
 """
@@ -428,6 +428,22 @@ def change_neighbour(stop_id_neighbour_information_output):
 	stop_id_neighbour_information_output[4] = new_neighbour_details[1][1]
 	# return
 	return stop_id_neighbour_information_output
+
+
+# ROUTE
+# source information
+file_name = "00010001.csv"
+route_journeys = journeys(file_name)
+# return object
+routes = {i:[] for i in range(0,7,1)}
+for i in range(0, 7, 1):
+	# data
+	weekday_routes = routes_weekday(route_journeys, i)
+	weekday_stops = unique_stops(weekday_routes)
+	array_holder = stop_id_neighbour_information_array(weekday_routes, weekday_stops)
+	weekday_route = []
+	# matching and modification
+	
 
 
 
