@@ -142,6 +142,18 @@ def unique_stops(specific_weekday_routes):
 # FIRST STOP BASED METHOD OF DETERMINING ROUTE ORDER
 # of the times it occurs, how often is it first
 def pct_first(stop_id, specific_weekday_routes, position):
+	"""
+	Purpose
+	- to determine the weighted occurances of a stop_id on a jpi for a given weekday
+	Inputs
+	- stop_id
+	- specific_weekday_routes
+	-- output of routes_weekday_list()
+	- position
+	-- position we care about
+	Outputs
+	- a floating number greater than or equal to 0
+	"""
 	# count the number of times the stop_id occurs
 	occurances = 0
 	# count the number of times the stop_id occurs in position
