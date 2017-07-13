@@ -348,9 +348,28 @@ def stop_id_neighbour_information_array_summary(array_holder):
 		stop_id_neighbour_information_summary(item)
 
 
-# matching mechanics
+# MATCHING MECHANICS
+"""
+These functions match and modify the output of stop_id_neighbour_information() in the process of creating the Route
+"""
 def match_index(stop_id_neighbour_information_output, array_holder, match_type):
-	# [StopID, n_side, match_status, n, n_rank, rank_array, key]
+	"""
+	Purpose
+	- to find the matching element of stop_id_neighbour_information_array()
+	Input
+	- stop_id_neighbour_information_output
+	-- the element we hope to match
+	-- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	- array_holder
+	-- output of stop_id_neighbour_information_array()
+	- match_type
+	-- what we hope to match with
+	--- neighbour: to find Neighbour for the StopID and given Neighbour_Side
+	--- other_side: to find the informaiton for the other side of the StopID e.g. left instead of right
+	Output
+	- if found in the array_holder, the index of the matching set of information
+	- if not found in the array holder, and indication of if the desired set of information means the current StopID is either the start or the end of the Route
+	"""
 	# StopID
 	match_stop_id_dict = {"neighbour":3, "other_side":0}
 	match_stop_id_index = match_stop_id_dict[match_type]
@@ -373,11 +392,31 @@ def match_index(stop_id_neighbour_information_output, array_holder, match_type):
 	# this means it is the beginning (if side was left) or end (if side was right)
 	end_type_dict = {"left":"start", "right":"end"}
 	return end_type_dict[match_side]
-#
-def neighbour_match_status(n):
+
+def check_match_status(stop_id_neighbour_information_output):
+	"""
+	Purpose
+	- determine if a given output for stop_id_neighbour_information() is already matched
+	Input
+	- stop_id_neighbour_information
+	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	Output
+	- True or False, depending on the value of Match_Status
+	"""
 	return n[2]
-# 
+
 def change_neighbour(stop_id_neighbour_information_output):
+	"""
+	Purpose
+	- change the Neighbour of the StopID (would do if the information for Neighbour indicates it's already matched)
+	Input
+	- stop_id_neighbour_information
+	- [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
+	Output
+	- an updated stop_id_neighbour_information
+	- Rank_Array has removed the original Neighbour entry
+	- Neighbour and Neighbour_Rank and the now-highest Neighbour_Rank values
+	"""
 	# rank array
 	rank_array = stop_id_neighbour_information_output[5]
 	# remove the already matched neighbour from rank_array
@@ -389,6 +428,8 @@ def change_neighbour(stop_id_neighbour_information_output):
 	stop_id_neighbour_information_output[4] = new_neighbour_details[1][1]
 	# return
 	return stop_id_neighbour_information_output
+
+
 
 
 file_name = "00010001.csv"
