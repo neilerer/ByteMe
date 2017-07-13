@@ -38,20 +38,4 @@ def jpi_preview(file_name):
 	jpid_to_jpif()
 
 
-os.chdir("../../")
-os.chdir("data/combined")
-direction_list = []
-with open("combined.csv", "r") as source:
-	index = source.readline().strip().split(",").index("Direction")
-	for line in source:
-		try:
-			direction = source.readline().strip().split(",")[index]
-			if direction in direction_list:
-				pass
-			else:
-				direction_list.append(direction)
-		except:
-			pass
-os.chdir("../../")
-os.chdir("functions/JourneyPatternID")
-print(direction_list)
+jpi_preview("00010001.csv")
