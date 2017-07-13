@@ -1,7 +1,6 @@
 # imports
 import os
-import routes
-import merge_sort
+import bus_stops_merge_sort as merge_sort
 
 
 # SOURCE DATA
