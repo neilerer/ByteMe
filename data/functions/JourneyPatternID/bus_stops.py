@@ -142,19 +142,29 @@ def unique_stops(specific_weekday_routes):
 # FIRST STOP BASED METHOD OF DETERMINING ROUTE ORDER
 # of the times it occurs, how often is it first
 def pct_first(stop_id, specific_weekday_routes, position):
+	# count the number of times the stop_id occurs
 	occurances = 0
-	first = 0
+	# count the number of times the stop_id occurs in position
+	pos = 0
+	# iterate over the routes
 	for route in specific_weekday_routes:
 		try:
+			# find the index; stop_id will occur only once in each route
 			index = route.index(stop_id)
+			# increment occurances
 			occurances += 1
+			# if its in the position
 			if index == position:
-				first += 1
+				# increment pos
+				pos += 1
 		except:
+			# if stop_id isn't in the route
 			pass
 	try:
-		return (first / occurances) * first
+		# return the weighted occurances of stop_id
+		return (pos / occurances) * pos
 	except:
+		# return zero if stop_id never occurred
 		return 0
 
 def who_is_first(all_stops, specific_weekday_routes, position):
