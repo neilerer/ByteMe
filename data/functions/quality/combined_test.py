@@ -68,51 +68,14 @@ def create_unique_value_files():
 	quality_d_to_quality_f()
 
 def get_unique_values():
-	uv_headers = headers()
 	file_names = file_name_header_conversion()
-	uv_range = range(0, len(uv_headers), 1)
-	uv_dict = {uv_headers[i]:file_names[i] for i in uv_range}
+	uv_range = range(0, len(file_names), 1)
 	quality_to_combined()
 	with open("combined.csv", "r") as source:
 		os.chdir("quality")
 		source.readline()
-		
-
-
-def unique_values():
-	uv_headers = headers()
-	# index_list
-	index_list = [headers.headers_reduced.index(header) for header in header_list]
-	# unique_values
-	unique_values_list = [set() for i in index_list]
-	# skip the first line
-	source.readline()
-	# populate the set
-	for line in source:
-		line_list = line.strip().split(",")
-		counter = 0
-		counter_bound = len(index_list)
-		while counter < counter_bound:
-			unique_values_list[counter].add(line_list[index_list[counter]])
-			counter += 1
-	# return
-	return [sorted(list(x)) for x in unique_values_list]
-
-
-def get_unique_values(file_name, header_list):
-	# change directory
-	jpif_to_jpid()
-	# open the file
-	with open(file_name, "r") as source:
-		# return to the starting directory
-		jpid_to_jpif()
-		# return
-		return unique_values(source, header_list)
-
-
-def unique_values():
-	create_unique_value_files()
-
-
-
-
+		for line in source:
+			line_list = line.strip().split(",")
+			for i in uv_range:
+				with open(file_names[i], "a") as destination:
+					
