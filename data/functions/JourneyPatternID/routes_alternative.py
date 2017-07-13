@@ -279,7 +279,7 @@ def stop_id_neighbour_information(routes_weekday_output, unique_stops_output, re
 	rank_info = merge_sort.get_first_entry_of_dict(rank_array)
 	n = rank_info[0]
 	n_rank = rank_info[1][1]
-	# return [StopID, n_side, match_status, n, n_rank, rank_array, key]
+	# return [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key]
 	return [resident_stop, side, False, n, n_rank, rank_array, None]
 
 def stop_id_neighbour_information_summary(stop_id_info):
@@ -300,8 +300,24 @@ def stop_id_neighbour_information_summary(stop_id_info):
 		count += 1
 
 
-# aggregating all stop_id_neighbour_information outputs into an array sorted by neighbour rank
+# CREATING THE DATA TO BE MANIPULATED TO DETERMINE THE ROUTE
+"""
+These functions aggregate all stop_id_neighbour_information outputs into an array sorted by Neighbour_Rank, using functions from merge_sort
+"""
 def stop_id_neighbour_information_array(routes_weekday_output, unique_stops_output):
+	"""
+	Purpose
+	- create an array of stop_id_neighbour_informaiton outputs and sort them by Neighbour_Rank
+	Input
+	- routes_weekday_output
+	-- a list of lists
+	-- each list is a unique journey on a JourneyPatternID for a given weekday
+	- unique_stops_output
+	-- an array containing the unique values of StopIDs for a JourneyPatternID
+	Output
+	- an array of stop_id_neighbour_informaiton outputs and sort them by Neighbour_Rank
+	--[ [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key], . . . ]
+	"""
 	# array to hold stop_id_neighbour_information output
 	array_holder = []
 	# iterate to generate all stop_id_neighbour_information output result
@@ -319,6 +335,15 @@ def stop_id_neighbour_information_array(routes_weekday_output, unique_stops_outp
 	return array_holder
 
 def stop_id_neighbour_information_array_summary(array_holder):
+	"""
+	Purpose
+	- to present the result of stop_id_neighbour_information_array() in human readable format
+	Input
+	- stop_id_neighbour_informatino_array_ output
+	-[ [StopID, Neighbour_Side, Match_Status, Neighbour, Neighbour_Rank, Rank_Array, Output_Key], . . . ]
+	Output
+	- a vertically oriented represenation of stop_id_neighbour_information() output with labels for each element of stop_id_neighbour_information_array()
+	"""
 	for item in array_holder:
 		stop_id_neighbour_information_summary(item)
 
