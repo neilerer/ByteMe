@@ -1,5 +1,6 @@
 # do not want data on github
 data/data/
+__pycache__/
 
 # Created by https://www.gitignore.io/api/windows
 
