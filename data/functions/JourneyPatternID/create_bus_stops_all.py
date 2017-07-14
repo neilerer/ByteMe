@@ -20,7 +20,7 @@ def list_of_csv_files():
 
 def create_file(file_name):
 	# collect the data
-	data = bus_stops_for_jpi_all(file_name)
+	data = bus_stops.bus_stops_for_jpi_all(file_name)
 	# change directory
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/bus_stops/all")
