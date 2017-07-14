@@ -300,6 +300,6 @@ def bus_stop_for_jpi_weekdays_constant_display(file_name):
 		print(bus_stops[i])
 		print("")
 
-
+# print(bus_stops_for_jpi_all("00010001.csv"))
 # bus_stop_for_jpi_all_display("00010001.csv")
 # bus_stop_for_jpi_weekdays_constant_display("00010001.csv")
