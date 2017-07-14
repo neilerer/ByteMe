@@ -27,7 +27,7 @@ def create_file(file_name):
 	# make the file
 	with open(file_name, "w") as destination:
 		for day in data:
-			source.write(",".join(day) + "\n")
+			destination.write(",".join(day) + "\n")
 	# change directory
 	os.chdir("../../../../")
 	os.chdir("functions/JourneyPatternID")
