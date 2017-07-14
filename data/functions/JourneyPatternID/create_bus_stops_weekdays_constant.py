@@ -24,7 +24,7 @@ def create_file(file_name):
 	data = bus_stops.bus_stops_for_jpi_weekdays_constant(data)
 	# change directory
 	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/bus_stops/all")
+	os.chdir("data/JourneyPatternID/bus_stops/weekdays_constant")
 	# make the file
 	with open(file_name, "w") as destination:
 		for day in data:
