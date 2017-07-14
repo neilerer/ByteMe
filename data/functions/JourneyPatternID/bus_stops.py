@@ -265,6 +265,9 @@ def bus_stops_for_jpi_all(file_name):
 	bus_stops_by_weekday = []
 	all_weekday_routes = routes(file_name)
 	for i in range(0, 7, 1):
+		print("")
+		print("File: {}").format(file_name)
+		print("Week: {}").format(i)
 		specific_weekday_routes = routes_weekday_list(all_weekday_routes, i)
 		all_stops = unique_stops(specific_weekday_routes)
 		bus_stops_by_weekday.append(bus_stops(all_stops, specific_weekday_routes))
