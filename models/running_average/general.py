@@ -41,6 +41,22 @@ def get_jpi_file_names():
 	jpid_to_ra()
 	return file_names
 
+def get_bus_stop_all_file_names():
+	file_names = []
+	ra_to_bus_stops_all()
+	for file in glob.glob("*.csv"):
+		file_names.append(file)
+	bus_stops_all_to_ra()
+	return file_names
+
+def get_bus_stop_weekdays_constant_file_names():
+	file_names = []
+	ra_to_bus_stops_weekdays_constant()
+	for file in glob.glob("*.csv"):
+		file_names.append(file)
+	bus_stops_weekdays_constant_to_ra()
+	return file_names
+
 
 # reading files
 def open_bus_stop_all_read(file_name):
