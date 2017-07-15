@@ -4,12 +4,21 @@ import glob
 
 
 # DIRECTORY CHANGES
-# bus_stop
+# bus_stop_all
 def ra_to_bus_stops_all():
 	os.chdir("../../")
 	os.chdir("data/data/JourneyPatternID/bus_stops/all")
 
 def bus_stops_all_to_ra():
+	os.chdir("../../../../../")
+	os.chdir("models/running_average")
+
+# bus_stop_weekdays_constant
+def ra_to_bus_stops_weekdays_constant():
+	os.chdir("../../")
+	os.chdir("data/data/JourneyPatternID/bus_stops/weekdays_constant")
+
+def bus_stops_weekdays_constant_to_ra():
 	os.chdir("../../../../../")
 	os.chdir("models/running_average")
 
@@ -34,6 +43,32 @@ def get_jpi_file_names():
 
 
 # reading files
+def open_bus_stop_all_read(file_name):
+	"""
+	Remember to close the file when you're done with it
+	"""
+	# change directory
+	ra_to_bus_stops_all()
+	# open the file
+	source = open(file_name, "r")
+	# return to starting direcotyr
+	bus_stops_all_to_ra()
+	# return the open file
+	return source
+
+def open_bus_stop_weekdays_constant_read(file_name):
+	"""
+	Remember to close the file when you're done with it
+	"""
+	# change directory
+	ra_to_bus_stops_weekdays_constant()
+	# open the file
+	source = open(file_name, "r")
+	# return to starting direcotyr
+	bus_stops_weekdays_constant_to_ra()
+	# return the open file
+	return source
+
 def open_jpi_source_read(file_name):
 	"""
 	Remember to close the file when you're done with it
@@ -58,6 +93,3 @@ def headers_string(file_name):
 	headers = source.readline().strip()
 	source.close()
 	return headers
-
-ra_to_bus_stops_all()
-bus_stops_all_to_ra()
