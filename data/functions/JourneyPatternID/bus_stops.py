@@ -202,7 +202,7 @@ def not_in_all_weekdays(list_of_lists):
 	result = []
 	unique_values = unique_stops(list_of_lists)
 	for uv in unique_values:
-		for array in list_of_lists:
+		for array in list_of_lists: 
 			if uv not in array:
 				if uv not in result:
 					result.append(uv)
@@ -265,9 +265,6 @@ def bus_stops_for_jpi_all(file_name):
 	bus_stops_by_weekday = []
 	all_weekday_routes = routes(file_name)
 	for i in range(0, 7, 1):
-		print("") #########################################################################
-		print("File: {}".format(file_name))
-		print("Week: {}".format(i))
 		specific_weekday_routes = routes_weekday_list(all_weekday_routes, i)
 		all_stops = unique_stops(specific_weekday_routes)
 		bus_stops_by_weekday.append(bus_stops(all_stops, specific_weekday_routes))
@@ -303,6 +300,9 @@ def bus_stop_for_jpi_weekdays_constant_display(file_name):
 		print(bus_stops[i])
 		print("")
 
-# print(bus_stops_for_jpi_all("00010001.csv"))
-# bus_stop_for_jpi_all_display("00010001.csv")
-# bus_stop_for_jpi_weekdays_constant_display("00010001.csv")
+test_data = bus_stops_for_jpi_all("00011001.csv")
+for item in test_data:
+	print("")
+	print(item)
+# bus_stop_for_jpi_all_display("00011001.csv")
+# bus_stop_for_jpi_weekdays_constant_display("00011001.csv")
