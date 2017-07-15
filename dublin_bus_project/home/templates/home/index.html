@@ -2,33 +2,185 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dublin Bus Travel Time Prediction</title>
-</head>
-<body>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
     {% load keyvalue_lat %} <!-- activating filter functions for accessing dictionary values, used below -->
     {% load keyvalue_long %}
 
-    {% if selected_route %} <!-- if selected_route has been rendered, ie a stop has been selected -->
-        <h1> You are viewing route {{ selected_route }}</h1>
-    {% else %}
-        <h1>Hi, please select a route to view from the dropdown menu</h1>
-    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" type='text/css'/>
+    <title>Dublin Bus Travel Time Prediction</title>
+    <style>
+        .navbar {
+          background-color: navy;
+        }
+        .navbar-inverse .navbar-nav > li > a {
+          color : yellow;
+        }
+        .navbar-inverse .navbar-header > a {
+          color : yellow;
+        }
+         footer {
+          background-color: navy;
+          color: yellow;
+          padding: 20px;
+        }
+         .panel-default > .panel-heading {
+            color: yellow;
+            background-color: navy;
+        }
 
-    <form action="selected_route"> {% csrf_token %} <!-- token needed to avoid Cross-Site Request Forgery attacks, built-in security feature -->
-        <select name="selected_route" onchange="this.form.submit()">
-            {% if selected_route %}
-               <option value={{ selected_route }} selected>{{ selected_route }}</option>
-            {% else %}
-                <option value="" selected disabled>---Select---</option>
-            {% endif %}
-            {% for route in routes %}
-                <option value={{ route }} >{{ route }}</option>
-            {% endfor %}
-        </select>
-    </form>
+    </style>
+</head>
+<body>
+<!--navbar adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_webpage&stacked=h-->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Dublin Bus Travel Time Prediction</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Language</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <div id="map" style="width:100%; height:500px;"></div>
+<!--containers and rows adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_blog&stacked=h-->
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+        {% if selected_route %} <!-- if selected_route has been rendered, ie a stop has been selected -->
+            <h2> You are viewing route {{ selected_route }} from stop ID {{ selected_start }} to stop ID {{ selected_end }}</h2>
+        {% else %}
+            <h2>Hi, please select a route to view from the dropdown menu</h2>
+        {% endif %}
+        <form action="route_selection"> {% csrf_token %}
+            <select name="start_point" required>
+                <option selected disabled>Start Stop ID</option>
+                {% for stop in stop_ids %}
+                    <option value={{ stop }}>{{ stop }}</option>
+                {% endfor %}
+            </select>
+            <select name="end_point" required>
+                <option selected disabled>End Stop ID</option>
+                {% for stop in stop_ids %}
+                    <option value={{ stop }}>{{ stop }}</option>
+                {% endfor %}
+            </select>
+            <select name="weekday" required>
+                <option selected disabled>Weekday</option>
+                <option value="0">Monday</option>
+                <option value="1">Tuesday</option>
+                <option value="2">Wednesday</option>
+                <option value="3">Thursday</option>
+                <option value="4">Friday</option>
+                <option value="5">Saturday</option>
+                <option value="6">Sunday</option>
+            </select>
+            <select name="hour" required>
+                <option selected disabled>Approx. Time</option>
+                <option value="7">7am</option>
+                <option value="8">8am</option>
+                <option value="9">9am</option>
+                <option value="10">10am</option>
+                <option value="11">11am</option>
+                <option value="12">12pm</option>
+                <option value="13">1pm</option>
+                <option value="14">2pm</option>
+                <option value="15">3pm</option>
+                <option value="16">4pm</option>
+                <option value="17">5pm</option>
+                <option value="18">6pm</option>
+                <option value="19">7pm</option>
+                <option value="20">8pm</option>
+                <option value="21">9pm</option>
+                <option value="22">10pm</option>
+                <option value="23">11pm</option>
+            </select>
+            <input type="submit" name="input_form">
+        </form>
+        {% if journey_time %}
+        <div>
+            <br><br>Expected journey time is <br><b>{{ journey_time }} minutes<b>
+        </div>
+        {% endif %}
+    </div>
 
+    <div class="col-sm-9">
+
+        <div id="map" style="width:100%; height:500px;"></div>
+    </div>
+  </div>
+
+    <div class="row content">
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">What's on!</h3>
+            </div>
+
+            <div class = "panel-body">
+                <img src="static/images/events_dublin.png" alt="dublin_events" class="center-block" width="304" height="236">
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">Twitter feed</h3>
+            </div>
+
+            <div class = "panel-body">
+                <img src="static/images/dublinbus_twitter_traffic.jpg" alt="dublinbus_twitter" class="center-block" width="304" height="236">
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">Current Weather</h3>
+            </div>
+
+            <div class = "panel-body">
+                <img src="static/images/sunny-showers.png" alt="sunny_showers" class="center-block" width="304" height="236">
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<!--Footer adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_webpage&stacked=h-->
+<footer class="footer text-center">
+    <div class="container">
+
+    <a href="#" class="btn btn-social-icon btn-twitter">
+        <i class="fa fa-twitter"></i>
+    </a>
+        <a href="#" class="btn btn-social-icon btn-facebook">
+        <i class="fa fa-facebook"></i>
+    </a>
+    <a class="btn btn-social-icon btn-google">
+        <i class="fa fa-google-plus"></i>
+    </a>
+    </div>
+</footer>
     <script>
     function googleMap() {
        var canvas=document.getElementById("map");
@@ -56,11 +208,13 @@
                 stopCount+=1;
            {% endfor %}
            map.setCenter(new google.maps.LatLng(latSum/stopCount, longSum/stopCount)); <!-- resetting centre of map to avg latlong -->
-           map.setZoom(11);
+           map.setZoom(12);
        }
        {% endif %}
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
 </body>
 </html>
