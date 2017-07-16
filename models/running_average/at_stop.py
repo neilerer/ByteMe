@@ -29,7 +29,36 @@ def bus_stop_all_coordinates(file_name):
 	source.close()
 	return coordinates
 
-coordinates = bus_stop_all_coordinates("00010001.csv")
+
+def bus_stop_all_coordinates_at_stop(file_name):
+	# data
+	headers = general.headers_list(file_name)
+	source = general.open_jpi_source_read(file_name)
+	# coordinates
+	coordinates = [{} for day in range(0, 7, 1)]
+	# skip the first line of the source
+	source.readline()
+	for line in source:
+		# create the information to add to coordinates
+		line_list = line.strip().split(",")
+		sid = line_list[headers.index("StopID")]
+		lat = line_list[headers.index("Latitude")]
+		lon = line_list[headers.index("Longitude")]
+		at_stop = line_list[headers.index("AtStop")]
+		# add the information to coordinates
+		weekday = int(line_list[headers.index("WeekDay")])
+		temp_dict = coordinates[weekday]
+		if at_stop == '1':
+			if sid in temp_dict:
+				temp_dict[sid].append((lat, lon, at_stop))
+			else:
+				temp_dict[sid] = [(lat, lon, at_stop)]
+	source.close()
+	return coordinates
+
+
+
+coordinates = bus_stop_all_coordinates_at_stop("00010001.csv")
 monday = coordinates[0]
 monday_226 = monday['226']
 # starting figures
