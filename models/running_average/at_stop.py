@@ -32,13 +32,13 @@ coordinates = bus_stop_all_coordinates("00010001.csv")
 monday = coordinates[0]
 monday_226 = monday['226']
 # starting figures
-lat_min = int(monday_226[0][0])
-lat_max = int(lat_min)
-lon_min = int(monday_226[0][1])
-lon_max = int(lon_min)
+lat_min = float(monday_226[0][0])
+lat_max = float(lat_min)
+lon_min = float(monday_226[0][1])
+lon_max = float(lon_min)
 for pair in monday_226[1::1]:
-	lat = int(pair[0])
-	lon = int(pair[1])
+	lat = float(pair[0])
+	lon = float(pair[1])
 	if lat < lat_min:
 		lat_min = lat
 	elif lat > lat_max:
