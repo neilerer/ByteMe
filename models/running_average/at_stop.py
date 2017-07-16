@@ -40,15 +40,13 @@ for pair in monday[1::1]:
 	lon = int(pair[1])
 	if lat < lat_min:
 		lat_min = lat
-	elif:
-		lat > lat_max:
+	elif lat > lat_max:
 		lat_max = lat
 	else:
 		pass
 	if lon < lon_min:
 		lon_min = lon
-	elif:
-		lon > lon_max:
+	elif lon > lon_max:
 		lon_max = lon
 	else:
 		pass
