@@ -107,7 +107,7 @@ def bus_stop_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 file_name = "00010001.csv"
 coordinates_by_weekday = bus_stop_all_coordinates_at_stop(file_name)
 for i in range(0, 7, 1):
-	coordinates = bus_stop_all_average_coordinates(coordinates_by_weekday, i, '226')
+	coordinates = bus_stop_average_coordinates(coordinates_by_weekday, i, '226')
 	print("")
 	print("Bus Stop Coordintes for {} for All".format(i))
 	print(coordinates[0])
