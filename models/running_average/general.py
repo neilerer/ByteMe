@@ -122,6 +122,7 @@ def headers_string(file_name):
 
 
 # BUS STOPS
+# all
 def bus_stops_all(file_name):
 	source = open_bus_stop_all_read(file_name)
 	bus_stops_by_day = []
@@ -130,7 +131,14 @@ def bus_stops_all(file_name):
 	source.close()
 	return bus_stops_by_day
 
-print(bus_stops_all("00010001.csv"))
+# weekdays constant
+def bus_stops_all(file_name):
+	source = open_bus_stop_weekdays_constant_read()
+	bus_stops_by_day = []
+	for line in source:
+		bus_stops_by_day.append(tuple(line.strip().split(",")))
+	source.close()
+	return bus_stops_by_day
 
 
 # 	0	1	  2		3	4		5		6		7		8		9		10			11				12			13				14		15			16		17		  18		19		20		30		31		32				33			34				35			 	36				37			38					39				40			 41		42	
