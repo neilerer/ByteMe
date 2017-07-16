@@ -32,15 +32,8 @@ def jpid_to_ra():
 	os.chdir("models/running_average")
 
 
-# files names
-def get_jpi_file_names():
-	file_names = []
-	ra_to_jpid()
-	for file in glob.glob("*.csv"):
-		file_names.append(file)
-	jpid_to_ra()
-	return file_names
-
+# FILES NAMES
+# bus_stops_all
 def get_bus_stop_all_file_names():
 	file_names = []
 	ra_to_bus_stops_all()
@@ -49,6 +42,7 @@ def get_bus_stop_all_file_names():
 	bus_stops_all_to_ra()
 	return file_names
 
+# bus_stops_weekdays_constant
 def get_bus_stop_weekdays_constant_file_names():
 	file_names = []
 	ra_to_bus_stops_weekdays_constant()
@@ -57,8 +51,20 @@ def get_bus_stop_weekdays_constant_file_names():
 	bus_stops_weekdays_constant_to_ra()
 	return file_names
 
+# jpi_file_names
+def get_jpi_file_names():
+	file_names = []
+	ra_to_jpid()
+	for file in glob.glob("*.csv"):
+		file_names.append(file)
+	jpid_to_ra()
+	return file_names
 
-# reading files
+
+
+
+# READING FILES
+# bus_stops_all
 def open_bus_stop_all_read(file_name):
 	"""
 	Remember to close the file when you're done with it
@@ -72,6 +78,7 @@ def open_bus_stop_all_read(file_name):
 	# return the open file
 	return source
 
+# bus_stops_weekdays_constant
 def open_bus_stop_weekdays_constant_read(file_name):
 	"""
 	Remember to close the file when you're done with it
@@ -85,6 +92,7 @@ def open_bus_stop_weekdays_constant_read(file_name):
 	# return the open file
 	return source
 
+# jpi
 def open_jpi_source_read(file_name):
 	"""
 	Remember to close the file when you're done with it
@@ -98,12 +106,16 @@ def open_jpi_source_read(file_name):
 	# return the open file
 	return source
 
+
+# Headers
+# list
 def headers_list(file_name):
 	source = open_jpi_source_read(file_name)
 	headers = source.readline().strip().split(",")
 	source.close()
 	return headers
 
+# string
 def headers_string(file_name):
 	source = open_jpi_source_read(file_name)
 	headers = source.readline().strip()
