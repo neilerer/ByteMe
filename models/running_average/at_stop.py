@@ -6,13 +6,12 @@ import general
 
 def bus_stop_all_coordinates(file_name):
 	# data
-	# headers = general.headers_list(file_name)
-	bus_stops_by_day = general.bus_stops_all(file_name)
-	source = general.open_bus_stop_all_read(file_name)
-	# skip the first line
-	headers = source.readline().strip().split(",")
+	headers = general.headers_list(file_name)
+	source = general.open_jpi_source_read(file_name)
 	# coordinates
-	coordinates = [{} for day in bus_stops_by_day]
+	coordinates = [{} for day in range(0, 7, 1)]
+	# skip the first line of the source
+	source.readline()
 	for line in source:
 		# create the information to add to coordinates
 		line_list = line.strip().split(",")
