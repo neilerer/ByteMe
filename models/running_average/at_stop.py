@@ -6,27 +6,27 @@ import general
 
 def bus_stop_all_coordinates(file_name):
 	# data
-	headers = general.headers_list(file_name)
+	# headers = general.headers_list(file_name)
 	bus_stops_by_day = general.bus_stops_all(file_name)
 	source = general.open_bus_stop_all_read(file_name)
 	# skip the first line
-	source.readline()
+	headers = source.readline().strip().split(",")
 	# coordinates
 	coordinates = [{} for day in bus_stops_by_day]
-	# for line in source:
-	# 	# create the information to add to coordinates
-	# 	line_list = line.strip().split(",")
-	# 	sid = line_list[headers.index("StopID")]
-	# 	lat = line_list[headers.index("Latitude")]
-	# 	lon = line_list[headers.index("Longitude")]
-	# 	# add the information to coordinates
-	# 	weekday = int(line_list[headers.index("WeekDay")])
-	# 	temp_dict = coordinates[weekday]
-	# 	if sid in temp_dict:
-	# 		temp_dict[sid].append((lat, lon))
-	# 	else:
-	# 		temp_dict[sid] = [(lat, lon)]
-	# source.close()
+	for line in source:
+		# create the information to add to coordinates
+		line_list = line.strip().split(",")
+		sid = line_list[headers.index("StopID")]
+		lat = line_list[headers.index("Latitude")]
+		lon = line_list[headers.index("Longitude")]
+		# add the information to coordinates
+		weekday = int(line_list[headers.index("WeekDay")])
+		temp_dict = coordinates[weekday]
+		if sid in temp_dict:
+			temp_dict[sid].append((lat, lon))
+		else:
+			temp_dict[sid] = [(lat, lon)]
+	source.close()
 	return coordinates
 
 coordinates = bus_stop_all_coordinates("00010001.csv")
