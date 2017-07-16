@@ -133,7 +133,7 @@ def bus_stops_all(file_name):
 
 # weekdays constant
 def bus_stops_all(file_name):
-	source = open_bus_stop_weekdays_constant_read()
+	source = open_bus_stop_weekdays_constant_read(file_name)
 	bus_stops_by_day = []
 	for line in source:
 		bus_stops_by_day.append(tuple(line.strip().split(",")))
