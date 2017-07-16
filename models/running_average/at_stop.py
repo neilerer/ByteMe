@@ -57,40 +57,90 @@ def bus_stop_all_coordinates_at_stop(file_name):
 	return coordinates
 
 
-all_positions = bus_stop_all_coordinates("00010001.csv")
-at_stop = bus_stop_all_coordinates_at_stop("00010001.csv")
+def bus_stop_all_average_coordinates(coordinates_by_weekday, weekday, stop_id):
+	# primary data object
+	coordinates = coordinates_by_weekday[weekday][stop_id]
+	# values
+	lat_total_all = 0
+	lon_total_all = 0
+	count_all = 0
+	lat_total_at_stop = 0
+	lon_total_at_stop = 0
+	count_at_stop = 0
+	# iteratively determine the average StopID coordinates
+	for triple in coordinates:
+		lat = float(triple[0])
+		lon = float(triple[1])
+		at_stop = int(triple[2])
+		# all
+		lat_total_all += lat
+		lon_total_all += lon
+		count_all += 1
+		# at stop
+		if at_stop == 1:
+			lat_total_at_stop += lat
+			lon_total_at_stop += lon
+			count_at_stop += 1
+	# calculat return values
+	lat_all = 0, lon_all = 0
+	lat_at_stop = 0, lon_at_stop = 0
+	# all
+	try:
+		lat_all = lat_total_all / count_all
+		lon_all = lon_total_all / count_all
+	except:
+		lat_all = None
+		lon_all = None
+	# at stop
+	try:
+		lat_at_stop = lat_total_at_stop / count_at_stop
+		lon_at_stop = lon_total_at_stop / count_at_stop
+	except:
+		lat_at_stop = None
+		lat_at_stop = None
+	# return
+	return [(lat_all, lon_all), (lat_at_stop, lon_at_stop)]
 
-for i in range(0, 7, 1):
-	print("")
-	print(i)
-	print(len(all_positions[0]))
-	print(len(at_stop[0]))
 
-# coordinates = bus_stop_all_coordinates_at_stop("00010001.csv")
-# monday = coordinates[0]
-# monday_226 = monday['226']
-# # starting figures
-# lat_min = float(monday_226[0][0])
-# lat_max = float(lat_min)
-# lon_min = float(monday_226[0][1])
-# lon_max = float(lon_min)
-# for pair in monday_226[1::1]:
-# 	lat = float(pair[0])
-# 	lon = float(pair[1])
+file_name = "00010001.csv"
+coordinates_by_weekday = bus_stop_all_coordinates_at_stop(file_name)
+for triple in bus_stop_all_average_coordinates(coordinates_by_weekday, 0, '226'):
+	print(triple)
+
+
+# def bus_stop_range_coordinates_min_max(lat_min, lon_min, lat_max, lon_max, lat, lon):
+# 	# lat
 # 	if lat < lat_min:
 # 		lat_min = lat
 # 	elif lat > lat_max:
 # 		lat_max = lat
 # 	else:
 # 		pass
+# 	# lon
 # 	if lon < lon_min:
 # 		lon_min = lon
 # 	elif lon > lon_max:
 # 		lon_max = lon
 # 	else:
 # 		pass
-# print("Lat range is {} to {}".format(lat_min, lat_max))
-# print("Lon range in {} to {}".format(lon_min, lon_max))
+# 	return [lat_min, lon_min, lat_max, lon_max]
+
+# def bus_stop_range(coordinates_by_weekday, weekday, sid):
+# 	# primary data object
+# 	coordinates = coordinates_by_weekday[weekday][sid]
+# 	# starting figures
+# 	lat_min = float(coordinates[0])
+# 	lat_max = float(lat_min)
+# 	lon_min = float(coordinates[1])
+# 	lon_max = float(lon_min)
+# 	# iteratively find the min and max
+# 	for pair in coordinates[1::1]:
+# 		lat = float(pair[0])
+# 		lon = float(pair[1])
+# 		new_vals = bus_stop_range_coordinates_min_max(lat_min, lon_min, lat_max, lon_max, lat, lon)
+# 		lat_min, lon_min, lat_max, lon_max = new_vals[0], new_vals[1], new_vals[2], new_vals[3]
+# 	# return
+# 	return [(lat_min, lon_max), (lat_max, lon_min)]
 
 
 # 	0	1	  2		3	4		5		6		7		8		9		10			11				12			13				14		15			16		17		  18		19		20		30		31		32				33			34				35			 	36				37			38					39				40			 41		42	
