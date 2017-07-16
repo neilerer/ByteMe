@@ -30,8 +30,9 @@ def bus_stop_all_coordinates(file_name):
 
 coordinates = bus_stop_all_coordinates("00010001.csv")
 monday = coordinates[0]
+monday_226 = monday['226']
 # starting figures
-for item in monday:
+for item in monday_226:
 	print(item)
 # lat_min = int(monday[0][0])
 # lat_max = int(lat_min)
