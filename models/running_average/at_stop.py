@@ -12,21 +12,21 @@ def bus_stop_all_coordinates(file_name):
 	# skip the first line
 	source.readline()
 	# coordinates
-	coordinates = [{} for day in range(0, 7, 1)]
-	for line in source:
-		# create the information to add to coordinates
-		line_list = line.strip().split(",")
-		sid = line_list[headers.index("StopID")]
-		lat = line_list[headers.index("Latitude")]
-		lon = line_list[headers.index("Longitude")]
-		# add the information to coordinates
-		weekday = int(line_list[headers.index("WeekDay")])
-		temp_dict = coordinates[weekday]
-		if sid in temp_dict:
-			temp_dict[sid].append((lat, lon))
-		else:
-			temp_dict[sid] = [(lat, lon)]
-	source.close()
+	coordinates = [{} for day in bus_stops_by_day]
+	# for line in source:
+	# 	# create the information to add to coordinates
+	# 	line_list = line.strip().split(",")
+	# 	sid = line_list[headers.index("StopID")]
+	# 	lat = line_list[headers.index("Latitude")]
+	# 	lon = line_list[headers.index("Longitude")]
+	# 	# add the information to coordinates
+	# 	weekday = int(line_list[headers.index("WeekDay")])
+	# 	temp_dict = coordinates[weekday]
+	# 	if sid in temp_dict:
+	# 		temp_dict[sid].append((lat, lon))
+	# 	else:
+	# 		temp_dict[sid] = [(lat, lon)]
+	# source.close()
 	return coordinates
 
 coordinates = bus_stop_all_coordinates("00010001.csv")
