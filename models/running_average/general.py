@@ -61,8 +61,6 @@ def get_jpi_file_names():
 	return file_names
 
 
-
-
 # READING FILES
 # bus_stops_all
 def open_bus_stop_all_read(file_name):
@@ -107,7 +105,7 @@ def open_jpi_source_read(file_name):
 	return source
 
 
-# Headers
+# HEADERS
 # list
 def headers_list(file_name):
 	source = open_jpi_source_read(file_name)
@@ -121,3 +119,21 @@ def headers_string(file_name):
 	headers = source.readline().strip()
 	source.close()
 	return headers
+
+
+# BUS STOPS
+def bus_stops_all(file_name):
+	source = open_bus_stop_all_read(file_name)
+	bus_stops_by_day = []
+	for line in source:
+		bus_stops_by_day.append(tuple(line.strip().split(",")))
+	source.close()
+	return bus_stops_by_day
+
+print(bus_stops_all("00010001.csv"))
+
+
+# 	0	1	  2		3	4		5		6		7		8		9		10			11				12			13				14		15			16		17		  18		19		20		30		31		32				33			34				35			 	36				37			38					39				40			 41		42	
+# Year,Month,Day,Hours,Minute,Second,WeekDay,YearDay,Timestamp,LineID,Direction,JourneyPatternID,TimeFrame,VehicleJourneyID,Operator,Congestion,Longitude,Latitude,BusDelay,BlockID,VehicleID,StopID,AtStop,Temperature (C),Dew Point (C),Humidity (%),Pressure (hPa),Visibility (km),Wind Direction,Wind Speed (km/h),Gust Speed (km/h),Precipitation,Events,Conditions
+
+
