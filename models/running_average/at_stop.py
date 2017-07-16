@@ -57,7 +57,7 @@ def bus_stop_all_coordinates_at_stop(file_name):
 	return coordinates
 
 
-def bus_stop_all_average_coordinates(coordinates_by_weekday, weekday, stop_id):
+def bus_stop_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 	# primary data object
 	coordinates = coordinates_by_weekday[weekday][stop_id]
 	# values
@@ -106,43 +106,16 @@ def bus_stop_all_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 
 file_name = "00010001.csv"
 coordinates_by_weekday = bus_stop_all_coordinates_at_stop(file_name)
-for triple in bus_stop_all_average_coordinates(coordinates_by_weekday, 0, '226'):
-	print(triple)
+for i in range(0, 7, 1):
+	coordinates = bus_stop_all_average_coordinates(coordinates_by_weekday, i, '226')
+	print("")
+	print("Bus Stop Coordintes for {} for All".format(i))
+	print(coordinates[0])
+	print("")
+	print("Bus Stop Coordintes for {} for AtStop == 1".format(i))
+	print(coordinates[1])
 
 
-# def bus_stop_range_coordinates_min_max(lat_min, lon_min, lat_max, lon_max, lat, lon):
-# 	# lat
-# 	if lat < lat_min:
-# 		lat_min = lat
-# 	elif lat > lat_max:
-# 		lat_max = lat
-# 	else:
-# 		pass
-# 	# lon
-# 	if lon < lon_min:
-# 		lon_min = lon
-# 	elif lon > lon_max:
-# 		lon_max = lon
-# 	else:
-# 		pass
-# 	return [lat_min, lon_min, lat_max, lon_max]
-
-# def bus_stop_range(coordinates_by_weekday, weekday, sid):
-# 	# primary data object
-# 	coordinates = coordinates_by_weekday[weekday][sid]
-# 	# starting figures
-# 	lat_min = float(coordinates[0])
-# 	lat_max = float(lat_min)
-# 	lon_min = float(coordinates[1])
-# 	lon_max = float(lon_min)
-# 	# iteratively find the min and max
-# 	for pair in coordinates[1::1]:
-# 		lat = float(pair[0])
-# 		lon = float(pair[1])
-# 		new_vals = bus_stop_range_coordinates_min_max(lat_min, lon_min, lat_max, lon_max, lat, lon)
-# 		lat_min, lon_min, lat_max, lon_max = new_vals[0], new_vals[1], new_vals[2], new_vals[3]
-# 	# return
-# 	return [(lat_min, lon_max), (lat_max, lon_min)]
 
 
 # 	0	1	  2		3	4		5		6		7		8		9		10			11				12			13				14		15			16		17		  18		19		20		30		31		32				33			34				35			 	36				37			38					39				40			 41		42	
