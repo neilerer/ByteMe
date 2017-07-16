@@ -82,8 +82,10 @@ def bus_stop_all_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 			lon_total_at_stop += lon
 			count_at_stop += 1
 	# calculat return values
-	lat_all = 0, lon_all = 0
-	lat_at_stop = 0, lon_at_stop = 0
+	lat_all = 0
+	lon_all = 0
+	lat_at_stop = 0
+	lon_at_stop = 0
 	# all
 	try:
 		lat_all = lat_total_all / count_all
