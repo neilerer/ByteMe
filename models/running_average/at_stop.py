@@ -20,7 +20,7 @@ def bust_stop_all_coordinates(file_name):
 		lat = line_list[headers.index("Latitude")]
 		lon = line_list[headers.index("Longitude")]
 		# add the information to coordinates
-		weekday = lon = line_list[headers.index("WeekDay")]
+		weekday = int(line_list[headers.index("WeekDay")])
 		temp_dict = coordinates[weekday]
 		if sid in temp_dict:
 			temp_dict[sid].append((lat, lon))
