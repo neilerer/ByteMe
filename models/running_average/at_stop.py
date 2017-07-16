@@ -18,13 +18,14 @@ def bus_stop_all_coordinates(file_name):
 		sid = line_list[headers.index("StopID")]
 		lat = line_list[headers.index("Latitude")]
 		lon = line_list[headers.index("Longitude")]
+		at_stop = line_list[headers.index("AtStop")]
 		# add the information to coordinates
 		weekday = int(line_list[headers.index("WeekDay")])
 		temp_dict = coordinates[weekday]
 		if sid in temp_dict:
-			temp_dict[sid].append((lat, lon))
+			temp_dict[sid].append((lat, lon, at_stop))
 		else:
-			temp_dict[sid] = [(lat, lon)]
+			temp_dict[sid] = [(lat, lon, at_stop)]
 	source.close()
 	return coordinates
 
