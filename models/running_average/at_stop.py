@@ -29,9 +29,8 @@ def bus_stop_all_coordinates(file_name):
 	return coordinates
 
 coordinates = bus_stop_all_coordinates("00010001.csv")
-for item in coordinates:
-	print("")
-	print(item)
+monday = coordinates[0]
+print(monday["226"])
 
 # 	0	1	  2		3	4		5		6		7		8		9		10			11				12			13				14		15			16		17		  18		19		20		30		31		32				33			34				35			 	36				37			38					39				40			 41		42	
 # Year,Month,Day,Hours,Minute,Second,WeekDay,YearDay,Timestamp,LineID,Direction,JourneyPatternID,TimeFrame,VehicleJourneyID,Operator,Congestion,Longitude,Latitude,BusDelay,BlockID,VehicleID,StopID,AtStop,Temperature (C),Dew Point (C),Humidity (%),Pressure (hPa),Visibility (km),Wind Direction,Wind Speed (km/h),Gust Speed (km/h),Precipitation,Events,Conditions
