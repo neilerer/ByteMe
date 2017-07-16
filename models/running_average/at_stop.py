@@ -4,7 +4,7 @@ import glob
 import general
 
 
-def bust_stop_all_coordinates(file_name):
+def bus_stop_all_coordinates(file_name):
 	# data
 	headers = general.headers_list(file_name)
 	bus_stops_by_day = general.bus_stops_all(file_name)
@@ -12,7 +12,7 @@ def bust_stop_all_coordinates(file_name):
 	# skip the first line
 	source.readline()
 	# coordinates
-	coordinates = [{} for day in bus_stops_by_day]
+	coordinates = [{} for day in range(0, 7, 1)]
 	for line in source:
 		# create the information to add to coordinates
 		line_list = line.strip().split(",")
@@ -29,7 +29,7 @@ def bust_stop_all_coordinates(file_name):
 	source.close()
 	return coordinates
 
-coordinates = bust_stop_all_coordinates("00010001.csv")
+coordinates = bus_stop_all_coordinates("00010001.csv")
 for item in coordinates:
 	print("")
 	print(item)
