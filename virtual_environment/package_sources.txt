@@ -16,6 +16,7 @@ Date: 21 Jun 2017
 User: Otto
 Reason: interation with Github, our version control software
 
+-----------
 Name: Geopy
 Source: https://anaconda.org/conda-forge/geopy
 Action: add
