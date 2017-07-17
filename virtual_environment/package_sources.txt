@@ -23,3 +23,11 @@ Action: add
 Date 17 Jul 2017
 User: Otto
 Reson: off the shelf ability to convert GPS figures into other units (and other functionality)
+
+--------------
+Name: Geocoder
+Source: https://anaconda.org/conda-forge/geocoder
+Action: add
+Date: 17 Jul 2017
+User: Otto
+Reason: off the shelf ability to match address to gps and vice-versa
