@@ -30,6 +30,16 @@ def bus_stop_all_coordinates(file_name):
 	return coordinates
 
 
+def coordinates_average(lat_total, lon_total, count):
+	try:
+		lat = lat_total / count
+		lon = lon_total / count
+	except:
+		lat = None
+		lon = None
+	finally:
+		return (lat, lon)
+
 def bus_stop_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 	# primary data object
 	coordinates = coordinates_by_weekday[weekday][stop_id]
@@ -54,27 +64,12 @@ def bus_stop_average_coordinates(coordinates_by_weekday, weekday, stop_id):
 			lat_total_at_stop += lat
 			lon_total_at_stop += lon
 			count_at_stop += 1
-	# calculat return values
-	lat_all = 0
-	lon_all = 0
-	lat_at_stop = 0
-	lon_at_stop = 0
 	# all
-	try:
-		lat_all = lat_total_all / count_all
-		lon_all = lon_total_all / count_all
-	except:
-		lat_all = None
-		lon_all = None
+	all_data = coordinates_average(lat_total_all, lon_total_all, count_all)
 	# at stop
-	try:
-		lat_at_stop = lat_total_at_stop / count_at_stop
-		lon_at_stop = lon_total_at_stop / count_at_stop
-	except:
-		lat_at_stop = None
-		lat_at_stop = None
+	at_stop_data = coordinates_average(lat_total_at_stop, lon_total_at_stop, count_at_stop)
 	# return
-	return [(lat_all, lon_all), (lat_at_stop, lon_at_stop)]
+	return [all_data, at_stop_data]
 
 
 file_name = "00010001.csv"
