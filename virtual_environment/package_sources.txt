@@ -4,7 +4,7 @@ package_sources.txt
 Name: django
 Source: https://anaconda.org/anaconda/django
 Action: add
-Date: 21 Jun 2016
+Date: 21 Jun 2017
 User: Otto
 Reason: interation with django, our web development platform
 
@@ -12,7 +12,13 @@ Reason: interation with django, our web development platform
 Name: Git
 Source: https://anaconda.org/anaconda/git
 Action: add
-Date: 21 Jun 2016
+Date: 21 Jun 2017
 User: Otto
 Reason: interation with Github, our version control software
 
+Name: Geopy
+Source: https://anaconda.org/conda-forge/geopy
+Action: add
+Date 17 Jul 2017
+User: Otto
+Reson: off the shelf ability to convert GPS figures into other units (and other functionality)
