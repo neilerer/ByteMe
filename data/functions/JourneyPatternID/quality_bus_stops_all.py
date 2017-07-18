@@ -24,4 +24,4 @@ def check_lines_in_file(file_name, expected_lines):
 	jpi_to_bus_all()
 	return lines == expected_lines
 
-print(check_lines_in_file("00010001.csv"))
+print(check_lines_in_file("00010001.csv", 7))
