@@ -227,6 +227,36 @@ def remove_non_constants(list_of_lists):
 	return list_of_lists
 
 
+def value_in_all_array(unique_value, list_of_lists):
+	count = 0
+	target = len(list_of_lists)
+	for array in list_of_lists:
+		if unique_value in array:
+			count += 1
+	return count == target
+
+def weekdays_constant(list_of_lists):
+	# all the weekday arrays
+	weekday_routes = list_of_lists[0:5:1]
+	# all the unique values in the weekday arrays
+	unique_values = unique_stops(weekday_routes)
+	# iterate over the unique values
+	for uv in unique_values:
+		# determine if the value is in all weekdays or not
+		uv_status = value_in_all_array(uv, weekday_routes)
+		# if the uv is not in all weekdays
+		if not uv_status:
+			# remove it if it's there
+			for array in weekday_routes:
+				try:
+					array.pop(array.index(uv))
+				except:
+					pass
+	# return
+	return weekday_routes + list_of_lists[5::1]
+
+
+
 def bus_stops(all_stops, specific_weekday_routes):
 	# data
 	unique_stops = all_stops
@@ -271,7 +301,8 @@ def bus_stops_for_jpi_all(file_name):
 	return bus_stops_by_weekday
 
 def bus_stops_for_jpi_weekdays_constant(bus_stops_by_weekday):
-	return remove_non_constants(bus_stops_by_weekday)
+	return weekdays_constant(bus_stops_by_weekday)
+	# return remove_non_constants(bus_stops_by_weekday)
 
 def bus_stop_for_jpi_all_display(file_name):
 	bus_stops = bus_stops_for_jpi_all(file_name)
@@ -288,7 +319,7 @@ def bus_stop_for_jpi_all_display(file_name):
 
 def bus_stop_for_jpi_weekdays_constant_display(file_name):
 	bus_stops = bus_stops_for_jpi_all(file_name)
-	bus_stops = remove_non_constants(bus_stops)
+	bus_stops = bus_stops_for_jpi_weekdays_constant(bus_stops)
 	day_dict = {0:"Monday", 1:"Tuesday", 2:"Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
 	name = file_name.split(".")[0]
 	print("")
@@ -300,9 +331,10 @@ def bus_stop_for_jpi_weekdays_constant_display(file_name):
 		print(bus_stops[i])
 		print("")
 
-test_data = bus_stops_for_jpi_all("00011001.csv")
-for item in test_data:
-	print("")
-	print(item)
+# test_data = bus_stops_for_jpi_all("00011001.csv")
+# for item in test_data:
+# 	print("")
+# 	print(item)
+
 # bus_stop_for_jpi_all_display("00011001.csv")
 # bus_stop_for_jpi_weekdays_constant_display("00011001.csv")
