@@ -8,7 +8,7 @@ def jpi_to_bus_all():
 	os.chdir("data/JourneyPatternID/bus_stops/all")
 
 def bus_all_to_jpi():
-	os.chdir("../../../../../")
+	os.chdir("../../../../")
 	os.chdir("functions/JourneyPatternID")
 
 def lines_in_file(file_name):
