@@ -6,7 +6,6 @@ import glob
 def jpi_to_bus_all():
 	os.chdir("../../")
 	os.chdir("data/JourneyPatternID/bus_stops/all")
-	# os.chdir("data/JourneyPatternID/bus_stops/all")
 
 def bus_all_to_jpi():
 	os.chdir("../../../../")
@@ -22,7 +21,7 @@ def lines_in_file(file_name):
 def check_lines_in_file(file_name, expected_lines):
 	jpi_to_bus_all()
 	lines = lines_in_file(file_name)
-	jpi_to_bus_all()
+	bus_all_to_jpi()
 	return lines == expected_lines
 
 print(check_lines_in_file("00010001.csv", 7))
