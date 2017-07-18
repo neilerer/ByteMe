@@ -2,6 +2,7 @@
 import os
 import glob
 import general
+from geopy.distance import great_circle
 
 
 def bus_stop_all_coordinates(file_name):
@@ -82,7 +83,31 @@ for i in range(0, 7, 1):
 	print("")
 	print("Bus Stop Coordintes for {} for AtStop == 1".format(i))
 	print(coordinates[1])
+	print("")
+	print("Distance between the two is {} metres".format(great_circle(coordinates[0], coordinates[1]).meters))
 
+
+"""
+one algorithm to record travel times
+one algorithm to record wait times
+
+open file
+
+sort by:
+- vjid_vid
+- timestamp
+
+for each vjid_vid:
+	record first stop and timestamp
+	recrod first stop at next stop (using gps proximity to stop coordinates)
+	calculate time
+	add to dictionary entry for stop_n to stop_n+1
+
+	record last stop at bust stop and timestamp
+	record first stop at next stop
+
+
+"""
 
 
 
