@@ -5,7 +5,8 @@ import glob
 
 def jpi_to_bus_all():
 	os.chdir("../../")
-	os.chdir("data/JourneyPatternID/bus_stops/all")
+	os.chdir("data/")
+	# os.chdir("data/JourneyPatternID/bus_stops/all")
 
 def bus_all_to_jpi():
 	os.chdir("../../../../")
