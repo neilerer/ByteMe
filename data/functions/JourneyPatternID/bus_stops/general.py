@@ -11,6 +11,13 @@ def bsf_to_jpi():
 def jpi_to_bsf():
 	os.chdir("../../")
 	os.chdir("functions/JourneyPatternID/bus_stops")
+#
+def bsf_to_bsd():
+	os.chdir("../../../")
+	os.chdir("data/JourneyPatternID/bus_stops")
+def bsd_to_bsf():
+	os.chdir("../../../")
+	os.chdir("functions/JourneyPatternID/bus_stops")
 
 
 # OPEN FILE
@@ -34,3 +41,16 @@ def headers_list(file_name):
 	headers = source.readline().strip().split(",")
 	source.close()
 	return headers
+
+
+def list_of_csv_files():
+	# change directory
+	bsf_to_jpi()
+	# collect all the file names
+	csv_list = []
+	for file in glob.glob("*.csv"):
+		csv_list.append(file)
+	# change directory
+	jpi_to_bsf()
+	# return
+	return csv_list

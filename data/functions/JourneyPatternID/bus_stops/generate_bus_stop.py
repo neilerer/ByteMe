@@ -130,4 +130,4 @@ def bus_stops(all_stops, routes):
 	# return
 	return bus_stop_list
 
-print(bus_stops(all_stops, the_routes))
+# print(bus_stops(all_stops, the_routes))
