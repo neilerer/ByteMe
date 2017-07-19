@@ -20,8 +20,8 @@ def unique_stops(routes):
 	# return stops
 	return stops
 
-the_routes = generate_routes.routes("00010001.csv")
-all_stops = unique_stops(the_routes)
+# the_routes = generate_routes.routes("00010001.csv")
+# all_stops = unique_stops(the_routes)
 
 
 # of the times it occurs, how often is it first
@@ -64,7 +64,7 @@ def pct_first(stop_id, routes, position):
 		return 0
 
 
-all_stops = unique_stops(the_routes)
+# all_stops = unique_stops(the_routes)
 # for item in the_routes:
 # 	print(the_routes[item])
 # print("")
