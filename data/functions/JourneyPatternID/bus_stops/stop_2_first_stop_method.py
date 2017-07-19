@@ -2,7 +2,7 @@
 import os
 import general
 import merge_sort
-import stop_1_routes
+import generate_routes
 
 
 # uniqute values of StopID
@@ -20,7 +20,7 @@ def unique_stops(routes):
 	# return stops
 	return stops
 
-the_routes = stop_1_routes.routes("00010001.csv")
+the_routes = generate_routes.routes("00010001.csv")
 all_stops = unique_stops(the_routes)
 
 
