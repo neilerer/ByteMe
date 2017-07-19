@@ -38,7 +38,7 @@ def check_lines():
 		file_names = get_bus_stop_file_names()
 		for file_name in file_names:
 			result = check_lines_in_file(file_name, 7)
-			if result[1]:
+			if not result[1]:
 				destination.write("{}: {}".format(file_name, result[0]) + "\n")
 
 if __name__ == "__main__":
