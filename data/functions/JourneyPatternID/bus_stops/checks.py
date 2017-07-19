@@ -10,7 +10,7 @@ def stops_greater_than_one(file_name):
 	# generate a list of the first line
 	bus_stops = source.readline().strip().split(",")
 	# return
-	return len(bus_stops) > 1
+	return len(bus_stops) > 0
 
 def check_if_all_routes_are_greater_than_one():
 	# file names

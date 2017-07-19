@@ -19,7 +19,7 @@ def remove_single_values(wd_dict):
 	# iterate over dictionary keys
 	for key in wd_dict:
 		# if the associated list has only one element
-		if len(wd_dict[key]) < 2:
+		if len(wd_dict[key]) < 1:
 			# mark this dictionary entry for deletion
 			kill_list.append(key)
 	# iterate over the keys in kill_list
@@ -74,6 +74,6 @@ def routes(file_name):
 	# return
 	return unique_journeys
 
-# my_dict = routes("00010001.csv")
+# my_dict = routes("053B1001.csv")
 # for item in my_dict:
 # 	print(my_dict[item])
