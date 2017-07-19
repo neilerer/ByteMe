@@ -1,13 +1,8 @@
 # imports
 import os
 import bus_stops_general as general
-import bus_stops_merge_sort as merge_sort
 
 
-# SOURCE DATA
-"""
-These functions get generate the stops on a JourneyPatternID for each day of the week
-"""
 def remove_single_values(wd_dict):
 	"""
 	Purpose
@@ -79,6 +74,6 @@ def routes(file_name):
 	# return
 	return unique_journeys
 
-my_dict = routes("00010001.csv")
-for item in my_dict:
-	print(my_dict[item])
+# my_dict = routes("00010001.csv")
+# for item in my_dict:
+# 	print(my_dict[item])
