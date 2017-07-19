@@ -9,6 +9,8 @@ import generate_bus_stop
 def create_files():
 	file_names = general.list_of_csv_files()
 	for file_name in file_names:
+		# program checking
+		print(file_name)
 		# generate the source data
 		the_journeys = generate_routes.routes(file_name)
 		all_stops = generate_bus_stop.unique_stops(the_journeys)
