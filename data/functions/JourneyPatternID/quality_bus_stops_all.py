@@ -40,6 +40,7 @@ def check_lines():
 			result = check_lines_in_file(file_name, 7)
 			if not result[1]:
 				destination.write("{}: {}".format(file_name, result[0]) + "\n")
+		destination.write("Program complete.")
 
 if __name__ == "__main__":
 	check_lines()
