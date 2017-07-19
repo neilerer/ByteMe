@@ -20,10 +20,10 @@ def unique_stops(routes):
 	# return stops
 	return stops
 
-my_dict = stop_1_routes.routes("00010001.csv")
-all_stops = unique_stops(my_dict)
-for item in all_stops:
-	print(item)
+# the_routes = stop_1_routes.routes("00010001.csv")
+# all_stops = unique_stops(the_routes)
+# for item in all_stops:
+# 	print(item)
 
 
 # of the times it occurs, how often is it first
@@ -64,6 +64,12 @@ def pct_first(stop_id, routes, position):
 	except:
 		# return zero if stop_id never occurred
 		return 0
+
+the_routes = stop_1_routes.routes("00010001.csv")
+all_stops = unique_stops(the_routes)
+test_dict = pct_first('226', the_routes, position)
+for item in test_dict:
+	print(item)
 
 
 # def who_is_first(all_stops, routes, position):
