@@ -37,11 +37,11 @@ def routes(file_name):
 	headers = general.headers_list(file_name)
 	source = general.read_jpi_file(file_name)
 	# index values
-	index_wd = header.index("WeekDay")
-	index_yd = header.index("YearDay")
-	index_vjid = header.index("VehicleJourneyID")
-	index_vid = header.index("VehicleID")
-	index_sid = header.index("StopID")
+	index_wd = headers.index("WeekDay")
+	index_yd = headers.index("YearDay")
+	index_vjid = headers.index("VehicleJourneyID")
+	index_vid = headers.index("VehicleID")
+	index_sid = headers.index("StopID")
 	# return object
 	unique_journeys = {}
 	# skip the first line
