@@ -46,7 +46,7 @@ def pct_first(stop_id, routes, position):
 	for route in routes:
 		try:
 			# find the index; stop_id will occur only once in each route
-			index = route.index(stop_id)
+			index = routes[route].index(stop_id)
 			# increment occurances
 			occurances += 1
 			# if its in the position
