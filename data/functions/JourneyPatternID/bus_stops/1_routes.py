@@ -79,5 +79,5 @@ def routes(file_name):
 	# return
 	return unique_journeys
 
-for item in route("00010001.csv"):
+for item in routes("00010001.csv"):
 	print(item)
