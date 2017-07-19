@@ -102,17 +102,14 @@ def remove_element_from_list(element, array):
 
 
 def bus_stops(all_stops, routes):
-	# data
-	unique_stops = all_stops
-	weekday_routes = routes
 	# termination condition
-	termination_length = len(unique_stops)
+	termination_length = len(all_stops)
 	# return object
 	bus_stop_list = []
 	# loop until termination condition is achieved
 	while len(bus_stop_list) < termination_length:
 		# make the sorted dictionary of stops
-		stop_dict = who_is_first(unique_stops, weekday_routes, 0)
+		stop_dict = who_is_first(all_stops, routes, 0)
 		# obtain a stop candidate
 		stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
 		# termination condition
@@ -126,10 +123,10 @@ def bus_stops(all_stops, routes):
 		# append the successful stop
 		bus_stop_list.append(stop)
 		# remove stop from unique_stops (we will no longer consider it)
-		unique_stops.pop(unique_stops.index(stop))
+		all_stops.pop(all_stops.index(stop))
 		# remove stop from weekday_routes (we will no longer consdier it)
-		for item in weekday_routes:
-			weekday_routes[item] = remove_element_from_list(stop, weekday_routes[item])
+		for item in routes:
+			routes[item] = remove_element_from_list(stop, routes[item])
 	# return
 	return bus_stop_list
 
