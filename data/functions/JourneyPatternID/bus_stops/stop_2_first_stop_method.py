@@ -1,6 +1,6 @@
 # imports
 import os
-import bus_stops_general as general
+import general
 import bus_stops_merge_sort as merge_sort
 import stop_1_routes
 

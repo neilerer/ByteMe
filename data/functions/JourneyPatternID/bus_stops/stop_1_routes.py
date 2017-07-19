@@ -1,6 +1,6 @@
 # imports
 import os
-import bus_stops_general as general
+import general
 
 
 def remove_single_values(wd_dict):
