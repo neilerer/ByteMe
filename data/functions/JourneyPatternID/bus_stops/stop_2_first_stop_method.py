@@ -63,21 +63,74 @@ def pct_first(stop_id, routes, position):
 		# return zero if stop_id never occurred
 		return 0
 
+
 all_stops = unique_stops(the_routes)
-for item in the_routes:
-	print(the_routes[item])
-print("")
-for stop in all_stops:
-	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
+# for item in the_routes:
+# 	print(the_routes[item])
+# print("")
+# for stop in all_stops:
+# 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
 
 
 def who_is_first(all_stops, routes, position):
-	# dictionary of 
+	# dictionary that will hold each stop and it's rank of occuring first as value
 	stop_dict = {stop:False for stop in all_stops}
+	# iterate over each unique stop
 	for stop in all_stops:
+		# use pct_first to add the value
 		stop_dict[stop] = pct_first(stop, routes, position)
+	# sort the dictionary by order of most often first to least often first
 	stop_dict = merge_sort.merge_sort_dict_who_is_first(stop_dict)
+	# return the dictionary
 	return stop_dict
 
 
-print(who_is_first(all_stops, the_routes, 0))
+# print(who_is_first(all_stops, the_routes, 0))
+
+
+def remove_element_from_list(element, array):
+	indices = []
+	index = 0
+	for item in array:
+		if item == element:
+			indices.append(index)
+		index += 1
+	indices.reverse()
+	for i in indices:
+		array.pop(i)
+	return array
+
+
+def bus_stops(all_stops, routes):
+	# data
+	unique_stops = all_stops
+	weekday_routes = routes
+	# termination condition
+	termination_length = len(unique_stops)
+	# return object
+	bus_stop_list = []
+	# loop until termination condition is achieved
+	while len(bus_stop_list) < termination_length:
+		# make the sorted dictionary of stops
+		stop_dict = who_is_first(unique_stops, weekday_routes, 0)
+		# obtain a stop candidate
+		stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+		# termination condition
+		in_list = (stop in bus_stop_list)
+		# loop until termination is achieved
+		while in_list:
+			# obtain a stop candidate
+			stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+			# check termination condition
+			in_list = (stop in bus_stop_list)
+		# append the successful stop
+		bus_stop_list.append(stop)
+		# remove stop from unique_stops (we will no longer consider it)
+		unique_stops.pop(unique_stops.index(stop))
+		# remove stop from weekday_routes (we will no longer consdier it)
+		for item in weekday_routes:
+			weekday_routes[item] = remove_element_from_list(stop, weekday_routes[item])
+	# return
+	return bus_stop_list
+
+print(bus_stops(all_stops, the_routes))
