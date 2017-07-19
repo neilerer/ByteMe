@@ -12,7 +12,7 @@ def unique_stops(routes):
 	# iterate over the lists
 	for stop_list in routes:
 		# iterate over the elements in the list
-		for stop in stop_list:
+		for stop in routes[stop_list]:
 			# check for inclusion
 			if stop not in stops:
 				# add if not already there
