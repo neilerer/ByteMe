@@ -106,8 +106,11 @@ def bus_stops(all_stops, routes):
 	termination_length = len(all_stops)
 	# return object
 	bus_stop_list = []
+	# count
+	count = 0
 	# loop until termination condition is achieved
-	while len(bus_stop_list) < termination_length:
+	# while len(bus_stop_list) < termination_length:
+	while count < termination_length:
 		# make the sorted dictionary of stops
 		stop_dict = who_is_first(all_stops, routes, 0)
 		# obtain a stop candidate
@@ -127,6 +130,8 @@ def bus_stops(all_stops, routes):
 		# remove stop from weekday_routes (we will no longer consdier it)
 		for item in routes:
 			routes[item] = remove_element_from_list(stop, routes[item])
+		# increment the count
+		count += 1
 	# return
 	return bus_stop_list
 
