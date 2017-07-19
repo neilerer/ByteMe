@@ -3,7 +3,7 @@ import os
 import general
 import merge_sort
 import generate_routes
-import generate_bus_stops
+import generate_bus_stop
 
 
 def create_files():
