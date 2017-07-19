@@ -48,7 +48,10 @@ def unique_journey_pattern_ids():
 			try:
 				# if one exists, add the jpi to the set
 				jpi = line.strip().split(",")[offset]
-				ujpi_set.add(jpi)
+				if jpi == "" or jpi == None:
+					pass
+				else:
+					ujpi_set.add(jpi)
 			except:
 				# otherwise, pass
 				pass
