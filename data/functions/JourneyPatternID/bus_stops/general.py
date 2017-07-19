@@ -34,6 +34,19 @@ def read_jpi_file(file_name):
 	# return the open file
 	return source
 
+def read_bus_stop_file(file_name):
+	"""
+	Remember to close the file when you're done with it
+	"""
+	# change directory
+	bsf_to_bsd()
+	# open the file
+	source = open(file_name, "r")
+	# return to starting direcotyr
+	bsd_to_bsf()
+	# return the open file
+	return source
+
 
 # HEADERS
 def headers_list(file_name):
