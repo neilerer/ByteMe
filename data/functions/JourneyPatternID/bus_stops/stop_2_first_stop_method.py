@@ -67,9 +67,8 @@ def pct_first(stop_id, routes, position):
 
 the_routes = stop_1_routes.routes("00010001.csv")
 all_stops = unique_stops(the_routes)
-test_dict = pct_first('226', the_routes, 0)
-for item in test_dict:
-	print(item)
+first = pct_first('226', the_routes, 0)
+print(first)
 
 
 # def who_is_first(all_stops, routes, position):
