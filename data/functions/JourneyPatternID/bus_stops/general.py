@@ -67,3 +67,15 @@ def list_of_csv_files():
 	jpi_to_bsf()
 	# return
 	return csv_list
+
+def list_of_bus_files():
+	# change directory
+	bsf_to_bsd()
+	# collect all the file names
+	csv_list = []
+	for file in glob.glob("*.csv"):
+		csv_list.append(file)
+	# change directory
+	bsd_to_bsf()
+	# return
+	return csv_list

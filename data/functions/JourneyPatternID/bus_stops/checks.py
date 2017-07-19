@@ -14,7 +14,7 @@ def stops_greater_than_one(file_name):
 
 def check_if_all_routes_are_greater_than_one():
 	# file names
-	file_names = general.list_of_csv_files()
+	file_names = general.list_of_bus_files()
 	# hold object
 	bad_files = []
 	# iterate over file names
