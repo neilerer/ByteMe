@@ -67,7 +67,7 @@ def pct_first(stop_id, routes, position):
 
 the_routes = stop_1_routes.routes("00010001.csv")
 all_stops = unique_stops(the_routes)
-test_dict = pct_first('226', the_routes, position)
+test_dict = pct_first('226', the_routes, 0)
 for item in test_dict:
 	print(item)
 
