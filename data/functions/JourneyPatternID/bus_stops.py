@@ -198,33 +198,33 @@ def remove_element_from_list(element, array):
 		array.pop(i)
 	return array
 
-def not_in_all_weekdays(list_of_lists):
-	result = []
-	unique_values = unique_stops(list_of_lists)
-	for uv in unique_values:
-		for array in list_of_lists: 
-			if uv not in array:
-				if uv not in result:
-					result.append(uv)
-				continue
-	return result
+# def not_in_all_weekdays(list_of_lists):
+# 	result = []
+# 	unique_values = unique_stops(list_of_lists)
+# 	for uv in unique_values:
+# 		for array in list_of_lists: 
+# 			if uv not in array:
+# 				if uv not in result:
+# 					result.append(uv)
+# 				continue
+# 	return result
 
-def remove_non_constants(list_of_lists):
-	not_ins = not_in_all_weekdays(list_of_lists)
-	for array in list_of_lists[0:5:1]:
-		indices = []
-		for n in not_ins:
-			try:
-				indices.append(array.index(n))
-			except:
-				pass
-		try:
-			indices.reverse()
-			for i in indices:
-				array.pop(i)
-		except:
-			pass
-	return list_of_lists
+# def remove_non_constants(list_of_lists):
+# 	not_ins = not_in_all_weekdays(list_of_lists)
+# 	for array in list_of_lists[0:5:1]:
+# 		indices = []
+# 		for n in not_ins:
+# 			try:
+# 				indices.append(array.index(n))
+# 			except:
+# 				pass
+# 		try:
+# 			indices.reverse()
+# 			for i in indices:
+# 				array.pop(i)
+# 		except:
+# 			pass
+# 	return list_of_lists
 
 
 def value_in_all_array(unique_value, list_of_lists):
