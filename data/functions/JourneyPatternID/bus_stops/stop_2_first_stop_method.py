@@ -71,10 +71,13 @@ for stop in all_stops:
 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
 
 
-# def who_is_first(all_stops, routes, position):
-# 	# dictionary of 
-# 	stop_dict = {stop:False for stop in all_stops}
-# 	for stop in all_stops:
-# 		stop_dict[stop] = pct_first(stop, routes, position)
-# 	stop_dict = merge_sort.merge_sort_dict_who_is_first(stop_dict)
-# 	return stop_dict
+def who_is_first(all_stops, routes, position):
+	# dictionary of 
+	stop_dict = {stop:False for stop in all_stops}
+	for stop in all_stops:
+		stop_dict[stop] = pct_first(stop, routes, position)
+	stop_dict = merge_sort.merge_sort_dict_who_is_first(stop_dict)
+	return stop_dict
+
+
+print(who_is_first(all_stops, the_routes, 0))
