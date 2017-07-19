@@ -65,7 +65,7 @@ def pct_first(stop_id, routes, position):
 
 all_stops = unique_stops(the_routes)
 for item in the_routes:
-	print(item)
+	print(routes[item])
 print("")
 for stop in all_stops:
 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
