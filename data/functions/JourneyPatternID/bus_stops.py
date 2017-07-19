@@ -336,5 +336,5 @@ def bus_stop_for_jpi_weekdays_constant_display(file_name):
 # 	print("")
 # 	print(item)
 
-# bus_stop_for_jpi_all_display("00011001.csv")
-# bus_stop_for_jpi_weekdays_constant_display("00011001.csv")
+bus_stop_for_jpi_all_display("00011001.csv")
+bus_stop_for_jpi_weekdays_constant_display("00011001.csv")
