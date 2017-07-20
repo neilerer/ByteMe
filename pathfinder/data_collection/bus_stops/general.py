@@ -9,8 +9,8 @@ def dc_to_bsd():
 	os.chdir("../../../")
 	os.chdir("data/data/JourneyPatternID/bus_stops")
 def bsd_to_dc():
-	os.chdir("../../../")
-	os.chdir("pathfinder/data_collection")
+	os.chdir("../../../../")
+	os.chdir("pathfinder/data_collection/bus_stops")
 
 
 # FILE NAMES
