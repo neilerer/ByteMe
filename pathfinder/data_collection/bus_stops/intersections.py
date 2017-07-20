@@ -24,7 +24,10 @@ def get_intersection_all_pairwise(primary_jpi, bus_stop_dict):
 			pass
 		else:
 			intersection_tuple = get_intersection_pairwise(primary_jpi, jpi, bus_stop_dict)
-			all_pairwise_intersections[jpi] = intersection_tuple[1]
+			if intersection_tuple[1] == []:
+				pass
+			else:
+				all_pairwise_intersections[jpi] = intersection_tuple[1]
 	return all_pairwise_intersections
 
 bus_stop_dict = source_data.jpi_dictionary()
