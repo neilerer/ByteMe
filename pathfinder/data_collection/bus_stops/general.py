@@ -7,7 +7,7 @@ import glob
 # data_collection to bus_stop data
 def dc_to_bsd():
 	os.chdir("../../../")
-	os.chdir("data/JourneyPatternID/bus_stops")
+	os.chdir("data/data/JourneyPatternID/bus_stops")
 def bsd_to_dc():
 	os.chdir("../../../")
 	os.chdir("pathfinder/data_collection")
@@ -47,9 +47,7 @@ def read_bus_stop_data(file_name):
 # RETURN DATA
 # bus stop data
 def return_bus_stop_data(file_name):
-	"""
-	Remember to close the file when you're done with it
-	"""
 	source = read_bus_stop_data()
 	bus_stops = source.readline().strip().split(",")
+	source.close()
 	return bus_stops
