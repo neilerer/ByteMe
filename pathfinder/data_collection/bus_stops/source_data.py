@@ -26,10 +26,9 @@ def jpi_dictionary():
 		bus_stop_dict[name] = bus_stop_dict.pop(file_name)
 	return bus_stop_dict
 
-
-my_dict = jpi_dictionary()
-print("jpi_dictionary")
-for item in my_dict:
-	print(item)
-	print(my_dict[item])
-	print("")
+# my_dict = jpi_dictionary()
+# print("jpi_dictionary")
+# for item in my_dict:
+# 	print(item)
+# 	print(my_dict[item])
+# 	print("")
