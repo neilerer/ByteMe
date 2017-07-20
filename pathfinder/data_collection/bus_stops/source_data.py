@@ -28,7 +28,9 @@ def csv_file_name_to_name(file_name):
 # takes the return of file_name_dictionary and replaces full file name with just the jpi
 def jpi_dictionary():
 	bus_stop_dict = file_name_dictionary()
-	for file_name in bus_stop_dict:
+	# a list with every bus stop file name in it
+	file_name_list = general.list_of_bus_files()
+	for file_name in file_name_list:
 		name = csv_file_name_to_name(file_name)
 		bus_stop_dict[name] = bus_stop_dict.pop(file_name)
 	return bus_stop_dict
