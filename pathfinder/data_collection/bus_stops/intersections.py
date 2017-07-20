@@ -25,8 +25,6 @@ def get_intersection_all_pairwise(primary_jpi, bus_stop_dict):
 	return (primary_jpi, all_pairwise_intersections)
 
 bus_stop_dict = source_data.jpi_dictionary()
-for item in bus_stop_dict:
-	print(item)
-# primary_jpi = "00010001"
-# secondary_jpi = "00011001"
-# print(get_intersection_pairwise(primary_jpi, secondary_jpi, bus_stop_dict))
+primary_jpi = "00010001"
+secondary_jpi = "00011001"
+print(get_intersection_pairwise(primary_jpi, secondary_jpi, bus_stop_dict))
