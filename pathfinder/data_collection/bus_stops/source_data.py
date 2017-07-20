@@ -22,7 +22,8 @@ def csv_file_name_to_name(file_name):
 def jpi_dictionary():
 	bus_stop_dict = file_name_dictionary()
 	for file_name in bus_stop_dict:
-		file_name = csv_file_name_to_name(file_name)
+		name = csv_file_name_to_name(file_name)
+		bus_stop_dict[name] = bus_stop_dict.pop(file_name)
 	return bus_stop_dict
 
 
