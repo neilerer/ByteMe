@@ -20,14 +20,16 @@ def get_intersection_pairwise(primary_jpi, secondary_jpi, bus_stop_dict):
 def get_intersection_all_pairwise(primary_jpi, bus_stop_dict):
 	all_pairwise_intersections = {}
 	for jpi in bus_stop_dict:
+		# we don't want to the trivial set of intersections
 		if jpi == primary_jpi:
 			pass
 		else:
+			# generate the pairwise intersections
 			intersection_tuple = get_intersection_pairwise(primary_jpi, jpi, bus_stop_dict)
-			if intersection_tuple[1] == []:
-				pass
-			else:
+			# if the set of intersection is not empty, then we'll record it
+			if not (intersection_tuple[1] == []):
 				all_pairwise_intersections[jpi] = intersection_tuple[1]
+	# return
 	return all_pairwise_intersections
 
 bus_stop_dict = source_data.jpi_dictionary()
