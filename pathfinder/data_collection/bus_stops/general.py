@@ -47,7 +47,7 @@ def read_bus_stop_data(file_name):
 # RETURN DATA
 # bus stop data
 def return_bus_stop_data(file_name):
-	source = read_bus_stop_data()
+	source = read_bus_stop_data(file_name)
 	bus_stops = source.readline().strip().split(",")
 	source.close()
 	return bus_stops
