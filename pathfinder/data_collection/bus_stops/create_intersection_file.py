@@ -10,7 +10,9 @@ def create_intersections():
 		for jpi in jpi_intersections:
 			key = jpi
 			value = jpi_intersections[jpi]
-			destination.write(key, value, "\n")
+			destination.write(key)
+			destination.write(value)
+			destination.write("\n")
 	general.i_to_dc()
 
 
