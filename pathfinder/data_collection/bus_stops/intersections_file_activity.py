@@ -19,5 +19,23 @@ def intersections_to_file():
 	general.i_to_dc()
 
 
+def intersections_from_file():
+	# got the appropriate directory
+	general.dc_to_i()
+	# open the pickle file
+	f = open("jpi_intersections.p", "rb")
+	# load the pickle file
+	jpi_intersections = pickle.load(f)
+	# close the pickle file
+	f.close()
+	return jpi_intersections
+
+
 if __name__ == "__main__":
-	intersections_to_file()
+# 	intersections_to_file()
+	test = intersections_from_file()
+	actual = intersections.get_all_intersections()
+	if test == actual:
+		print("OK")
+	else:
+		print("Not OK")
