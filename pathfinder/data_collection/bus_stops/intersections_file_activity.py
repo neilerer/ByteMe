@@ -28,6 +28,9 @@ def intersections_from_file():
 	jpi_intersections = pickle.load(f)
 	# close the pickle file
 	f.close()
+	# return to the appropriate dictory
+	general.i_to_dc()
+	# return
 	return jpi_intersections
 
 
