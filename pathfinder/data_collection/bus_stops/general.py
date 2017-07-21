@@ -12,6 +12,14 @@ def bsd_to_dc():
 	os.chdir("../../../../")
 	os.chdir("pathfinder/data_collection/bus_stops")
 
+# data_collection to intersection directory
+def dc_to_i():
+	os.chdir("../../../")
+	os.chdir("data/data/JourneyPatternID/intersections")
+def i_to_dc():
+	os.chdir("../../../../")
+	os.chdir("pathfinder/data_collection/bus_stops")
+
 
 # FILE NAMES
 # list of bus files
