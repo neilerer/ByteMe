@@ -7,8 +7,9 @@ import intersections
 def intersections_to_file():
 	jpi_intersections = intersections.get_all_intersections()
 	general.dc_to_i()
-	with open("jpi_intersections.p", "w") as destination:
-		pickle.dump(jpi_intersections, destination)
+	destination = open("jpi_intersections.p", "w")
+	pickle.dump(jpi_intersections, destination)
+	destination.close()
 	general.i_to_dc()
 
 
