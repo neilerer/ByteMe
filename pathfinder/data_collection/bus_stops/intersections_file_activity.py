@@ -34,11 +34,11 @@ def intersections_from_file():
 	return jpi_intersections
 
 
-if __name__ == "__main__":
-# 	intersections_to_file()
-	test = intersections_from_file()
-	actual = intersections.get_all_intersections()
-	if test == actual:
-		print("OK")
-	else:
-		print("Not OK")
+# if __name__ == "__main__":
+# # 	intersections_to_file()
+# 	test = intersections_from_file()
+# 	actual = intersections.get_all_intersections()
+# 	if test == actual:
+# 		print("OK")
+# 	else:
+# 		print("Not OK")
