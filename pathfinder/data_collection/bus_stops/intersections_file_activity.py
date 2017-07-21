@@ -10,7 +10,7 @@ def intersections_to_file():
 	# got the appropriate directory
 	general.dc_to_i()
 	# create the file
-	destination = open("jpi_intersections.p", "w")
+	destination = open("jpi_intersections.p", "wb")
 	# get the dictionary to disk
 	pickle.dump(jpi_intersections, destination)
 	# close the file
