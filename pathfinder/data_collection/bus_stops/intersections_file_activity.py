@@ -13,4 +13,4 @@ def intersections_to_file():
 
 
 if __name__ == "__main__":
-	create_intersections()
+	intersections_to_file()
