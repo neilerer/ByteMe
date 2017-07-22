@@ -36,4 +36,4 @@ def next_stop_from_file():
 
 if __name__ == "__main__":
 	status = (next_stop.next_for_all() == next_stop_from_file())
-	print("A new dictionary and that form file match: {}".format(status))
+	print("A new dictionary and that from file match: {}".format(status))
