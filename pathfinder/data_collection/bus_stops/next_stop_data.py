@@ -31,7 +31,7 @@ def next_stop_from_file():
 	# return to the appropriate dictory
 	general.pd_to_dc()
 	# return
-	return jpi_intersections
+	return next_stop_dict
 
 
 if __name__ == "__main__":
