@@ -19,7 +19,7 @@ def next_for_stop_id(stop_id, bus_stop_dict):
 	for jpi in bus_stop_dict:
 		try:
 			index = bus_stop_dict[jpi].index(stop_id) + 1
-			key = bus_stop_dict[jpi][index]
+			key = (bus_stop_dict[jpi][index], jpi)
 			next_dict[key] = False
 		except:
 			pass
