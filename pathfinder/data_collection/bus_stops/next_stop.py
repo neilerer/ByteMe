@@ -30,7 +30,7 @@ def next_for_all():
 	bus_stop_dict = source_data.jpi_dictionary()
 	next_dict = {}
 	bus_stop_unique_values = bus_stops(bus_stop_dict)
-	for sid in bus_stop_unique_values:
+	for stop_id in bus_stop_unique_values:
 		data = next_for_stop_id(stop_id, bus_stop_dict)
 		next_dict[data[0]] = data[1]
 	return next_dict
