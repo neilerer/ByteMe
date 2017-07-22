@@ -3,14 +3,29 @@ import general
 import source_data
 
 
-def bus_stops():
-	bus_stop_dict = source_data.jpi_dictionary()
+def bus_stops(bus_stop_dict):
+	# holder for return values
 	bus_stop_unique_values = set()
+	# iterate over the values in each element of the dictionary
 	for jpi in bus_stop_dict:
 		for stop in bus_stop_dict[jpi]:
 			bus_stop_unique_values.add(stop)
-	bus_stop_unique_values = list(bus_stop_unique_values)
-	bus_stop_unique_values.sort()
-	return bus_stop_unique_values
+	# return
+	return list(bus_stop_unique_values)
 
-print(bus_stops())
+
+def next_for_stop_id(stop_id, bus_stop_dict):
+	next_dict = {}
+	for jpi in bus_stop_dict:
+		try:
+			index = bus_stop_dict[jpi].index(stop_id) + 1
+			key = bus_stop_dict[jpi][index]
+			next_dict[key] = False
+		except:
+			pass
+	return (stop_id, next_dict)
+
+
+bus_stop_dict = source_data.jpi_dictionary()
+stop_id = '226'
+print(next_for_stop_id(stop_id, bus_stop_dict))
