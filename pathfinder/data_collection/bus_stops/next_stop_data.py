@@ -19,4 +19,20 @@ def next_stop_to_file():
 	general.pd_to_dc()
 
 
-next_stop_to_file()
+def next_stop_from_file():
+	# got the appropriate directory
+	general.dc_to_pd()
+	# open the pickle file
+	f = open("next_stop.p", "rb")
+	# load the pickle file
+	next_stop_dict = pickle.load(f)
+	# close the pickle file
+	f.close()
+	# return to the appropriate dictory
+	general.pd_to_dc()
+	# return
+	return jpi_intersections
+
+
+if __name__ == "__main__":
+	return "A generated dictionary and that stored in file are the same: {}".format(next_stop.next_for_all() == next_stop_from_file())
