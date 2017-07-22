@@ -20,6 +20,14 @@ def i_to_dc():
 	os.chdir("../../../../")
 	os.chdir("pathfinder/data_collection/bus_stops")
 
+# data_collection to pathfinder data
+def dc_to_pd():
+	os.chdir("../../../")
+	os.chdir("data/data/pathfinder/")
+def pd_to_dc():
+	os.chdir("../../../")
+	os.chdir("pathfinder/data_collection_bus_stops")
+
 
 # FILE NAMES
 # list of bus files
