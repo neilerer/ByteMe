@@ -35,4 +35,5 @@ def next_stop_from_file():
 
 
 if __name__ == "__main__":
-	return "A generated dictionary and that stored in file are the same: {}".format(next_stop.next_for_all() == next_stop_from_file())
+	status = (next_stop.next_for_all() == next_stop_from_file())
+	return "A new dictionary and that form file match: {}".format(status)
