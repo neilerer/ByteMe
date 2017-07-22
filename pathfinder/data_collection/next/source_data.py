@@ -9,7 +9,7 @@ import general
 def skeleton_dictonary(bus_file_names_list):
 	return {jpi:False for jpi in bus_file_names_list}
 
-# creates a dicitonary with key of file name and values of associated bus stops
+# creates a dicitonary with key of file name and value a list of associated bus stops
 def file_name_dictionary():
 	# a list with every bus stop file name in it
 	file_name_list = general.list_of_bus_files()

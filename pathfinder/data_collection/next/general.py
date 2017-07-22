@@ -26,7 +26,7 @@ def dc_to_pd():
 	os.chdir("data/data/pathfinder/")
 def pd_to_dc():
 	os.chdir("../../../")
-	os.chdir("pathfinder/data_collection/bus_stops")
+	os.chdir("pathfinder/data_collection/next")
 
 
 # FILE NAMES
