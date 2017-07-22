@@ -10,7 +10,7 @@ def dc_to_bsd():
 	os.chdir("data/data/JourneyPatternID/bus_stops")
 def bsd_to_dc():
 	os.chdir("../../../../")
-	os.chdir("pathfinder/data_collection/bus_stops")
+	os.chdir("pathfinder/data_collection/next")
 
 # data_collection to intersection directory
 def dc_to_i():
@@ -18,7 +18,7 @@ def dc_to_i():
 	os.chdir("data/data/JourneyPatternID/intersections")
 def i_to_dc():
 	os.chdir("../../../../")
-	os.chdir("pathfinder/data_collection/bus_stops")
+	os.chdir("pathfinder/data_collection/next")
 
 # data_collection to pathfinder data
 def dc_to_pd():
