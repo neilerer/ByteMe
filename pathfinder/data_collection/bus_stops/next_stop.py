@@ -35,6 +35,8 @@ def next_for_all():
 		next_dict[data[0]] = data[1]
 	return next_dict
 
-for item in next_for_all():
+my_dict = next_for_all()
+for item in my_dict:
 	print(item)
+	print(my_dict[item])
 	print("")
