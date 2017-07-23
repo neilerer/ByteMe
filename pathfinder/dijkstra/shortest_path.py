@@ -4,10 +4,16 @@ import general
 
 
 # wait_time_dict assumed to match time period of bus_stop_dict and contain stop_id:{jpi:t, . . . } for each stop_id
-
+# wait_time_dict: information will be 
+def journey_start(journey_id, stop_id, time, journies_dict):
 def journey_start(journey_id, stop_id, bus_stop_dict, wait_time_dict, journies_dict):
-	# obtain the source information
+	# get the information for the next_stop
+	bus_stop_dict = general.next_stop_from_file() # in future will specify based on time and stopid
 	next_dict = bus_stop_dict[stop_id]
+	# get the information for waiting at stop_id
+	wait_time_dict = general.next_stop_from_file() # in futre will replace with
+	## 
+
 	wait_dict = wait_time_dict[stop_id]
 	# iteratively populate journies
 	for next_stop in next_dict:
@@ -27,6 +33,8 @@ def journey_start(journey_id, stop_id, bus_stop_dict, wait_time_dict, journies_d
 		journies_dict[journey_id].append(second_entry)
 		# increment the journey_id
 		journey_id += 1
+
+
 
 
 # bus_stop_dict = general.next_stop_from_file()

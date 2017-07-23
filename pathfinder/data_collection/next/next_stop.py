@@ -53,7 +53,7 @@ def next_for_stop_id(stop_id, bus_stop_dict):
 	--- creates a dicitonary with key of JPI and value a list of associated bus stops
 
 	Output
-	- a tuple (stop id, {(next stop id, next stop id jpi): False, ...})
+	- a tuple (stop id, {(next stop id, next stop id jpi): Model output, ...})
 
 	"""
 
