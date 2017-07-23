@@ -1,4 +1,5 @@
 # import
+import random
 import general
 import source_data
 
@@ -31,6 +32,12 @@ def bus_stops(bus_stop_dict):
 
 
 
+# TEMPORARY RANDOM TIME VALUE GENERATOR; WILL BE REPLACED BY SYNCING UP MODEL DATA IN THE FUTURE
+def random_journey_time():
+	return random.randint(1, 11)
+
+
+
 def next_for_stop_id(stop_id, bus_stop_dict):
 	"""
 	Purpose
@@ -54,7 +61,7 @@ def next_for_stop_id(stop_id, bus_stop_dict):
 		try:
 			index = bus_stop_dict[jpi].index(stop_id) + 1
 			key = (bus_stop_dict[jpi][index], jpi)
-			next_dict[key] = False
+			next_dict[key] = random_journey_time()
 		except:
 			pass
 	return (stop_id, next_dict)
