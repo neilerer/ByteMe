@@ -39,6 +39,53 @@ def random_journey_time():
 
 
 
+# These functions are used to turn a JPI set into a route set
+def routes_present(next_dict):
+	routes = set()
+	for key in next_dict:
+		jpi = key[1]
+		route = jpi[0:5:1]
+		routes.add(route)
+	return list(routes)
+
+def stops_present(next_dict):
+	stops = set()
+	for key in next_dict:
+		stop = key[0]
+		stops.add(stop)
+	return list(stops)
+
+def route_average_time(route, stop_id, next_dict):
+	total = 0
+	count = 0
+	for key in next_dict:
+		key_route = key[1][0:5:1]
+		next_stop_id = key[0]
+		time = next_dict[key_route]
+		if (key_route == route) and (next_stop_id == stop_id):
+			total += time
+			count += 1
+	try:
+		average = total / count
+		return ((stop_id, route), average)
+	except:
+		return None
+
+def jpi_to_route(next_dict):
+	routes = routes_present(next_dict)
+	stops = stops_present(next_dict)
+	route_dict_value = dict()
+	for route in routes:
+		for stop in stops:
+			new_entry = route_average_time(route, stop, next_dict)
+			if new_entry is not None:
+				key_tuple = new_entry[0]
+				value = new_entry[1]
+				route_dict_value[key_tuple] = value
+	return route_dict_value
+
+
+
 def next_for_stop_id(stop_id, bus_stop_dict):
 	"""
 	Purpose
@@ -66,6 +113,7 @@ def next_for_stop_id(stop_id, bus_stop_dict):
 		except:
 			pass
 	next_dict = merge_sort.merge_sort_next_for_stop_id(next_dict)
+	next_dict = jpi_to_route(next_dict)
 	return (stop_id, next_dict)
 
 
