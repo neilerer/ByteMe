@@ -1,6 +1,7 @@
 # import
 import random
 import general
+import merge_sort
 import source_data
 
 
@@ -64,6 +65,7 @@ def next_for_stop_id(stop_id, bus_stop_dict):
 			next_dict[key] = random_journey_time()
 		except:
 			pass
+	next_dict = merge_sort.merge_sort_next_for_stop_id(next_dict)
 	return (stop_id, next_dict)
 
 
