@@ -61,7 +61,7 @@ def route_average_time(route, stop_id, next_dict):
 	for key in next_dict:
 		key_route = key[1][0:5:1]
 		next_stop_id = key[0]
-		time = next_dict[key_route]
+		time = next_dict[key]
 		if (key_route == route) and (next_stop_id == stop_id):
 			total += time
 			count += 1
