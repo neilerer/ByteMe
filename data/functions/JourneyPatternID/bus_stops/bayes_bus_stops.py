@@ -40,7 +40,7 @@ def left_neighbours(stop_id, the_routes):
 	occurances = 0
 	# collect and tabulate the number of occurances of the left neighbour
 	for route in the_routes:
-		neighbour = left_neighbour(stop_id, route)
+		neighbour = left_neighbour(stop_id, the_routes[route])
 		occurances += 1
 		if neighbour is not None:
 			if neighbour in left_dict:
@@ -57,6 +57,5 @@ def left_neighbours(stop_id, the_routes):
 if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
-	print(all_stops)
-	# for stop in all_stops:
-	# 	print(left_neighbours(stop, the_routes))
+	for stop in all_stops:
+		print(left_neighbours(stop, the_routes))
