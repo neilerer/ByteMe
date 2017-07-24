@@ -69,5 +69,3 @@ if __name__ == "__main__":
 	my_dict = left_neighbours_dict(the_routes, all_stops)
 	for item in my_dict:
 		print(item)
-		print(my_dict[item])
-		print("")
