@@ -64,12 +64,11 @@ def pct_first(stop_id, routes, position):
 		return 0
 
 
-# all_stops = unique_stops(the_routes)
-# for item in the_routes:
-# 	print(the_routes[item])
-# print("")
-# for stop in all_stops:
-# 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
+for item in the_routes:
+	print(the_routes[item])
+print("")
+for stop in all_stops:
+	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
 
 
 def who_is_first(all_stops, routes, position):
@@ -135,4 +134,4 @@ def bus_stops(all_stops, routes):
 	# return
 	return bus_stop_list
 
-print(bus_stops(all_stops, the_routes))
+# print(bus_stops(all_stops, the_routes))
