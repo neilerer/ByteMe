@@ -40,6 +40,10 @@ def pct_first(stop_id, routes, position):
 	occurances = 0
 	# count the number of times the stop_id occurs in position
 	pos = 0
+	# number of routes
+	number_of_routes = len(routes)
+	number_of_routes_minimum_threshold = 3 / 4
+	number_of_routes_check = number_of_routes * number_of_routes_minimum_threshold
 	# iterate over the routes
 	for route in routes:
 		try:
@@ -56,8 +60,8 @@ def pct_first(stop_id, routes, position):
 			pass
 	try:
 		# return the weighted occurances of stop_id
-		# if it occurs only once and in the position, don't count it
-		if pos == 1 and occurances == 1:
+		# if it occurs only once and in the position, don't count it; similarly if it doesn occur in enough volume, don't count it
+		if (pos == 1 and occurances == 1) or (occurances < number_of_routes_check):
 			return 0
 		else:
 			return (pos / occurances) * pos
@@ -105,38 +109,78 @@ def remove_element_from_list(element, array):
 	return array
 
 
-def bus_stops(all_stops, routes):
+
+def bus_stop(all_stops, routes):
 	# termination condition
-	termination_length = len(all_stops)
+	candidates_exist = True
 	# return object
 	bus_stop_list = []
-	# count
-	count = 0
-	# loop until termination condition is achieved
-	# while len(bus_stop_list) < termination_length:
-	while count < termination_length:
+	# loop until no more candidates exist
+	while candidates_exist:
 		# make the sorted dictionary of stops
 		stop_dict = who_is_first(all_stops, routes, 0)
 		# obtain a stop candidate
 		stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+		# check for a lack of candidates
+		if stop == 0:
+			candidates_exist = False
+			break
 		# termination condition
 		in_list = (stop in bus_stop_list)
 		# loop until termination is achieved
 		while in_list:
 			# obtain a stop candidate
 			stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+			# check for a lack of candidates
+			if stop == 0:
+				candidates_exist = False
+				break
 			# check termination condition
 			in_list = (stop in bus_stop_list)
-		# append the successful stop
-		bus_stop_list.append(stop)
-		# remove stop from unique_stops (we will no longer consider it)
-		all_stops.pop(all_stops.index(stop))
-		# remove stop from weekday_routes (we will no longer consdier it)
-		for item in routes:
-			routes[item] = remove_element_from_list(stop, routes[item])
-		# increment the count
-		count += 1
+		# make sure we haven't found that no candidates exist
+		if candidates_exist:
+			# append the successful stop
+			bus_stop_list.append(stop)
+			# remove stop from unique_stops (we will no longer consider it)
+			all_stops.pop(all_stops.index(stop))
+			# remove stop from weekday_routes (we will no longer consdier it)
+			for item in routes:
+				routes[item] = remove_element_from_list(stop, routes[item])
 	# return
 	return bus_stop_list
+
+
+# def bus_stops(all_stops, routes):
+# 	# termination condition
+# 	termination_length = len(all_stops)
+# 	# return object
+# 	bus_stop_list = []
+# 	# count
+# 	count = 0
+# 	# loop until termination condition is achieved
+# 	while count < termination_length:
+# 		# make the sorted dictionary of stops
+# 		stop_dict = who_is_first(all_stops, routes, 0)
+# 		# obtain a stop candidate
+# 		stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+# 		# termination condition
+# 		in_list = (stop in bus_stop_list)
+# 		# loop until termination is achieved
+# 		while in_list:
+# 			# obtain a stop candidate
+# 			stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+# 			# check termination condition
+# 			in_list = (stop in bus_stop_list)
+# 		# append the successful stop
+# 		bus_stop_list.append(stop)
+# 		# remove stop from unique_stops (we will no longer consider it)
+# 		all_stops.pop(all_stops.index(stop))
+# 		# remove stop from weekday_routes (we will no longer consdier it)
+# 		for item in routes:
+# 			routes[item] = remove_element_from_list(stop, routes[item])
+# 		# increment the count
+# 		count += 1
+# 	# return
+# 	return bus_stop_list
 
 print(bus_stops(all_stops, the_routes))
