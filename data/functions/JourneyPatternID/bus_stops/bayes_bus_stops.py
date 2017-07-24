@@ -55,11 +55,19 @@ def left_neighbours(stop_id, the_routes):
 	# return
 	return left_dict
 
+def left_neighbours_dict(the_routes, all_stops):
+	neighbours_dict = {}
+	for stop in all_stops:
+		neighbours_dict{stop} = left_neighbours(stop, the_routes)
+
+
+
 
 if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
-	for stop in all_stops:
-		print(stop)
-		print(left_neighbours(stop, the_routes))
+	my_dict = left_neighbours_dict(the_routes, all_stops)
+	for item in my_dict:
+		print(item)
+		print(my_dict[item])
 		print("")
