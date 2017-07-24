@@ -63,7 +63,7 @@ def left_neighbours_dict(the_routes, all_stops):
 
 def find_right_neighbour(stop_id, neighbours_dict):
 	start = False
-	start_value = 0
+	start_value = 0.05
 	for stop in neighbours_dict:
 		value_dict = neighbours_dict[stop]
 		temp = merge_sort.get_first_entry_of_dict(value_dict)
@@ -73,6 +73,19 @@ def find_right_neighbour(stop_id, neighbours_dict):
 	return start
 
 
+def generate_bus_stops(neighbours_dict):
+	bus_stops = []
+	# add the first stop
+	bus_stops.append(find_right_neighbour('start', neighbours_dict))
+	# iteratively find the rest
+	keep_going = True
+	while keep_going:
+		neighbour = find_right_neighbour(bus_stops[-1], neighbours_dict)
+		if isinstance(neighbour, str):
+			bus_stops.append(neighbour)
+		else:
+			keep_going = False
+	return bus_stops
 
 
 
@@ -80,9 +93,13 @@ if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
 	my_dict = left_neighbours_dict(the_routes, all_stops)
+	
 	# for item in my_dict:
 	# 	print(item)
 	# 	print(my_dict[item])
 	# 	print("")
-	print(find_right_neighbour("start", my_dict))
-	print(find_right_neighbour('226', my_dict))
+	
+	# print(find_right_neighbour("start", my_dict))
+	# print(find_right_neighbour('226', my_dict))
+
+	print(generate_bus_stops(my_dict))
