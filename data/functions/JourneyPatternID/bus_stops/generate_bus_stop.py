@@ -118,9 +118,12 @@ def bus_stops(all_stops, routes):
 	while candidates_exist:
 		# make the sorted dictionary of stops
 		stop_dict = who_is_first(all_stops, routes, 0)
-		print(stop_dict)
 		# obtain a stop candidate
-		stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+		try:
+			stop = merge_sort.remove_first_entry_of_dict(stop_dict)[0]
+		except:
+			candidates_exist = False
+			break
 		# check for a lack of candidates
 		if stop == 0:
 			candidates_exist = False
