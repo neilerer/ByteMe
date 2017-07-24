@@ -58,7 +58,7 @@ def left_neighbours(stop_id, the_routes):
 def left_neighbours_dict(the_routes, all_stops):
 	neighbours_dict = {}
 	for stop in all_stops:
-		neighbours_dict{stop} = left_neighbours(stop, the_routes)
+		neighbours_dict[stop] = left_neighbours(stop, the_routes)
 
 
 
