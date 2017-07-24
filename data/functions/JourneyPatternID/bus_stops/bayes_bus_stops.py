@@ -50,6 +50,8 @@ def left_neighbours(stop_id, the_routes):
 	# convert left_dict values to percentages of total appearances
 	for neighbour in left_dict:
 		left_dict[neighbour] = left_dict[neighbour] / occurances
+	# sort the diciontary
+	left_dict = merge_sort.merge_sort_dict_left_neighbours(left_dict)
 	# return
 	return left_dict
 
