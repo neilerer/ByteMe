@@ -74,6 +74,6 @@ def routes(file_name):
 	# return
 	return unique_journeys
 
-# my_dict = routes("00010001.csv")
-# for item in my_dict:
-# 	print(my_dict[item])
+my_dict = routes("00010001.csv")
+for item in my_dict:
+	print(my_dict[item])
