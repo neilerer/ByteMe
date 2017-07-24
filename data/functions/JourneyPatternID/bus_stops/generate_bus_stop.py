@@ -58,6 +58,7 @@ def pct_first(stop_id, routes, position):
 			pass
 	try:
 		# return the weighted occurances of stop_id
+		# if it occurs only once and in the position, don't count it
 		if pos == 1 and occurances == 1:
 			return 0
 		else:
@@ -67,11 +68,11 @@ def pct_first(stop_id, routes, position):
 		return 0
 
 
-for item in the_routes:
-	print(the_routes[item])
-print("")
-for stop in all_stops:
-	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
+# for item in the_routes:
+# 	print(the_routes[item])
+# print("")
+# for stop in all_stops:
+# 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
 
 
 def who_is_first(all_stops, routes, position):
@@ -137,4 +138,4 @@ def bus_stops(all_stops, routes):
 	# return
 	return bus_stop_list
 
-# print(bus_stops(all_stops, the_routes))
+print(bus_stops(all_stops, the_routes))
