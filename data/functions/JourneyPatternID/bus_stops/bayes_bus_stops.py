@@ -33,7 +33,7 @@ def left_neighbour(stop_id, route):
 	except:
 		return None
 
-def left_neighours(stop_id, the_routes):
+def left_neighbours(stop_id, the_routes):
 	# return object
 	left_dict = {}
 	# occurances
