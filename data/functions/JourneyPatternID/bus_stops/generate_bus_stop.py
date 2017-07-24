@@ -70,14 +70,13 @@ def pct_first(stop_id, routes, position):
 		return 0
 
 
-the_routes = generate_routes.routes("00010001.csv")
-all_stops = unique_stops(the_routes)
+
 
 # for item in the_routes:
 # 	print(the_routes[item])
 # print("")
-for stop in all_stops:
-	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
+# for stop in all_stops:
+# 	print("{}: {}".format(stop, pct_first(stop, the_routes, 0)))
 
 
 def who_is_first(all_stops, routes, position):
@@ -110,7 +109,7 @@ def remove_element_from_list(element, array):
 
 
 
-def bus_stop(all_stops, routes):
+def bus_stops(all_stops, routes):
 	# termination condition
 	candidates_exist = True
 	# return object
@@ -183,4 +182,8 @@ def bus_stop(all_stops, routes):
 # 	# return
 # 	return bus_stop_list
 
-print(bus_stops(all_stops, the_routes))
+
+if __name__ == "__main__":
+	the_routes = generate_routes.routes("00010001.csv")
+	all_stops = unique_stops(the_routes)
+	print(bus_stops(all_stops, the_routes))
