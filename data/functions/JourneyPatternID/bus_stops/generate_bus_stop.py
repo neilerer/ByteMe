@@ -58,7 +58,10 @@ def pct_first(stop_id, routes, position):
 			pass
 	try:
 		# return the weighted occurances of stop_id
-		return (pos / occurances) * pos
+		if pos == 1 and occurances == 1:
+			return 0
+		else:
+			return (pos / occurances) * pos
 	except:
 		# return zero if stop_id never occurred
 		return 0
