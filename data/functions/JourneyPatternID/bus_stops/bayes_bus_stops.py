@@ -6,20 +6,20 @@ import generate_routes
 
 
 
-# # uniqute values of StopID
-# def unique_stops(routes):
-# 	# list of stops
-# 	stops = []
-# 	# iterate over the lists
-# 	for stop_list in routes:
-# 		# iterate over the elements in the list
-# 		for stop in routes[stop_list]:
-# 			# check for inclusion
-# 			if stop not in stops:
-# 				# add if not already there
-# 				stops.append(stop)
-# 	# return stops
-# 	return stops
+# uniqute values of StopID
+def unique_stops(routes):
+	# list of stops
+	stops = []
+	# iterate over the lists
+	for stop_list in routes:
+		# iterate over the elements in the list
+		for stop in routes[stop_list]:
+			# check for inclusion
+			if stop not in stops:
+				# add if not already there
+				stops.append(stop)
+	# return stops
+	return stops
 
 
 
@@ -91,6 +91,7 @@ def generate_bus_stops(neighbours_dict):
 
 if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
+	all_stops = unique_stops(the_routes)
 	my_dict = left_neighbours_dict(the_routes, all_stops)
 	
 	# for item in my_dict:
