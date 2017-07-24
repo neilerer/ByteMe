@@ -59,6 +59,7 @@ def left_neighbours_dict(the_routes, all_stops):
 	neighbours_dict = {}
 	for stop in all_stops:
 		neighbours_dict[stop] = left_neighbours(stop, the_routes)
+	return neighbours_dict
 
 
 
@@ -69,3 +70,5 @@ if __name__ == "__main__":
 	my_dict = left_neighbours_dict(the_routes, all_stops)
 	for item in my_dict:
 		print(item)
+		print(my_dict[item])
+		print("")
