@@ -20,8 +20,8 @@ def unique_stops(routes):
 	# return stops
 	return stops
 
-# the_routes = generate_routes.routes("00010001.csv")
-# all_stops = unique_stops(the_routes)
+the_routes = generate_routes.routes("00010001.csv")
+all_stops = unique_stops(the_routes)
 
 
 # of the times it occurs, how often is it first
@@ -135,4 +135,4 @@ def bus_stops(all_stops, routes):
 	# return
 	return bus_stop_list
 
-# print(bus_stops(all_stops, the_routes))
+print(bus_stops(all_stops, the_routes))
