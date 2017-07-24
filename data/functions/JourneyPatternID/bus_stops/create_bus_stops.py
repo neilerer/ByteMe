@@ -3,7 +3,7 @@ import os
 import general
 import merge_sort
 import generate_routes
-import generate_bus_stop
+import bayes_bus_stops
 
 
 def create_files():
@@ -14,8 +14,9 @@ def create_files():
 		# generate the source data
 		the_journeys = generate_routes.routes(file_name)
 		all_stops = generate_bus_stop.unique_stops(the_journeys)
+		neighbours_dict = bayes_bus_stops.left_neighbours_dict(the_journeys, all_stops)
 		# create the object of interest
-		bus_route = generate_bus_stop.bus_stops(all_stops, the_journeys)
+		bus_route = bayes_bus_stops.generate_bus_stops(neighbours_dict)
 		# save the object of interest to file
 		general.bsf_to_bsd()
 		with open(file_name, "w") as destination:
