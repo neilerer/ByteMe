@@ -61,6 +61,13 @@ def left_neighbours_dict(the_routes, all_stops):
 		neighbours_dict[stop] = left_neighbours(stop, the_routes)
 	return neighbours_dict
 
+def find_start(neighbours_dict):
+	start = False
+	for stop in neighbours_dict:
+		value_dict = neighbours_dict[stop]
+		temp = merge_sort.get_first_entry_of_dict(value_dict)
+		print(temp)
+
 
 
 
@@ -68,7 +75,8 @@ if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
 	my_dict = left_neighbours_dict(the_routes, all_stops)
-	for item in my_dict:
-		print(item)
-		print(my_dict[item])
-		print("")
+	# for item in my_dict:
+	# 	print(item)
+	# 	print(my_dict[item])
+	# 	print("")
+	find_start(my_dict)
