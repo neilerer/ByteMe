@@ -48,8 +48,8 @@ def left_neighbours(stop_id, the_routes):
 			else:
 				left_dict[neighbour] = 1
 	# convert left_dict values to percentages of total appearances
-	# for neighbour in left_dict:
-	# 	left_dict[neighbour] = left_dict[neighbour] / occurances
+	for neighbour in left_dict:
+		left_dict[neighbour] = left_dict[neighbour] / occurances
 	# return
 	return left_dict
 
@@ -57,4 +57,5 @@ def left_neighbours(stop_id, the_routes):
 if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
-	print(left_neighbours('226', the_routes))
+	for stop in all_stops:
+		print(left_neighbours(stop, the_routes))
