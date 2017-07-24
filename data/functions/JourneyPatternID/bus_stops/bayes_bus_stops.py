@@ -61,13 +61,13 @@ def left_neighbours_dict(the_routes, all_stops):
 		neighbours_dict[stop] = left_neighbours(stop, the_routes)
 	return neighbours_dict
 
-def find_start(neighbours_dict):
+def find_right_neighbour(stop_id, neighbours_dict):
 	start = False
 	start_value = 0
 	for stop in neighbours_dict:
 		value_dict = neighbours_dict[stop]
 		temp = merge_sort.get_first_entry_of_dict(value_dict)
-		if temp[0] == "start" and temp[1] > start_value:
+		if temp[0] == stop_id and temp[1] > start_value:
 			start = stop
 			start_value = temp[1]
 	return start
@@ -84,4 +84,4 @@ if __name__ == "__main__":
 	# 	print(item)
 	# 	print(my_dict[item])
 	# 	print("")
-	print(find_start(my_dict))
+	print(find_right_neighbour("start", my_dict))
