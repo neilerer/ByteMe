@@ -60,4 +60,6 @@ if __name__ == "__main__":
 	the_routes = generate_routes.routes("00010001.csv")
 	all_stops = unique_stops(the_routes)
 	for stop in all_stops:
+		print(stop)
 		print(left_neighbours(stop, the_routes))
+		print("")
