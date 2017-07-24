@@ -48,8 +48,8 @@ def left_neighbours(stop_id, the_routes):
 			else:
 				left_dict[neighbour] = 1
 	# convert left_dict values to percentages of total appearances
-	for neighbour in left_dict:
-		left_dict[neighbour] = left_dict[neighbour] / occurances
+	# for neighbour in left_dict:
+	# 	left_dict[neighbour] = left_dict[neighbour] / occurances
 	# return
 	return left_dict
 
