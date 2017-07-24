@@ -85,3 +85,4 @@ if __name__ == "__main__":
 	# 	print(my_dict[item])
 	# 	print("")
 	print(find_right_neighbour("start", my_dict))
+	print(find_right_neighbour('226', my_dict))
