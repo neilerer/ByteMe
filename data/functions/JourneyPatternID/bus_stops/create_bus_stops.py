@@ -17,6 +17,8 @@ def create_files():
 		neighbours_dict = bayes_bus_stops.left_neighbours_dict(the_journeys, all_stops)
 		# create the object of interest
 		bus_route = bayes_bus_stops.generate_bus_stops(neighbours_dict)
+		if bus_route is False:
+			continue
 		# save the object of interest to file
 		general.bsf_to_bsd()
 		with open(file_name, "w") as destination:

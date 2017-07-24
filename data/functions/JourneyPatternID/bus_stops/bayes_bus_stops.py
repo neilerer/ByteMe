@@ -76,7 +76,11 @@ def find_right_neighbour(stop_id, neighbours_dict):
 def generate_bus_stops(neighbours_dict):
 	bus_stops = []
 	# add the first stop
-	bus_stops.append(find_right_neighbour('start', neighbours_dict))
+	first_stop = find_right_neighbour('start', neighbours_dict)
+	if first_stop is False:
+		return False
+	else:
+		bus_stops.append(first_stop)
 	# iteratively find the rest
 	keep_going = True
 	while keep_going:
