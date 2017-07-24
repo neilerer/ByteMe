@@ -13,7 +13,7 @@ def create_files():
 		print(file_name)
 		# generate the source data
 		the_journeys = generate_routes.routes(file_name)
-		all_stops = generate_bus_stop.unique_stops(the_journeys)
+		all_stops = bayes_bus_stops.unique_stops(the_journeys)
 		neighbours_dict = bayes_bus_stops.left_neighbours_dict(the_journeys, all_stops)
 		# create the object of interest
 		bus_route = bayes_bus_stops.generate_bus_stops(neighbours_dict)
