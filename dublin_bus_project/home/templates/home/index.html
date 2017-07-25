@@ -115,9 +115,30 @@
             <input type="submit" name="input_form">
         </form>
         {% if journey_time %}
-        <div>
-            <br><br>Expected journey time is <br><b>{{ journey_time }} minutes<b>
-        </div>
+            <div>
+                <br><br>Expected journey time is <br><b>{{ journey_time }} minutes</b>
+                <br><br>
+                <table>
+                    <tr><td>Leap Fare</td><td id="leap_fare"></td></tr>
+                    <tr><td>Cash Fare</td><td id="cash_fare"></td></tr>
+                </table>
+            </div>
+            <script>
+                var leap_fares=['1.50','2.05','2.60'];
+                var cash_fares=['2.00','2.70','3.30'];
+                if({{ trip_length }} < 4){
+                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[0];
+                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[0];
+                }
+                else if({{ trip_length }} < 14){
+                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[1];
+                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[1];
+                }
+                else{
+                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[2];
+                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[2];
+                }
+            </script>
         {% endif %}
     </div>
 

@@ -59,7 +59,7 @@ def get_route(request):
             returned_stops.append(stops_on_routes[i])
 
         stops_00010001=['226', '228', '229', '227', '230', '231', '1641', '1642', '213', '214', '4432', '119', '44', '45', '46', '47', '48', '49', '50', '51', '52', '265', '271', '340', '350', '351', '352', '353', '354', '355', '356', '357', '390', '372', '373', '374', '375', '2804', '376', '377', '378', '380']
-        context = {'stop_ids':stops_00010001,'stops_on_routes': returned_stops, 'routes': routes, 'stop_coordinates': stop_coordinates, 'selected_route':selected_route,'journey_time':journey_time,'selected_start':selected_start,'selected_end':selected_end }
+        context = {'stop_ids':stops_00010001,'stops_on_routes': returned_stops, 'trip_length':len(returned_stops)-1, 'routes': routes, 'stop_coordinates': stop_coordinates, 'selected_route':selected_route,'journey_time':journey_time,'selected_start':selected_start,'selected_end':selected_end }
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
