@@ -33,10 +33,20 @@ def get_route_journey_time_dict(dict_to_list_output):
 			route_journey_time_dict[stop] = data
 	return route_journey_time_dict
 
+def model_data_to_path_data():
+	path_data_dict = dict()
+	model_data = get_model_data()
+	for route_id in model_data:
+		route = model_data[route_id]
+		dict_to_list_output = dict_to_list(route)
+		path_data_dict[route_id] = get_route_journey_time_dict(dict_to_list_output)
+	return path_data_dict
 
 
-model_data = get_model_data()
-route = model_data[1]
-for item in dict_to_list(route):
-	print(item)
-print(get_route_journey_time_dict(dict_to_list(route)))
+
+if __name__ == "__main__":
+	path_data = model_data_to_path_data()
+	for item in path_data:
+		print(item)
+		print(path_data[item])
+		print("")
