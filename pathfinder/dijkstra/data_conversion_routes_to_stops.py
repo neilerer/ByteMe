@@ -28,11 +28,14 @@ def get_bus_stop_data():
 		stop_list.sort(key=lambda tup: tup[2])
 	return stop_dict
 
-bus_stop_data = get_bus_stop_data()
-for stop in bus_stop_data:
-	print(stop)
-	print(bus_stop_data[stop])
-	print("")
+
+
+if __name__ == "__main__":
+	bus_stop_data = get_bus_stop_data()
+	for stop in bus_stop_data:
+		print(stop)
+		print(bus_stop_data[stop])
+		print("")
 
 """
 Get unique bus stops
