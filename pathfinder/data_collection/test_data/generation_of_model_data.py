@@ -1,6 +1,7 @@
 # imports
 import random
 import merge_sort
+import pickle
 
 """
 JPI
@@ -117,6 +118,10 @@ def route_ctt_review(route_ctt_output):
 		print("route: {}, stops: {}".format(route, route_ctt_output[route]))
 	print("")
 
+def route_ctt_to_file(route_ctt_output):
+	destination = open("test_data.p", "wb")
+	pickle.dump(route_ctt_output, destination)
+	destination.close()
 
 
 
@@ -136,3 +141,5 @@ if __name__ == "__main__":
 	
 	route_ctt_output = route_ctt(route_dict_simple)
 	route_ctt_review(route_ctt_output)
+
+	route_ctt_to_file(route_ctt_output)
