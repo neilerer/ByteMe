@@ -28,7 +28,7 @@ def get_route_journey_time_dict(dict_to_list_output):
 		if stop_index != end_index:
 			next_stop = stop_list[stop_index + 1]
 			next_ctt = ctt_list[stop_index + 1]
-			journey_time = next_ctt - stop_ctt
+			journey_time = round(next_ctt - stop_ctt, 2)
 			data = (stop, next_stop, journey_time)
 			route_journey_time_dict[stop] = data
 	return route_journey_time_dict
