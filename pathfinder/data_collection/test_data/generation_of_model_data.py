@@ -96,12 +96,7 @@ def route_simple_review(route_simple_output):
 
 
 
-# CTT
-def ctt(minimum, maximum):
-	# recall that random.randint(x, y) is inclusive of x and y
-	return random.randint(minimum, maximum)
-
-
+# CTT: assumed output of models
 def route_ctt(route_simple_output):
 	route_cct_dict = dict()
 	for route_id in route_simple_output:
@@ -133,6 +128,7 @@ if __name__ == "__main__":
 	
 	route(2, "row", grid_output, route_dict, route_id_list)
 	route(2, "column", grid_output, route_dict, route_id_list)
+	route(7, "row", grid_output, route_dict, route_id_list)
 	# route_review(route_dict)
 
 	route_dict_simple = route_simple(route_dict)
