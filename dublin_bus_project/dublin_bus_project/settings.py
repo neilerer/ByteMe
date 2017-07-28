@@ -67,6 +67,9 @@ TEMPLATES = [
             'libraries':{
                 'keyvalue_lat':'home.templatetags.filter',
                 'keyvalue_long':'home.templatetags.filter',
+                'keyvalue_startpoint':'home.templatetags.filter',
+                'keyvalue_endpoint':'home.templatetags.filter',
+                'jpid_stops':'home.templatetags.filter',
             }
         },
     },
