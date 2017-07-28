@@ -25,36 +25,44 @@ journies_dict
 """
 Start
 - set each tuple as a journey
+
 - compare time of all journies and continue the journey with the lowest value
--- also, if at destination, return that journey
 
 Ongoing
 - for each tuple at stop, if not been, extend current journey, each as a new journey
 -- remove old current journey
 
+- if at destination, return that journey
+
+- if cannot move and not at destination, remove from journies
+
 - compare time of all journies and continue with the lowest value
--- also, if at destination, return that journey
+
 """
 
 
 stop_dict = dcrts.get_bus_stop_data()
 been_list = []
+journey_id = 0
 journey_id_list = []
-active_journey = 0
 journies_dict = dict()
 
-def continue_journey(journey_id, stop_id, stop_dict, been_list, journey_id_list, journies_dict):
-	journey_to_extend = journies_dict[journey_id]
 
+def start_journey(stop_id, stop_dict, been_list, journey_id, journey_id_list, journies_dict):
+	# record that we've been to this bus stop
+	been_list.append(stop_id)
+	# find the data we will use to start our journies
+	list_of_next_stop_details = stop_dict[stop_id]
+	# populate journies_dict
+	for stop_detail in list_of_next_stop_details:
+		# check if we've already been there
+		if stop_detail[1] not in been_list:
+			# record the journey_id
+			journey_id_list.append(journey_id)
+			# create the journey details
+			journies_dict[journey_id] = stop_detail
+			# increment the journey_id
+			journey_id += 1
 
-
-def continue_journey(journey_id, stop_id, stop_dict, journies_list, been_list):
-	list_of_stop_details = stop_dict[stop_id]
-	for stop_detail in list_of_stop_details:
-		next_stop = stop_detail[1]
-		next_time = stop_detail[2]
-		next_route = stop_detail[3]
-		if next_stop in been_list:
-			pass
-		else:
-			pass
+start_journey(78, stop_dict, been_list, journey_id, journey_id_list, journies_dict)
+print(journies_dict)
