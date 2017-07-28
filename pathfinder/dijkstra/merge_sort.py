@@ -1,5 +1,5 @@
 # imports
-
+import copy
 
 
 """
@@ -50,7 +50,8 @@ def merge_journies_dict(d_1, d_2):
 	# return
 	return d_return
 
-def merge_sort_journies_dict(d_return):
+def merge_sort_journies_dict(d_input):
+	d_return = copy.deepcopy(d_input)
 	# objects
 	d_1 = {}
 	d_2 = {}
