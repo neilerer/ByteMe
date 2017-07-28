@@ -3,46 +3,37 @@ import general
 import data_conversion
 
 
+"""
+been_list
+journies_dict
+- {journey_id : [time, journey]}
+-- journey_id is str
+-- time is float
+-- journy is list of stop details
+--- stop details (start stop, next stop, next time, route)
+"""
 
 
 
+def check_if_already_been(stop_id, been_list):
+	return (stopid in been_list)
 
-# wait_time_dict assumed to match time period of bus_stop_dict and contain stop_id:{jpi:t, . . . } for each stop_id
-# wait_time_dict: information will be 
-def journey_start(journey_id, stop_id, time, journies_dict):
-def journey_start(journey_id, stop_id, bus_stop_dict, wait_time_dict, journies_dict):
-	# get the information for the next_stop
-	bus_stop_dict = general.next_stop_from_file() # in future will specify based on time and stopid
-	next_dict = bus_stop_dict[stop_id]
-	# get the information for waiting at stop_id
-	wait_time_dict = general.next_stop_from_file() # in futre will replace with
-	## 
-
-	wait_dict = wait_time_dict[stop_id]
-	# iteratively populate journies
-	for next_stop in next_dict:
-		# articulate the bus_stop_dict_entries
-		next_stop_id = next_stop[0]
-		jpi = next_stop[1]
-		journey_time = next_dict[next_stop]
-		# articulate the wait_time_dict entries: this is time spent waiting at stop_id for the relevant jpi bus
-		wait_time = wait_dict[jpi]
-		# create the first entry
-		first_entry = (journey_id, stop_id, jpi, 0)
-		# add the first entry
-		journies_dict[journey_id] = [first_entry]
-		# create the second entry
-		second_entry = (journey_id, next_stop_id, jpi, wait_time + journey_time)
-		# add the second entry
-		journies_dict[journey_id].append(second_entry)
-		# increment the journey_id
-		journey_id += 1
+def possible_next_stops(list_of_stop_details, been_list):
+	next_stop_list = []
+	for stop_detail in list_of_stop_details:
+		next_stop = stop_detail[1]
+		if not check_if_already_been(next_stop, been_list):
+			next_stop_list.append(next_stop)
+	return next_stop_list
 
 
 
-
-# bus_stop_dict = general.next_stop_from_file()
-# for item in bus_stop_dict:
-# 	print(item)
-# 	print(bus_stop_dict[item])
-# 	print("")
+def continue_journey(journey_id, stop_id, stop_dict, journies_list, been_list):
+	list_of_stop_details = stop_dict[stop_id]
+	for stop_detail in list_of_stop_details:
+		next_stop = stop_detail[1]
+		next_time = stop_detail[2]
+		next_route = stop_detail[3]
+		if next_stop in been_list:
+			pass
+		else:
