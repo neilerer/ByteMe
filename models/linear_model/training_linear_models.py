@@ -16,9 +16,7 @@ for data_file in glob.glob("C:/Users/Conor/Desktop/Summer Project/Linear Model/c
 		if data_file[-14:-10]=="0001" or data_file[-14:-10]=="1001":
 		
 			route=data_file[-18:-14].lstrip('0')
-			# creating list of unique routes
-			if route not in route_list:
-				route_list.append(route)
+			
 		
 			# getting current jpid
 			jpid=data_file[-18:-10]
@@ -76,15 +74,18 @@ for data_file in glob.glob("C:/Users/Conor/Desktop/Summer Project/Linear Model/c
 			# dumping model to pkl file
 			pkl.dump(model,open('pickle_files/'+jpid+'.pkl','wb'),pkl.HIGHEST_PROTOCOL)
 			
-			with open("model_metrics.json","w",newline="") as metric_file:
-				json.dump(model_metrics,metric_file)
-			
-			with open('route_list','wb') as route_file:
-				pkl.dump(route_list,route_file)
+			# creating list of unique routes
+			if route not in route_list:
+				route_list.append(route)
 	except:
 		continue
 		
-	
+with open("model_metrics.json","w",newline="") as metric_file:
+	json.dump(model_metrics,metric_file)
+
+with open('route_list','wb') as route_file:
+	pkl.dump(route_list,route_file)
+			
 	
 	
 	

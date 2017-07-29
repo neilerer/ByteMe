@@ -9,8 +9,9 @@ import pandas as pd
 def index(request): #called from home urls.py file
 
     # hardcoded list of currently available routes, needs to be generated for all routes later
-    routes=sorted(['39A','46A','77A','4','41','7','9','14','15','27','40','83','122','123','140','145'])
-    # stops_00010001=['226', '228', '229', '227', '230', '231', '1641', '1642', '213', '214', '4432', '119', '44', '45', '46', '47', '48', '49', '50', '51', '52', '265', '271', '340', '350', '351', '352', '353', '354', '355', '356', '357', '390', '372', '373', '374', '375', '2804', '376', '377', '378', '380']
+    with open("../models/linear_model/route_list", "rb") as route_file:  # loading pickle file with routes
+        routes = pkl.load(route_file)
+        routes=sorted(routes)
 
     with open("home/stop_coordinates.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
