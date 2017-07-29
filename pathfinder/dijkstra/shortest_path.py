@@ -128,11 +128,12 @@ if __name__ == "__main__":
 	# data objects
 	stop_dict = dcrts.get_bus_stop_data()
 	for stop in stop_dict:
-		print("{}_________________________________________".format(stop))
+		print("{}_start________________________________________".format(stop))
 		big_time_start = time.time()
 		for other_stop in stop_dict:
 			small_time_start = time.time()
 			find_shortest_path(stop, other_stop, stop_dict)
 			print("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
-		print("{} done".format(stop))
+		print("{}_end__________________________________________".format(stop))
 		print("{} took {} to check all stops".format(stop, big_time_start - time.time()))
+		print("")
