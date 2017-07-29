@@ -1,44 +1,132 @@
 # imports
+import copy
 import general
+import merge_sort
+import data_conversion_routes_to_stops as dcrts
 
 
 
-# wait_time_dict assumed to match time period of bus_stop_dict and contain stop_id:{jpi:t, . . . } for each stop_id
-# wait_time_dict: information will be 
-def journey_start(journey_id, stop_id, time, journies_dict):
-def journey_start(journey_id, stop_id, bus_stop_dict, wait_time_dict, journies_dict):
-	# get the information for the next_stop
-	bus_stop_dict = general.next_stop_from_file() # in future will specify based on time and stopid
-	next_dict = bus_stop_dict[stop_id]
-	# get the information for waiting at stop_id
-	wait_time_dict = general.next_stop_from_file() # in futre will replace with
-	## 
-
-	wait_dict = wait_time_dict[stop_id]
-	# iteratively populate journies
-	for next_stop in next_dict:
-		# articulate the bus_stop_dict_entries
-		next_stop_id = next_stop[0]
-		jpi = next_stop[1]
-		journey_time = next_dict[next_stop]
-		# articulate the wait_time_dict entries: this is time spent waiting at stop_id for the relevant jpi bus
-		wait_time = wait_dict[jpi]
-		# create the first entry
-		first_entry = (journey_id, stop_id, jpi, 0)
-		# add the first entry
-		journies_dict[journey_id] = [first_entry]
-		# create the second entry
-		second_entry = (journey_id, next_stop_id, jpi, wait_time + journey_time)
-		# add the second entry
-		journies_dict[journey_id].append(second_entry)
-		# increment the journey_id
-		journey_id += 1
+def start_journey(start_stop_id, end_stop_id, stop_dict, been_list, journey_id_list):
+	"""
+	Purpose
+	- to generate the starting options for a journey on the bus system
 
 
+	Input
+	- start_stop_id
+	-- int representation of the bus stop id
+	
+	- stop_dict
+	-- output of dcrts.get_bus_stop_data()
+	--- dictionary
+	---- key is stop id
+	---- value is a list containing every triple of (stop_id, next_stop_id, journey_time)
+
+	- been_list
+	-- a list containing all stops that have been visited
+
+	- journey_id_list
+	-- a list containing the journey ids of each journey we've explored
 
 
-# bus_stop_dict = general.next_stop_from_file()
-# for item in bus_stop_dict:
-# 	print(item)
-# 	print(bus_stop_dict[item])
-# 	print("")
+	Output
+	- list
+	-- list[0] boolean indicating if we've found the shortest path
+	-- list[1] a dictionary
+	--- key journey_id
+	--- value [total travel time, [(starting stop id, next stop id, travel time, route id)
+
+	"""
+	if start_stop_id == end_stop_id:
+		return [True, {1: [0.00, [(start_stop_id, end_stop_id, 0.00, "n/a")]]}]
+	# temp_dict
+	temp_dict = dict()
+	# instantiate journey_id
+	try:
+		journey_id = journey_id_list[-1] + 1
+	except:
+		journey_id = 0
+	# record that we've been to this bus stop
+	been_list.append(start_stop_id)
+	# find the data we will use to start our journies
+	list_of_next_stop_details = stop_dict[start_stop_id]
+	# populate journies_dict
+	for stop_detail in list_of_next_stop_details:
+		next_stop_id = stop_detail[1]
+		next_time = stop_detail[2]
+		# check if we've already been there
+		if next_stop_id not in been_list:
+			# record the journey_id
+			journey_id_list.append(journey_id)
+			# create the journey details
+			temp_dict[journey_id] = [next_time, [stop_detail]]
+			# increment the journey_id
+			journey_id += 1
+	return [False, temp_dict]
+
+
+
+def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict):
+	# sort journies so we know which is the shortest
+	starting_dict = merge_sort.merge_sort_journies_dict(journies_dict)
+	# temp_dict
+	temp_dict = dict()
+	# iterate over items in starting_dict
+	for jid in starting_dict:
+		starting_details = starting_dict[jid]
+		journey_time = starting_details[0]
+		journey_details = starting_details[1]
+		start_stop_id = journey_details[-1][0]
+		next_stop_id = journey_details[-1][1]
+		# 
+		if next_stop_id in been_list:
+			pass
+		elif next_stop_id == end_stop_id:
+			temp_dict = dict()
+			temp_dict[jid] = starting_details
+			return [True, temp_dict]
+		else:
+			next_dict = stop_dict[next_stop_id]
+			for stop_detail in next_dict:
+				next_dict_stop_id = stop_detail[1]
+				next_dict_time = stop_detail[2]
+				if next_dict_stop_id not in been_list:
+					journey_id = journey_id_list[-1] + 1
+					journey_id_list.append(journey_id)
+					temp_details = copy.deepcopy(journey_details)
+					temp_details.append(stop_detail)
+					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
+				else:
+					temp_dict[jid] = starting_details
+	return [False, temp_dict]
+
+
+
+def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
+	this_shortest_path = None
+	this_found_shortest_path = False
+	this_been_list = []
+	this_journey_id_list = []
+	this_journies_dict = dict()
+
+	result = start_journey(start_stop_id, end_stop_id, stop_dict, this_been_list, this_journey_id_list)
+	this_journies_dict = result[1]
+
+	while this_found_shortest_path is False:
+		result = continue_journey(this_journey_id_list, this_journies_dict, this_been_list, end_stop_id, stop_dict)
+		this_found_shortest_path = result[0]
+		this_journies_dict = result[1]
+
+	this_shortest_path = this_journies_dict
+
+	return this_shortest_path
+		
+	
+
+if __name__ == "__main__":
+	# data objects
+	stop_dict = dcrts.get_bus_stop_data()
+	for stop in stop_dict:
+		print("")
+		print(stop)
+		print(find_shortest_path(stop, 76, stop_dict))
