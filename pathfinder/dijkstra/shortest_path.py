@@ -6,7 +6,37 @@ import data_conversion_routes_to_stops as dcrts
 
 
 
-def start_journey(start_stop_id, stop_dict, been_list, journey_id_list, journies_dict):
+def start_journey(start_stop_id, stop_dict, been_list, journey_id_list):
+	"""
+	Purpose
+	- to generate the starting options for a journey on the bus system
+
+
+	Input
+	- start_stop_id
+	-- int representation of the bus stop id
+	
+	- stop_dict
+	-- output of dcrts.get_bus_stop_data()
+	--- dictionary
+	---- key is stop id
+	---- value is a list containing every triple of (stop_id, next_stop_id, journey_time)
+
+	- been_list
+	-- a list containing all stops that have been visited
+
+	- journey_id_list
+	-- a list containing the journey ids of each journey we've explored
+
+
+	Output
+	- list
+	-- list[0] boolean indicating if we've found the shortest path (in this function it will always be False)
+	-- list[1] a dictionary
+	--- key journey_id
+	--- value [total travel time, [(starting stop id, next stop id, travel time, route id)
+
+	"""
 	# temp_dict
 	temp_dict = dict()
 	# instantiate journey_id
@@ -77,7 +107,7 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 	this_journey_id_list = []
 	this_journies_dict = dict()
 
-	result = start_journey(start_stop_id, stop_dict, this_been_list, this_journey_id_list, this_journies_dict)
+	result = start_journey(start_stop_id, stop_dict, this_been_list, this_journey_id_list)
 	this_journies_dict = result[1]
 
 	while this_found_shortest_path is False:

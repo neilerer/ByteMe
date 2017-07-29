@@ -2,6 +2,8 @@
 import os
 import pickle
 
+
+
 # DIRECTORY CHANGES
 # dijkstra to test data
 def d_to_td():
@@ -11,7 +13,6 @@ def td_to_d():
 	os.chdir("../../")
 	os.chdir("dijkstra")
 
-
 # dijkstra to pathfinder data
 def d_to_pd():
 	os.chdir("../../")
@@ -19,6 +20,7 @@ def d_to_pd():
 def pd_to_d():
 	os.chdir("../../../")
 	os.chdir("pathfinder/dijkstra")
+
 
 
 # SOURCE DATA
