@@ -24,10 +24,11 @@ def dict_display(file_name, jpi):
 		print("CTT: {}".format(data[key]))
 		print("")
 
-
 def route(jpi_dict, jpi, weekday_input, hour_input):
-	data = jpi_dict[jpi]
+	data = jpi_dict[jpi]	
+
 	output_dict = dict()
+
 	for key in data:
 		key_list = key_to_list(key)
 		stop_sequence = key_list[0]
@@ -43,10 +44,38 @@ def route(jpi_dict, jpi, weekday_input, hour_input):
 
 	return output_dict
 
+def route_list(output_dict):
+	stop_id_list = []
+	ctt_list = []
+	for stop_sequence in output_dict:
+		value = output_dict[stop_sequence]
+		stop_id = value[0]
+		ctt = value[1]
+		stop_id_list.append(stop_id)
+		ctt_list.append(ctt)
+	return [stop_id_list, ctt_list]
+
+def pathfinder_input(route_list_output):
+	pathfinder_dict = dict()
+	stop_id_list = route_list_output[0]
+	ctt_list = route_list_output[1]
+	index = 1
+	for stop_id in stop_id_list[1::1]:
+		start_stop_id = stop_id_list[index - 1]
+		next_stop_id = stop_id_list[index]
+		time = ctt_list[index] - ctt_list[index - 1]
+		triple = (start_stop_id, next_stop_id, time)
+		pathfinder_dict[start_stop_id] = triple
+		index += 1
+	return pathfinder_dict
+
+
 
 jpi_dict = json_to_dict("046A0001.json")
-# dict_display("046A0001.json", "046A0001")
-my_data = route(jpi_dict, "046A0001", '3', '9')
-for sequence in my_data:
-	print(sequence)
-	print(my_data[sequence])
+my_dict = route(jpi_dict, "046A0001", '3', '9')
+my_lists = route_list(my_dict)
+for_pathfinder = pathfinder_input(my_lists)
+for stop in for_pathfinder:
+	print(stop)
+	print(for_pathfinder[stop])
+	print("")
