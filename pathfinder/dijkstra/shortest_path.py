@@ -1,4 +1,5 @@
 # imports
+import time
 import copy
 import general
 import merge_sort
@@ -123,10 +124,23 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 		
 	
 
-if __name__ == "__main__":
-	# data objects
+def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
-	for stop in stop_dict:
-		print("")
-		print(stop)
-		print(find_shortest_path(stop, 76, stop_dict))
+	with open("shortest_path_test.txt", "w") as destination:
+		for stop in stop_dict:
+			destination.write("{}_start________________________________________".format(stop))
+			destination.write("\n")
+			big_time_start = time.time()
+			for other_stop in stop_dict:
+				small_time_start = time.time()
+				find_shortest_path(stop, other_stop, stop_dict)
+				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
+				destination.write("\n")
+			destination.write("{}_end__________________________________________".format(stop))
+			destination.write("\n")
+			destination.write("{} took {} to check all stops".format(stop, time.time() - big_time_start))
+			destination.write("\n")
+
+
+if __name__ == "__main__":
+	shortest_path_test()
