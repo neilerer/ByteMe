@@ -1,4 +1,5 @@
 # imports
+import time
 import copy
 import general
 import merge_sort
@@ -127,6 +128,7 @@ if __name__ == "__main__":
 	# data objects
 	stop_dict = dcrts.get_bus_stop_data()
 	for stop in stop_dict:
-		print("")
-		print(stop)
-		print(find_shortest_path(stop, 76, stop_dict))
+		time_start = time.time()
+		for other_stop in stop_dict:
+			find_shortest_path(stop, other_stop, stop_dict)
+		print("{} took {}".format(stop, time_start - time.time()))
