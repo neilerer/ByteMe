@@ -140,6 +140,7 @@ def shortest_path_test():
 			destination.write("\n")
 			destination.write("{} took {} to check all stops".format(stop, time.time() - big_time_start))
 			destination.write("\n")
+			destination.write("\n")
 
 
 if __name__ == "__main__":
