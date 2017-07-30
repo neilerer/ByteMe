@@ -144,7 +144,7 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 
 def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
-	with open("shortest_path_test.txt", "w") as destination:
+	with open("dijkstra_shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
 			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))

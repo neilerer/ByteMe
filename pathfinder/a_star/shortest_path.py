@@ -150,7 +150,7 @@ def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
 	os.chdir("../")
 	os.chdir("a_star")
-	with open("shortest_path_test.txt", "w") as destination:
+	with open("a_star_shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
 			# target_routes
 			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
