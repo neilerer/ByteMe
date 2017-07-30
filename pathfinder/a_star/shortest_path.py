@@ -69,9 +69,11 @@ def start_journey(start_stop_id, end_stop_id, stop_dict, been_list, journey_id_l
 
 
 
-def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict):
+def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict, target_routes):
 	# sort journies so we know which is the shortest
-	starting_dict = merge_sort.merge_sort_journies_dict(journies_dict)
+	intermediate_dict = merge_sort.merge_sort_journies_dict(journies_dict)
+	# sort journies so that a journey on the route gets precedence
+	starting_dict = the_heuristic.target_routes_goes_first(intermediate_dict, target_routes)
 	# temp_dict that is the return object
 	temp_dict = dict()
 	# delete list
@@ -122,7 +124,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 
 
 
-def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
+def find_shortest_path(start_stop_id, end_stop_id, stop_dict, target_routes):
 	this_shortest_path = None
 	this_found_shortest_path = False
 	this_been_list = []
@@ -133,7 +135,7 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 	this_journies_dict = result[1]
 
 	while this_found_shortest_path is False:
-		result = continue_journey(this_journey_id_list, this_journies_dict, this_been_list, end_stop_id, stop_dict)
+		result = continue_journey(this_journey_id_list, this_journies_dict, this_been_list, end_stop_id, stop_dict, target_routes)
 		this_found_shortest_path = result[0]
 		this_journies_dict = result[1]
 
@@ -147,13 +149,15 @@ def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
 	with open("shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
+			# target_routes
+			target_routes = the_heuristic.create_target_routess(stop, stop_dict)
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
 			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
 			destination.write("\n")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
 				small_time_start = time.time()
-				find_shortest_path(stop, other_stop, stop_dict)
+				find_shortest_path(stop, other_stop, stop_dict, target_routes)
 				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
 				destination.write("\n")
 			destination.write("{}_end__________________________________________".format(stop))
