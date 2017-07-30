@@ -150,7 +150,7 @@ def shortest_path_test():
 	with open("shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
 			# target_routes
-			target_routes = the_heuristic.create_target_routess(stop, stop_dict)
+			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
 			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
 			destination.write("\n")
