@@ -1,4 +1,5 @@
 # imports
+import os
 import datetime
 import time
 import copy
@@ -147,6 +148,8 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict, target_routes):
 
 def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
+	os.chdir("../")
+	os.chdir("a_star")
 	with open("shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
 			# target_routes
