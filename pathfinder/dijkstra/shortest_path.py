@@ -70,35 +70,49 @@ def start_journey(start_stop_id, end_stop_id, stop_dict, been_list, journey_id_l
 def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict):
 	# sort journies so we know which is the shortest
 	starting_dict = merge_sort.merge_sort_journies_dict(journies_dict)
-	# temp_dict
+	# temp_dict that is the return object
 	temp_dict = dict()
+	# delete list
+	delete_list = list()
 	# iterate over items in starting_dict
 	for jid in starting_dict:
+		# details
 		starting_details = starting_dict[jid]
 		journey_time = starting_details[0]
 		journey_details = starting_details[1]
 		start_stop_id = journey_details[-1][0]
 		next_stop_id = journey_details[-1][1]
-		# 
+		# skip if the next_stop has been visted before
 		if next_stop_id in been_list:
 			pass
+		# if the next_stop is our destination, then we have our route
 		elif next_stop_id == end_stop_id:
 			temp_dict = dict()
 			temp_dict[jid] = starting_details
 			return [True, temp_dict]
+		# otherwise, we create the next set of possible paths
 		else:
+			# we get the information about the next possible stop
 			next_dict = stop_dict[next_stop_id]
+			# iterate over possible next stops
 			for stop_detail in next_dict:
 				next_dict_stop_id = stop_detail[1]
 				next_dict_time = stop_detail[2]
+				# if the stop has not been visited
 				if next_dict_stop_id not in been_list:
+					delete_list.append(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
 					temp_details = copy.deepcopy(journey_details)
 					temp_details.append(stop_detail)
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
+				# if the stop has been visited, we don't modify the journey
 				else:
 					temp_dict[jid] = starting_details
+	# delete journeys we don't need to explore
+	for jid in delete_list:
+		del temp_dict[jid]
+	# return
 	return [False, temp_dict]
 
 
