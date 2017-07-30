@@ -1,4 +1,5 @@
 # imports
+import datetime
 import time
 import copy
 import general
@@ -111,7 +112,10 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[jid] = starting_details
 	# delete journeys we don't need to explore
 	for jid in delete_list:
-		del temp_dict[jid]
+		try:
+			del temp_dict[jid]
+		except:
+			pass
 	# return
 	return [False, temp_dict]
 
@@ -142,7 +146,8 @@ def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
 	with open("shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
-			destination.write("{}_start________________________________________".format(stop))
+			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
+			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
 			destination.write("\n")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
