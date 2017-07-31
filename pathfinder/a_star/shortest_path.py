@@ -108,7 +108,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 				next_dict_time = stop_detail[2]
 				possible_route = stop_detail[3]
 				# if the stop has not been visited
-				if next_dict_stop_id not in been_list and possible_route != (current_route *-1): # need to change the criteria for the reverse route for actual data
+				if next_dict_stop_id not in been_list and (current_route != (possible_route * -1)):
 					delete_list.add(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
@@ -117,7 +117,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
 				# if the stop has been visited, we don't modify the journey
 				else:
-					pass
+					temp_dict[jid] = starting_details
 	# delete journeys we don't need to explore
 	delete_list = list(delete_list)
 	for jid in delete_list:
