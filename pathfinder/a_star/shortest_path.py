@@ -171,7 +171,7 @@ def shortest_path_test():
 				sp = find_shortest_path(stop, other_stop, stop_dict, target_routes)
 				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
 				destination.write("\n")
-				destination.write(sp)
+				destination.write(str(sp))
 				destination.write("\n")
 			destination.write("{} to all other stops took {}".format(stop, time.time() - big_time_start))
 			destination.write("\n")
