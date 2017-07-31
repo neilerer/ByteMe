@@ -90,6 +90,10 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 		start_stop_id = journey_details[-1][0]
 		next_stop_id = journey_details[-1][1]
 		current_route = journey_details[-1][3]
+		try:
+			prior_stop_id = journey_details[-2][0]
+		except:
+			prior_stop_id = None
 		# skip if the next_stop has been visted before
 		if next_stop_id in been_list:
 			pass
@@ -108,7 +112,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 				next_dict_time = stop_detail[2]
 				possible_route = stop_detail[3]
 				# if the stop has not been visited
-				if next_dict_stop_id not in been_list and (current_route != (possible_route * -1)):
+				if next_dict_stop_id not in been_list and (next_dict_stop_id != prior_stop_id): #later condition prevents looping
 					delete_list.add(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
