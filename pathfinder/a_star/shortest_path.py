@@ -1,10 +1,12 @@
 # imports
+import os
 import datetime
 import time
 import copy
 import general
 import merge_sort
 import data_conversion_routes_to_stops as dcrts
+import the_heuristic
 
 
 
@@ -68,13 +70,17 @@ def start_journey(start_stop_id, end_stop_id, stop_dict, been_list, journey_id_l
 
 
 
-def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict):
+def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, stop_dict, target_routes):
 	# sort journies so we know which is the shortest
-	starting_dict = merge_sort.merge_sort_journies_dict(journies_dict)
+	intermediate_dict = merge_sort.merge_sort_journies_dict(journies_dict)
+	# sort journies so that a journey on the route gets precedence
+	starting_dict = the_heuristic.target_route_goes_first(intermediate_dict, target_routes)
+	print("")
+	print(starting_dict)
 	# temp_dict that is the return object
 	temp_dict = dict()
 	# delete list
-	delete_list = list()
+	delete_list = set()
 	# iterate over items in starting_dict
 	for jid in starting_dict:
 		# details
@@ -83,6 +89,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 		journey_details = starting_details[1]
 		start_stop_id = journey_details[-1][0]
 		next_stop_id = journey_details[-1][1]
+		current_route = journey_details[-1][3]
 		# skip if the next_stop has been visted before
 		if next_stop_id in been_list:
 			pass
@@ -99,9 +106,10 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 			for stop_detail in next_dict:
 				next_dict_stop_id = stop_detail[1]
 				next_dict_time = stop_detail[2]
+				possible_route = stop_detail[3]
 				# if the stop has not been visited
-				if next_dict_stop_id not in been_list:
-					delete_list.append(jid) # we've extended this journey, so after temp_dict is full, delete this entry
+				if next_dict_stop_id not in been_list and (next_dict_stop_id != start_stop_id): #later condition prevents looping
+					delete_list.add(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
 					temp_details = copy.deepcopy(journey_details)
@@ -109,9 +117,9 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
 				# if the stop has been visited, we don't modify the journey
 				else:
-					# temp_dict[jid] = starting_details
-					pass
+					temp_dict[jid] = starting_details
 	# delete journeys we don't need to explore
+	delete_list = list(delete_list)
 	for jid in delete_list:
 		try:
 			del temp_dict[jid]
@@ -122,7 +130,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 
 
 
-def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
+def find_shortest_path(start_stop_id, end_stop_id, stop_dict, target_routes):
 	this_shortest_path = None
 	this_found_shortest_path = False
 	this_been_list = []
@@ -133,7 +141,7 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 	this_journies_dict = result[1]
 
 	while this_found_shortest_path is False:
-		result = continue_journey(this_journey_id_list, this_journies_dict, this_been_list, end_stop_id, stop_dict)
+		result = continue_journey(this_journey_id_list, this_journies_dict, this_been_list, end_stop_id, stop_dict, target_routes)
 		this_found_shortest_path = result[0]
 		this_journies_dict = result[1]
 
@@ -145,15 +153,23 @@ def find_shortest_path(start_stop_id, end_stop_id, stop_dict):
 
 def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
-	with open("dijkstra_shortest_path_test.txt", "w") as destination:
+	os.chdir("../")
+	os.chdir("a_star")
+	with open("a_star_shortest_path_test.txt", "a") as destination:
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
 		for stop in stop_dict:
+			# target_routes
+			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
 			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
 			destination.write("\n")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
 				small_time_start = time.time()
-				find_shortest_path(stop, other_stop, stop_dict)
+				find_shortest_path(stop, other_stop, stop_dict, target_routes)
 				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
 				destination.write("\n")
 			destination.write("{}_end__________________________________________".format(stop))
