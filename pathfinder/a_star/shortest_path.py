@@ -78,7 +78,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 	# temp_dict that is the return object
 	temp_dict = dict()
 	# delete list
-	delete_list = list()
+	delete_list = set()
 	# iterate over items in starting_dict
 	for jid in starting_dict:
 		# details
@@ -89,7 +89,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 		next_stop_id = journey_details[-1][1]
 		# skip if the next_stop has been visted before
 		if next_stop_id in been_list:
-			delete_list.append(jid) # if this is the end of the line for the jid, get rid of it; if there is a connection, a later step will add the new stop
+			pass
 		# if the next_stop is our destination, then we have our route
 		elif next_stop_id == end_stop_id:
 			temp_dict = dict()
@@ -105,7 +105,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 				next_dict_time = stop_detail[2]
 				# if the stop has not been visited
 				if next_dict_stop_id not in been_list:
-					delete_list.append(jid) # we've extended this journey, so after temp_dict is full, delete this entry
+					delete_list.add(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
 					temp_details = copy.deepcopy(journey_details)
@@ -113,8 +113,9 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
 				# if the stop has been visited, we don't modify the journey
 				else:
-					temp_dict[jid] = starting_details
+					pass
 	# delete journeys we don't need to explore
+	delete_list = list(delete_list)
 	for jid in delete_list:
 		try:
 			del temp_dict[jid]
