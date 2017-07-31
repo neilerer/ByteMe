@@ -154,10 +154,6 @@ def shortest_path_test():
 	os.chdir("../")
 	os.chdir("a_star")
 	with open("a_star_shortest_path_test.txt", "w") as destination:
-		destination.write("\n")
-		destination.write("\n")
-		destination.write("\n")
-		destination.write("\n")
 		for stop in stop_dict:
 			# target_routes
 			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
@@ -179,6 +175,10 @@ def shortest_path_test():
 			destination.write("\n")
 			destination.write("\n")
 			destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
 
 
 if __name__ == "__main__":
