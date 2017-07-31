@@ -24,7 +24,7 @@ SECRET_KEY = 'hk*cuv323a(%^#&t@e$=ddx+e3efq74*!7qe6!37s_i@#63@1#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://sheltered-hollows-83041.herokuapp.com']
+ALLOWED_HOSTS = ['sheltered-hollows-83041.herokuapp.com']
 
 
 # Application definition
