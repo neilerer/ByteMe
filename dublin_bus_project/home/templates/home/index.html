@@ -40,7 +40,8 @@
             color: yellow;
             background-color: navy;
         }
-
+        #form_container{
+        }
     </style>
 </head>
 <body>
@@ -107,54 +108,56 @@
                 }
             </script>
         {% else %}
-            <form action="route_selection"> {% csrf_token %}
-                <select name="route" onchange="chooseRoute()" id="selectedRoute">
-                    <option selected disabled>Select your route</option>
-                    {% for route in routes %}
-                        <option value={{ route }}>{{ route }}</option>
-                    {% endfor %}
-                </select>
-                <select name="direction" onchange="googleMap.chooseDirection()" id='direction_box' style="visibility:hidden" on>
-                    <option selected disabled>Select your direction</option>
-                </select>
-                <select name="start" id="start_point" onchange="googleMap.chooseStart()" style="visibility:hidden">
-                    <option selected disabled>Origin</option>
-                </select>
-                <select name="end" id="end_point" onchange="googleMap.chooseEnd()" style="visibility:hidden">
-                    <option selected disabled>Destination</option>
-                </select>
-                <select name="weekday" id="weekday_box" onchange="chooseWeekDay()" required style="visibility:hidden">
-                    <option selected disabled>Weekday</option>
-                    <option value="0">Monday</option>
-                    <option value="1">Tuesday</option>
-                    <option value="2">Wednesday</option>
-                    <option value="3">Thursday</option>
-                    <option value="4">Friday</option>
-                    <option value="5">Saturday</option>
-                    <option value="6">Sunday</option>
-                </select>
-                <select name="hour" id="hour_box" onchange="chooseTime()" required style="visibility:hidden">
-                    <option selected disabled>Approx. Time</option>
-                    <option value="7">7am</option>
-                    <option value="8">8am</option>
-                    <option value="9">9am</option>
-                    <option value="10">10am</option>
-                    <option value="11">11am</option>
-                    <option value="12">12pm</option>
-                    <option value="13">1pm</option>
-                    <option value="14">2pm</option>
-                    <option value="15">3pm</option>
-                    <option value="16">4pm</option>
-                    <option value="17">5pm</option>
-                    <option value="18">6pm</option>
-                    <option value="19">7pm</option>
-                    <option value="20">8pm</option>
-                    <option value="21">9pm</option>
-                    <option value="22">10pm</option>
-                    <option value="23">11pm</option>
-                </select>
-                <input type="submit" name="input_form" id="submit" value="Predict Travel Time" style="visibility:hidden">
-            </form>
+            <div id="form_container">
+                <form action="route_selection"> {% csrf_token %}
+                    <select name="route" onchange="chooseRoute()" id="selectedRoute">
+                        <option selected disabled>Select your route</option>
+                        {% for route in routes %}
+                            <option value={{ route }}>{{ route }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="direction" onchange="googleMap.chooseDirection()" id='direction_box' style="visibility:hidden" on>
+                        <option selected disabled>Select your direction</option>
+                    </select>
+                    <select name="start" id="start_point" onchange="googleMap.chooseStart()" style="visibility:hidden">
+                        <option selected disabled>Origin</option>
+                    </select>
+                    <select name="end" id="end_point" onchange="googleMap.chooseEnd()" style="visibility:hidden">
+                        <option selected disabled>Destination</option>
+                    </select>
+                    <select name="weekday" id="weekday_box" onchange="chooseWeekDay()" required style="visibility:hidden">
+                        <option selected disabled>Weekday</option>
+                        <option value="0">Monday</option>
+                        <option value="1">Tuesday</option>
+                        <option value="2">Wednesday</option>
+                        <option value="3">Thursday</option>
+                        <option value="4">Friday</option>
+                        <option value="5">Saturday</option>
+                        <option value="6">Sunday</option>
+                    </select>
+                    <select name="hour" id="hour_box" onchange="chooseTime()" required style="visibility:hidden">
+                        <option selected disabled>Approx. Time</option>
+                        <option value="7">7am</option>
+                        <option value="8">8am</option>
+                        <option value="9">9am</option>
+                        <option value="10">10am</option>
+                        <option value="11">11am</option>
+                        <option value="12">12pm</option>
+                        <option value="13">1pm</option>
+                        <option value="14">2pm</option>
+                        <option value="15">3pm</option>
+                        <option value="16">4pm</option>
+                        <option value="17">5pm</option>
+                        <option value="18">6pm</option>
+                        <option value="19">7pm</option>
+                        <option value="20">8pm</option>
+                        <option value="21">9pm</option>
+                        <option value="22">10pm</option>
+                        <option value="23">11pm</option>
+                    </select>
+                    <input type="submit" name="input_form" id="submit" value="Predict Travel Time" style="visibility:hidden">
+                </form>
+            </div>
         {% endif %}
     </div>
 
@@ -220,16 +223,13 @@
 </footer>
     <script>
     function chooseRoute(){
-
         document.getElementById("direction_box").style.visibility="visible";
         selectedRoute=document.getElementById("selectedRoute").value;
-
         var withLeadingZeroes=selectedRoute;
         for (i=0; i<4-selectedRoute.length; i++){
             withLeadingZeroes="0"+withLeadingZeroes;
         }
         selectedRoute=withLeadingZeroes;
-
         <!--if (first_direction){-->
             <!--alert("yea");-->
             <!--&lt;!&ndash;var element = document.getElementById("first_direction");&ndash;&gt;-->
@@ -238,12 +238,9 @@
             <!--&lt;!&ndash;var element = document.getElementById("second_direction");&ndash;&gt;-->
             <!--&lt;!&ndash;element.parentNode.removeChild(element);&ndash;&gt;-->
         <!--}-->
-
             var start=0;
             var end=0;
-
             for (var key in jpids_and_stops){
-
                     if ((start==0)&&(selectedRoute+"0001" == key )){
                         var first_direction = document.createElement("option");
                         first_direction.id='first_direction';
@@ -259,7 +256,6 @@
                         end+=1;
                     }
             }
-
             var select = document.getElementById("direction_box");
             select.appendChild(first_direction);
             select.appendChild(second_direction);
@@ -274,13 +270,11 @@
                 document.getElementById("submit").style.visibility="visible";
                 }
    }
-
     function googleMap() {
        var canvas=document.getElementById("map");
        myCenter=new google.maps.LatLng(53.4, -6.3);
        var options={center: myCenter,zoom:10};
        var map=new google.maps.Map(canvas,options);
-
        function chooseDirection(){
             selectedRoute=document.getElementById("selectedRoute").value;
             var withLeadingZeroes=selectedRoute;
@@ -288,11 +282,8 @@
                 withLeadingZeroes="0"+withLeadingZeroes;
             }
             selectedRouteDirection=withLeadingZeroes+document.getElementById("direction_box").value+"001";
-
             setMarkers(selectedRouteDirection,0,jpids_and_stops[selectedRouteDirection].length);
-
             document.getElementById("start_point").style.visibility="visible";
-
             for(i=0;i<jpids_and_stops[selectedRouteDirection].length-1;i++){
                 var stop = document.createElement("option");
                 stop.id=jpids_and_stops[selectedRouteDirection][i];
@@ -301,11 +292,8 @@
                 document.getElementById("start_point").appendChild(stop);
             }
         }
-
         googleMap.chooseDirection=chooseDirection;
-
        function setMarkers(selectedRouteDirection,start,end){
-
            var latSum=0; <!-- variables used to calculate the avg latlong of a route -->
            var longSum=0;
            var stopCount=0;
@@ -342,7 +330,6 @@
             polyline.setMap(map);
        }
        googleMap.setMarkers=setMarkers;
-
        function chooseStart(){
             selectedStart=document.getElementById("start_point").value;
             for(i=selectedStart;i<jpids_and_stops[selectedRouteDirection].length-1;i++){
@@ -353,19 +340,33 @@
                 document.getElementById("end_point").appendChild(stop);
             }
             document.getElementById("end_point").style.visibility="visible";
+
+            var lat=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedStart]][0]);
+            var long=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedStart]][1]);
+            var myPosition= new google.maps.LatLng(lat,long);
+            var marker = new google.maps.Marker({position:myPosition,
+                icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png'});
+            marker.setMap(map);
+
        }
        googleMap.chooseStart=chooseStart;
        function chooseEnd(){
                 document.getElementById("weekday_box").style.visibility="visible";
                 document.getElementById("hour_box").style.visibility="visible";
+                selectedEnd=document.getElementById("end_point").value;
+
+                var lat=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedEnd]][0]);
+                var long=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedEnd]][1]);
+                var myPosition= new google.maps.LatLng(lat,long);
+                var marker = new google.maps.Marker({position:myPosition,
+                icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png'});
+                marker.setMap(map);
             }
             googleMap.chooseEnd=chooseEnd;
     {% if estimated_time %}
         setMarkers("{{ current_route }}", {{ start_point }}, {{ end_point }});
     {% endif %}
     }
-
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
