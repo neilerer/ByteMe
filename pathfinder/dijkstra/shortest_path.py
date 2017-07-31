@@ -74,7 +74,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 	# temp_dict that is the return object
 	temp_dict = dict()
 	# delete list
-	delete_list = list()
+	delete_list = set()
 	# iterate over items in starting_dict
 	for jid in starting_dict:
 		# details
@@ -100,8 +100,8 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 				next_dict_stop_id = stop_detail[1]
 				next_dict_time = stop_detail[2]
 				# if the stop has not been visited
-				if next_dict_stop_id not in been_list:
-					delete_list.append(jid) # we've extended this journey, so after temp_dict is full, delete this entry
+				if next_dict_stop_id not in been_list and (next_dict_stop_id != start_stop_id):
+					delete_list.add(jid) # we've extended this journey, so after temp_dict is full, delete this entry
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
 					temp_details = copy.deepcopy(journey_details)
@@ -109,9 +109,9 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
 				# if the stop has been visited, we don't modify the journey
 				else:
-					# temp_dict[jid] = starting_details
-					pass
+					temp_dict[jid] = starting_details
 	# delete journeys we don't need to explore
+	delete_list = list(delete_list)
 	for jid in delete_list:
 		try:
 			del temp_dict[jid]
@@ -148,19 +148,27 @@ def shortest_path_test():
 	with open("dijkstra_shortest_path_test.txt", "w") as destination:
 		for stop in stop_dict:
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
-			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
+			destination.write("{} to all other stops started at {}".format(stop, start_time))
+			destination.write("\n")
+			destination.write("-------------------------------------------------------------------")
 			destination.write("\n")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
 				small_time_start = time.time()
-				find_shortest_path(stop, other_stop, stop_dict)
+				sp = find_shortest_path(stop, other_stop, stop_dict)
 				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
 				destination.write("\n")
-			destination.write("{}_end__________________________________________".format(stop))
+				destination.write(str(sp))
+				destination.write("\n")
+				destination.write("\n")
+			destination.write("{} to all other stops took {}".format(stop, time.time() - big_time_start))
 			destination.write("\n")
-			destination.write("{} took {} to check all stops".format(stop, time.time() - big_time_start))
 			destination.write("\n")
 			destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
 
 
 if __name__ == "__main__":
