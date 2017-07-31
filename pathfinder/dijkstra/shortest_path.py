@@ -109,7 +109,8 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 					temp_dict[journey_id] = [round(journey_time + next_dict_time, 2), temp_details]
 				# if the stop has been visited, we don't modify the journey
 				else:
-					temp_dict[jid] = starting_details
+					# temp_dict[jid] = starting_details
+					pass
 	# delete journeys we don't need to explore
 	for jid in delete_list:
 		try:
