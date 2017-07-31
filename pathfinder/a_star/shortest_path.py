@@ -164,7 +164,8 @@ def shortest_path_test():
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
 			destination.write("{} to all other stops started at {}".format(stop, start_time))
 			destination.write("\n")
-			destination.write("_________________________________________")
+			destination.write("_______________________________________________________________")
+			destination.write("\n")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
 				small_time_start = time.time()
@@ -173,9 +174,9 @@ def shortest_path_test():
 				destination.write("\n")
 				destination.write(str(sp))
 				destination.write("\n")
+				destination.write("\n")
 			destination.write("{} to all other stops took {}".format(stop, time.time() - big_time_start))
 			destination.write("\n")
-			destination.write("_________________________________________")
 			destination.write("\n")
 			destination.write("\n")
 
