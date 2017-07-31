@@ -89,7 +89,7 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 		next_stop_id = journey_details[-1][1]
 		# skip if the next_stop has been visted before
 		if next_stop_id in been_list:
-			pass
+			delete_list.append(jid) # if this is the end of the line for the jid, get rid of it; if there is a connection, a later step will add the new stop
 		# if the next_stop is our destination, then we have our route
 		elif next_stop_id == end_stop_id:
 			temp_dict = dict()
@@ -150,7 +150,11 @@ def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
 	os.chdir("../")
 	os.chdir("a_star")
-	with open("a_star_shortest_path_test.txt", "w") as destination:
+	with open("a_star_shortest_path_test.txt", "a") as destination:
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
+		destination.write("\n")
 		for stop in stop_dict:
 			# target_routes
 			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
