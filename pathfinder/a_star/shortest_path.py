@@ -75,6 +75,8 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_stop_id, sto
 	intermediate_dict = merge_sort.merge_sort_journies_dict(journies_dict)
 	# sort journies so that a journey on the route gets precedence
 	starting_dict = the_heuristic.target_route_goes_first(intermediate_dict, target_routes)
+	print("")
+	print(starting_dict)
 	# temp_dict that is the return object
 	temp_dict = dict()
 	# delete list
