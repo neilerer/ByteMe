@@ -5,6 +5,7 @@
 def target_route_goes_first(journies_dict, target_routes):
 	# [True, {1: [0.00, [(start_stop_id, end_stop_id, 0.00, "n/a")]]}]
 	# data
+	return_dict = dict()
 	heuristic_list = list()
 	# iterate over each journey in journies_dict
 	for jpi in journies_dict:
