@@ -153,7 +153,7 @@ def shortest_path_test():
 	stop_dict = dcrts.get_bus_stop_data()
 	os.chdir("../")
 	os.chdir("a_star")
-	with open("a_star_shortest_path_test.txt", "a") as destination:
+	with open("a_star_shortest_path_test.txt", "w") as destination:
 		destination.write("\n")
 		destination.write("\n")
 		destination.write("\n")
@@ -162,17 +162,20 @@ def shortest_path_test():
 			# target_routes
 			target_routes = the_heuristic.create_target_routes(stop, stop_dict)
 			start_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d_%H:%M:%S')
-			destination.write("{}_start_at_{}__________________________________".format(stop, start_time))
+			destination.write("{} to all other stops started at {}".format(stop, start_time))
 			destination.write("\n")
+			destination.write("_________________________________________")
 			big_time_start = time.time()
 			for other_stop in stop_dict:
 				small_time_start = time.time()
-				find_shortest_path(stop, other_stop, stop_dict, target_routes)
+				sp = find_shortest_path(stop, other_stop, stop_dict, target_routes)
 				destination.write("{} path to {} took {}".format(stop, other_stop, time.time() - small_time_start))
 				destination.write("\n")
-			destination.write("{}_end__________________________________________".format(stop))
+				destination.write(sp)
+				destination.write("\n")
+			destination.write("{} to all other stops took {}".format(stop, time.time() - big_time_start))
 			destination.write("\n")
-			destination.write("{} took {} to check all stops".format(stop, time.time() - big_time_start))
+			destination.write("_________________________________________")
 			destination.write("\n")
 			destination.write("\n")
 
