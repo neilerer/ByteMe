@@ -76,11 +76,25 @@ def pathfinder_input(route_list_output):
 
 
 
-jpi_dict = json_to_dict("046A0001.json")
-my_dict = route(jpi_dict, "046A0001", '3', '9')
-my_lists = route_list(my_dict)
-for_pathfinder = pathfinder_input(my_lists)
-for stop in for_pathfinder:
-	print(stop)
-	print(for_pathfinder[stop])
+jpi_dict = json_to_dict("data_for_pathfinder.json")
+for jpi in jpi_dict:
+	jpi_route_dict = route(jpi_dict, jpi, '3', '9')
+	jpi_route_lists = route_list(jpi_route_dict)
+	jpi_pathfinder_input = pathfinder_input(jpi_route_lists)
+	print(jpi)
+	for stop in jpi_pathfinder_input:
+		print("")
+		print(stop)
+		print(jpi_pathfinder_input[stop])
 	print("")
+	print("")
+
+
+# jpi_dict = json_to_dict("046A0001.json")
+# my_dict = route(jpi_dict, "046A0001", '3', '9')
+# my_lists = route_list(my_dict)
+# for_pathfinder = pathfinder_input(my_lists)
+# for stop in for_pathfinder:
+# 	print(stop)
+# 	print(for_pathfinder[stop])
+# 	print("")
