@@ -1,5 +1,6 @@
 # imports
 import json
+import pickle
 import merge_sort
 
 
@@ -114,29 +115,29 @@ def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, in
 
 
 if __name__ == "__main__":
-	# # get shit to file
-	# pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
-	# destination = open("pathfinder_data.p", "wb")
-	# # dump the data into the pickle file
-	# pickle.dump(pathfinder_dict, destination)
-	# # close the file
-	# destination.close()
+	# get shit to file
+	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
+	destination = open("pathfinder_data.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(pathfinder_dict, destination)
+	# close the file
+	destination.close()
 
 
-	# get shit from file
-	f = open("pathfinder_data.p", "rb")
-	# load the pickle file
-	pathfinder_dict = pickle.load(f)
-	# close the pickle file
-	f.close()
+	# # get shit from file
+	# f = open("pathfinder_data.p", "rb")
+	# # load the pickle file
+	# pathfinder_dict = pickle.load(f)
+	# # close the pickle file
+	# f.close()
 
 
-	monday = pathfinder_dict[0]
-	nine_oclock = monday[9]
-	for stop in nine_oclock:
-		print(stop)
-		print(nine_oclock[stop])
-		print("")
+	# monday = pathfinder_dict[0]
+	# nine_oclock = monday[9]
+	# for stop in nine_oclock:
+	# 	print(stop)
+	# 	print(nine_oclock[stop])
+	# 	print("")
 
 	# for weekday in pathfinder_dict:
 	# 	day_dict = pathfinder_dict[weekday]
