@@ -117,9 +117,12 @@ if __name__ == "__main__":
 	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
 	for weekday in pathfinder_dict:
 		day_dict = pathfinder_dict[weekday]
-		print(weekday)
-		print(len(day_dict))
-		print("")
+		for time_unit in day_dict:
+			time_unit_dict = day_dict[time_unit]
+			print(weekday)
+			print(time_unit)
+			print(time_unit_dict)
+			print("")
 	# 	for day in day_dict:
 	# 		time_unit_dict = day_dict[day]
 	# 		for time_unit in time_unit_dict:
