@@ -132,24 +132,24 @@ if __name__ == "__main__":
 	f.close()
 
 
-	monday = pathfinder_dict[0]
-	nine_oclock = monday[9]
-	for stop in nine_oclock:
-		print(stop)
-		print(nine_oclock[stop])
-		print("")
+	# monday = pathfinder_dict[0]
+	# nine_oclock = monday[9]
+	# for stop in nine_oclock:
+	# 	print(stop)
+	# 	print(nine_oclock[stop])
+	# 	print("")
 
-	# for weekday in pathfinder_dict:
-	# 	day_dict = pathfinder_dict[weekday]
-	# 	for time_unit in day_dict:
-	# 		time_unit_dict = day_dict[time_unit]
-	# 		for stop in time_unit_dict:
-	# 			stop_list = time_unit_dict[stop]
-	# 			print(weekday)
-	# 			print(time_unit)
-	# 			print(stop)
-	# 			print(stop_list)
-	# 			print("")
+	for weekday in pathfinder_dict:
+		day_dict = pathfinder_dict[weekday]
+		for time_unit in day_dict:
+			time_unit_dict = day_dict[time_unit]
+			for stop in time_unit_dict:
+				stop_list = time_unit_dict[stop]
+				print(weekday)
+				print(time_unit)
+				print(stop)
+				print(stop_list)
+				print("")
 
 
 	# dict_display("data_for_pathfinder.json", "046A0001")
