@@ -75,16 +75,68 @@ def pathfinder_input(route_list_output):
 	return pathfinder_dict
 
 
-if __name__ == "__main__":
-	jpi_dict = json_to_dict("data_for_pathfinder.json")
+
+def create_dict(start, end):
+	this_dict = dict()
+	for i in range(start, end, 1):
+		this_dict[i] = dict()
+	return this_dict
+
+def create_pathfinder_dictionary(outer_start, outer_end, inner_start, inner_end):
+	pathfinder_dict = create_dict(outer_start, outer_end)
+	for weekday in pathfinder_dict:
+		pathfinder_dict[weekday] = create_dict(inner_start, inner_end)
+	return pathfinder_dict
+
+def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, inner_end):
+	pathfinder_dict = create_pathfinder_dictionary(outer_start, outer_end, inner_start, inner_end)
+	jpi_dict = json_to_dict(file_name)
 	for jpi in jpi_dict:
-		jpi_route_dict = route(jpi_dict, jpi, '3', '9')
-		jpi_route_lists = route_list(jpi_route_dict)
-		jpi_pathfinder_input = pathfinder_input(jpi_route_lists)
-		print(jpi)
-		for stop in jpi_pathfinder_input:
-			print("")
-			print(stop)
-			print(jpi_pathfinder_input[stop])
-		print("")
-		print("")
+		for w in range(outer_start, outer_end, 1):
+			weekday = str(w)
+			for t in range(inner_start, inner_end, 1):
+				time_unit = str(t)
+				jpi_route_dict = route(jpi_dict, jpi, weekday, time_unit)
+				jpi_route_lists = route_list(jpi_route_dict)
+				jpi_pathfinder_input = pathfinder_input(jpi_route_lists)
+				#
+				destination_dict = pathfinder_dict[int(weekday)][int(time_unit)]
+				for stop in jpi_pathfinder_input:
+					stop_details = jpi_pathfinder_input[stop]
+					for detail in stop_details:
+						try:
+							destination_dict[stop].append(detail)
+						except:
+							destination_dict[stop] = stop_details
+	return pathfinder_dict
+
+
+
+
+if __name__ == "__main__":
+	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
+	for weekday in pathfinder_dict:
+		day_dict = pathfinder_dict[weekday]
+		for day in day_dict:
+			time_unit_dict = day_dict[day]
+			for time_unit in time_unit_dict:
+				stop_dict = time_unit_dict[time_unit]
+				for stop in stop_dict:
+					print(stop)
+					print(stop_dict[stop])
+					print("")
+
+
+
+	# jpi_dict = json_to_dict("data_for_pathfinder.json")
+	# for jpi in jpi_dict:
+	# 	jpi_route_dict = route(jpi_dict, jpi, '3', '9')
+	# 	jpi_route_lists = route_list(jpi_route_dict)
+	# 	jpi_pathfinder_input = pathfinder_input(jpi_route_lists)
+	# 	print(jpi)
+	# 	for stop in jpi_pathfinder_input:
+	# 		print("")
+	# 		print(stop)
+	# 		print(jpi_pathfinder_input[stop])
+	# 	print("")
+	# 	print("")
