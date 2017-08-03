@@ -15,12 +15,14 @@
         var routes={{ routes|safe }};
         var jpids_and_stops={{ jpids_and_stops|safe }};
         var stop_coordinates={{ stop_coordinates|safe }};
+        var weather_data={{ weather_data|safe }};
     </script>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'/>
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}" type='text/css'/>
     <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" type='text/css'/>
-    <title>Dublin Bus Travel Time Prediction</title>
+    <title>Dublin Bus Journey Time Predictor</title>
     <style>
         .navbar {
           background-color: navy;
@@ -40,8 +42,20 @@
             color: yellow;
             background-color: navy;
         }
-        #form_container{
+         #form_container{
         }
+        .icon-small {
+            height:18px;
+            margin:0;
+            padding:0;
+        }
+
+        .icon-medium {
+            height:22px;
+            margin:0;
+            padding:0;
+        }
+
     </style>
 </head>
 <body>
@@ -54,18 +68,46 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Dublin Bus Travel Time Prediction</a>
+      <a class="navbar-brand" href="https://safe-sea-28160.herokuapp.com/">Dublin Bus Journey Time Predictor</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Language</a></li>
-        <li><a href="#">Contact</a></li>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+            <div class="dropdown-menu" style="width: 300px;">
+    <div >
+
+  <h3> A big welcome to our journey predicting web app from Team ByteMe.</h3>
+        We are happy you chose us, and only hope that after using our service you feel the same way.
+        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
+        two long months ago.<br>
+        Our main objective in building this app, was to put the commuter first. We drew upon our past
+        experiences as commuters ourselves, and asked ourselves the question, "what would make our
+        commuting experience better?"<br>
+        The answer to that question is what you see before you in the form of this intuitive and informative
+        app.<br>
+        We hope you have as much fun using it as we did building it.<br>
+        Team ByteMe
+
+    </div>
+  </div>
+        <li><a href="#">Timetables</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSel">ENG</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+            	        <li><a id="navIta" href="#" class="language"> <img id="imgNavIta" src="http://www.roemheld.de/IT/DATA/Images/Address/Italien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavIta">Italiano</span></a></li>
+                        <li><a id="navDeu" href="#" class="language"> <img id="imgNavDeu" src="http://www.roemheld.de/IT/DATA/Images/Address/Deutschland.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavDeu">Deutsch</span></a></li>
+        			    <li><a id="navFra" href="#" class="language"><img id="imgNavFra" src="http://www.roemheld.de/IT/DATA/Images/Address/Frankreich.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavFra">Francais</span></a></li>
+        			    <li><a id="navEng" href="#" class="language"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavEng">English</span></a></li>
+                        <li><a id="navSpa" href="#" class="language"> <img id="imgNavSpa" src="http://www.roemheld.de/IT/DATA/Images/Address/Spanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSpa">Español</span></a></li>
+
+        	        </ul>
+                </li>
       </ul>
+
     </div>
   </div>
 </nav>
@@ -74,8 +116,11 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav">
-
-
+        <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">Select your journey</h3>
+            </div>
+            <div class = "panel-body">
         <script>
             var selectedRoute;
             var selectedDirection;
@@ -84,7 +129,7 @@
         </script>
         {% if estimated_time %}
             <div>
-                <br><br>Expected journey time is <br><b>{{ estimated_time }} minutes</b>
+                <br><br>Expected journey time is: <br><b>{{ estimated_time }} minutes</b>
                 <br><br>
                 <table>
                     <tr><td>Leap Fare</td><td id="leap_fare"></td></tr>
@@ -110,14 +155,14 @@
         {% else %}
             <div id="form_container">
                 <form action="route_selection"> {% csrf_token %}
-                    <select name="route" onchange="chooseRoute()" id="selectedRoute">
-                        <option selected disabled>Select your route</option>
+                    <select  name="route" onchange="chooseRoute()" id="selectedRoute">
+                        <option selected disabled>Route</option>
                         {% for route in routes %}
                             <option value={{ route }}>{{ route }}</option>
                         {% endfor %}
                     </select>
-                    <select name="direction" onchange="googleMap.chooseDirection()" id='direction_box' style="visibility:hidden" on>
-                        <option selected disabled>Select your direction</option>
+                    <select name="direction" onchange="googleMap.chooseDirection()" id='direction_box' style="visibility:hidden">
+                        <option selected disabled>Direction</option>
                     </select>
                     <select name="start" id="start_point" onchange="googleMap.chooseStart()" style="visibility:hidden">
                         <option selected disabled>Origin</option>
@@ -126,7 +171,7 @@
                         <option selected disabled>Destination</option>
                     </select>
                     <select name="weekday" id="weekday_box" onchange="chooseWeekDay()" required style="visibility:hidden">
-                        <option selected disabled>Weekday</option>
+                        <option selected disabled>Day of the week</option>
                         <option value="0">Monday</option>
                         <option value="1">Tuesday</option>
                         <option value="2">Wednesday</option>
@@ -159,11 +204,14 @@
                 </form>
             </div>
         {% endif %}
+            </div>
+          </div>
     </div>
 
     <div class="col-sm-9">
-
+        <div class = "panel panel-default">
         <div id="map" style="width:100%; height:500px;"></div>
+        </div>
     </div>
   </div>
 
@@ -187,22 +235,37 @@
             </div>
 
             <div class = "panel-body">
-                <img src="static/images/dublinbus_twitter_traffic.jpg" alt="dublinbus_twitter" class="center-block" width="304" height="236">
+                <a class="twitter-timeline" data-lang="en" data-width="440" data-height="230" href="https://twitter.com/dublinbusnews">Tweets by dublinbusnews</a>
+
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>
       </div>
 
       <div class="col-sm-4">
           <div class = "panel panel-default">
-            <div class = "panel-heading text-center">
-                <h3 class = "panel-title">Current Weather</h3>
+              <div class = "panel-heading text-center">
+                  <h3 class = "panel-title">Current Weather</h3>
+              </div>
+
+              <div class = "panel-body">
+                  <div id="weather">
+                      {% if weather_data.items %}
+                      <div id="iconImg">
+                          <img src="static/css/icons/black/png/128x128/{{ weather_data.icon }}.png" alt="Weather Icon" style="display:block;vertical-align:middle;margin:auto;" class="center-block" width="304" height="176"/>
+                      </div>
+                      <div id="wData" style="display:block;vertical-align:middle;margin:auto;">
+                          <p style="text-align:center">{{ weather_data.weather}}</p>
+                          <p style="text-align:center">{{ weather_data.temp_c}} &degC | {{ weather_data.pressure }} kPa | {{ weather_data.wind }} km/h</p>
+                      </div>
+                      {% endif %}
+                  </div>
+
             </div>
 
-            <div class = "panel-body">
-                <img src="static/images/sunny-showers.png" alt="sunny_showers" class="center-block" width="304" height="236">
-            </div>
           </div>
-      </div>
+
+    </div>
     </div>
 </div>
 
@@ -340,21 +403,18 @@
                 document.getElementById("end_point").appendChild(stop);
             }
             document.getElementById("end_point").style.visibility="visible";
-
             var lat=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedStart]][0]);
             var long=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedStart]][1]);
             var myPosition= new google.maps.LatLng(lat,long);
             var marker = new google.maps.Marker({position:myPosition,
                 icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png'});
             marker.setMap(map);
-
        }
        googleMap.chooseStart=chooseStart;
        function chooseEnd(){
                 document.getElementById("weekday_box").style.visibility="visible";
                 document.getElementById("hour_box").style.visibility="visible";
                 selectedEnd=document.getElementById("end_point").value;
-
                 var lat=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedEnd]][0]);
                 var long=parseFloat(stop_coordinates[jpids_and_stops[selectedRouteDirection][selectedEnd]][1]);
                 var myPosition= new google.maps.LatLng(lat,long);
@@ -371,5 +431,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap-select.min.js"></script>
 </body>
 </html>

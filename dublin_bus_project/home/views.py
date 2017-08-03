@@ -5,6 +5,7 @@ import json
 import pickle as pkl
 import os
 import pandas as pd
+import urllib.request
 
 def index(request): #called from home urls.py file
 
@@ -19,7 +20,28 @@ def index(request): #called from home urls.py file
     with open("home/jpids_and_stops.json") as jpids_and_stops:
         jpids_and_stops= json.load(jpids_and_stops)
 
-    context={'routes':routes, 'jpids_and_stops':jpids_and_stops,'stop_coordinates':stop_coordinates} #homepage requires only the routes for the dropdown menu
+    url = 'http://api.wunderground.com/api/'
+
+    wu_key = 'fc74b20ed4eafd0b'
+    lat = "53.355122"
+    lon = "-6.24922"
+    final_url = url + wu_key + "/geolookup/conditions/q/" + lat + "," + lon + ".json"
+    url_open = urllib.request.urlopen(final_url)
+    json_string = url_open.read()
+    parsed_json = json.loads(json_string)
+    url_open.close()
+
+    weather_data = dict(
+        location=parsed_json.get('location').get('city'),
+        temp_c=parsed_json.get('current_observation').get('temp_c'),
+        weather=parsed_json.get('current_observation').get('weather'),
+        pressure=parsed_json.get('current_observation').get('pressure_mb'),
+        wind=parsed_json.get('current_observation').get('wind_kph'),
+        iconURL=parsed_json.get('current_observation').get('icon_url'),
+        icon=parsed_json.get('current_observation').get('icon')
+    )
+
+    context={'routes':routes, 'jpids_and_stops':jpids_and_stops,'stop_coordinates':stop_coordinates, 'weather_data':weather_data} #homepage requires only the routes for the dropdown menu
     template = loader.get_template('home/index.html')  # loading the html homepage
     return HttpResponse(template.render(context, request)) #rendering routes to index.html
 
@@ -62,7 +84,28 @@ def get_route(request):
 
             returned_stops=stops_on_routes[selected_route][int(selected_start):int(selected_end)+1]
 
-        context = {'routes':routes,'jpids_and_stops':stops_on_routes,'stops_on_routes': returned_stops, 'trip_length':len(returned_stops)-1, 'stop_coordinates': stop_coordinates, 'estimated_time':result, 'current_route':selected_route, 'start_point':selected_start, 'end_point':selected_end}
+        url = 'http://api.wunderground.com/api/'
+
+        wu_key = 'fc74b20ed4eafd0b'
+        lat = "53.355122"
+        lon = "-6.24922"
+        final_url = url + wu_key + "/geolookup/conditions/q/" + lat + "," + lon + ".json"
+        url_open = urllib.request.urlopen(final_url)
+        json_string = url_open.read()
+        parsed_json = json.loads(json_string)
+        url_open.close()
+
+        weather_data = dict(
+            location=parsed_json.get('location').get('city'),
+            temp_c=parsed_json.get('current_observation').get('temp_c'),
+            weather=parsed_json.get('current_observation').get('weather'),
+            pressure=parsed_json.get('current_observation').get('pressure_mb'),
+            wind=parsed_json.get('current_observation').get('wind_kph'),
+            iconURL=parsed_json.get('current_observation').get('icon_url'),
+            icon=parsed_json.get('current_observation').get('icon')
+        )
+
+        context = {'routes':routes,'jpids_and_stops':stops_on_routes,'stops_on_routes': returned_stops, 'trip_length':len(returned_stops)-1, 'stop_coordinates': stop_coordinates, 'estimated_time':result, 'current_route':selected_route, 'start_point':selected_start, 'end_point':selected_end, 'weather_data':weather_data}
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
