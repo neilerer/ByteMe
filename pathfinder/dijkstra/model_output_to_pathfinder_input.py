@@ -118,7 +118,7 @@ if __name__ == "__main__":
 	for weekday in pathfinder_dict:
 		day_dict = pathfinder_dict[weekday]
 		print(weekday)
-		print(day_dict)
+		print(len(day_dict))
 		print("")
 	# 	for day in day_dict:
 	# 		time_unit_dict = day_dict[day]
