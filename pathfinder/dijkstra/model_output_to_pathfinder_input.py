@@ -124,7 +124,6 @@ if __name__ == "__main__":
 
 				print(weekday)
 				print(time_unit)
-				print(time_unit_dict)
 				print(stop)
 				print(stop_list)
 				print("")
