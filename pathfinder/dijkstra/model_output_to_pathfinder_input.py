@@ -119,10 +119,15 @@ if __name__ == "__main__":
 		day_dict = pathfinder_dict[weekday]
 		for time_unit in day_dict:
 			time_unit_dict = day_dict[time_unit]
-			print(weekday)
-			print(time_unit)
-			print(time_unit_dict)
-			print("")
+			for stop in time_unit_dict:
+				stop_list = time_unit_dict[stop]
+
+				print(weekday)
+				print(time_unit)
+				print(time_unit_dict)
+				print(stop)
+				print(stop_list)
+				print("")
 	# 	for day in day_dict:
 	# 		time_unit_dict = day_dict[day]
 	# 		for time_unit in time_unit_dict:
