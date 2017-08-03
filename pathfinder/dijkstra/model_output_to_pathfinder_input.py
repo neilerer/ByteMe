@@ -114,18 +114,35 @@ def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, in
 
 
 if __name__ == "__main__":
-	# pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
+	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
+	
+	monday = pathfinder_dict[0]
+	nine_oclock = monday[9]
+	for stop in nine_oclock:
+		print(stop)
+		print(nine_oclock[stop])
+		print("")
+
 	# for weekday in pathfinder_dict:
 	# 	day_dict = pathfinder_dict[weekday]
 	# 	for time_unit in day_dict:
 	# 		time_unit_dict = day_dict[time_unit]
 	# 		for stop in time_unit_dict:
 	# 			stop_list = time_unit_dict[stop]
-
 	# 			print(weekday)
 	# 			print(time_unit)
 	# 			print(stop)
 	# 			print(stop_list)
 	# 			print("")
 
-	dict_display("046A0001.json", "046A0001")
+
+	# dict_display("data_for_pathfinder.json", "046A0001")
+
+	
+	# jpi_dict = json_to_dict("data_for_pathfinder.json")
+	# jpi = "046A0001"
+	# weekday_input = "1"
+	# hour_input = "9"
+	# my_route = route(jpi_dict, jpi, weekday_input, hour_input)
+	# my_route_list = route_list(my_route)
+	# print(pathfinder_input(my_route_list))
