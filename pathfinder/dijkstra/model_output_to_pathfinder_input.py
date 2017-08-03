@@ -115,13 +115,21 @@ def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, in
 
 if __name__ == "__main__":
 	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
+
+	destination = open("pathfinder_data.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(next_stop_dict, destination)
+	# close the file
+	destination.close()
+
+
 	
-	monday = pathfinder_dict[0]
-	nine_oclock = monday[9]
-	for stop in nine_oclock:
-		print(stop)
-		print(nine_oclock[stop])
-		print("")
+	# monday = pathfinder_dict[0]
+	# nine_oclock = monday[9]
+	# for stop in nine_oclock:
+	# 	print(stop)
+	# 	print(nine_oclock[stop])
+	# 	print("")
 
 	# for weekday in pathfinder_dict:
 	# 	day_dict = pathfinder_dict[weekday]
