@@ -203,5 +203,5 @@ def testing_real_data():
 	return sp
 
 if __name__ == "__main__":
-	# shortest_path_test()
-	print(testing_real_data())
+	shortest_path_test()
+	# print(testing_real_data())
