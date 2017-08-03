@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
 	destination = open("pathfinder_data.p", "wb")
 	# dump the data into the pickle file
-	pickle.dump(next_stop_dict, destination)
+	pickle.dump(pathfinder_dict, destination)
 	# close the file
 	destination.close()
 
