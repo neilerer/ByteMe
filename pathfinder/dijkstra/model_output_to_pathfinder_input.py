@@ -115,16 +115,19 @@ def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, in
 
 if __name__ == "__main__":
 	pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
-	for weekday in pathfinder_dict:
-		day_dict = pathfinder_dict[weekday]
-		for day in day_dict:
-			time_unit_dict = day_dict[day]
-			for time_unit in time_unit_dict:
-				stop_dict = time_unit_dict[time_unit]
-				for stop in stop_dict:
-					print(stop)
-					print(stop_dict[stop])
-					print("")
+	for itme in pathfinder_dict:
+		print(item)
+		print("")
+	# for weekday in pathfinder_dict:
+	# 	day_dict = pathfinder_dict[weekday]
+	# 	for day in day_dict:
+	# 		time_unit_dict = day_dict[day]
+	# 		for time_unit in time_unit_dict:
+	# 			stop_dict = time_unit_dict[time_unit]
+	# 			for stop in stop_dict:
+	# 				print(stop)
+	# 				print(stop_dict[stop])
+	# 				print("")
 
 
 
