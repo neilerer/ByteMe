@@ -20,6 +20,21 @@ def get_model_data():
 	# return
 	return model_dict
 
+def model_data_review(model_dict):
+	for weekday in model_data:
+		print(weekday)
+		weekday_data = model_data[weekday]
+		for time_unit in weekday_data:
+			print(time_unit)
+			time_unit_data = weekday_data[time_unit]
+			print(len(time_unit_data))
+			# for stop in time_unit_data:
+			# 	print(stop)
+			# 	print(time_unit_data[stop])
+			# 	# stop : [(start, next, time, route), . . . ]
+
+model_dict = get_model_data()
+model_data_review(model_dict)
 
 
 def dict_to_list(model_data):
@@ -41,16 +56,7 @@ def dict_to_list_review(triple_list):
 		print(jpi_list)
 		print("")
 
-model_data = get_model_data()
-for weekday in model_data:
-	print(weekday)
-	weekday_data = model_data[weekday]
-	for time_unit in weekday_data:
-		print(time_unit)
-		time_unit_data = weekday_data[time_unit]
-		for jpi in time_unit_data:
-			print(jpi)
-			print(time_unit_data[jpi])
+
 # triple_list = dict_to_list(model_data)
 # dict_to_list_review(triple_list)
 
