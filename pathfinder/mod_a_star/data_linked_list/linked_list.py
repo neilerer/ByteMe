@@ -24,24 +24,26 @@ def get_model_data():
 
 def dict_to_list(model_data):
 	triple_list = list()
-	for route in model_data:
-		route_data = model_data[route]
+	for jpi in model_data:
+		jpi_data = model_data[jpi]
 		temp_triple_list = list()
-		for stop in route_data:
-			time = route_data[stop]
-			triple = (stop, route, time)
+		for stop in jpi_data:
+			time = jpi_data[stop]
+			triple = (stop, jpi, time)
 			temp_triple_list.append(triple)
 		triple_list.append(temp_triple_list)
 	return triple_list
 
 def dict_to_list_review(triple_list):
-	for route_list in triple_list:
-		print(route_list)
+	for jpi_list in triple_list:
+		print(jpi_list)
 		print("")
 
 model_data = get_model_data()
-triple_list = dict_to_list(model_data)
-dict_to_list_review(triple_list)
+for jpi in model_data:
+	print(jpi)
+# triple_list = dict_to_list(model_data)
+# dict_to_list_review(triple_list)
 
 
 
