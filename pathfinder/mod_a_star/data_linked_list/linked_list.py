@@ -24,14 +24,16 @@ def get_model_data():
 
 def dict_to_list(model_data):
 	triple_list = list()
-	for jpi in model_data:
-		jpi_data = model_data[jpi]
+	for weekday in model_data:
+		weekday_data = model_data[weekday]
 		temp_triple_list = list()
-		for stop in jpi_data:
-			time = jpi_data[stop]
-			triple = (stop, jpi, time)
-			temp_triple_list.append(triple)
-		triple_list.append(temp_triple_list)
+		for jpi in weekday_data:
+			jpi_data = weekday_data[jpi]
+			for stop in jpi_data:
+				time = jpi_data[stop]
+				triple = (stop, jpi, time)
+				temp_triple_list.append(triple)
+			triple_list.append(temp_triple_list)
 	return triple_list
 
 def dict_to_list_review(triple_list):
@@ -40,8 +42,11 @@ def dict_to_list_review(triple_list):
 		print("")
 
 model_data = get_model_data()
-for jpi in model_data:
-	print(jpi)
+for weekday in model_data:
+	print(weekday)
+	weekday_data = model_data[weekday]
+	for jpi in weekday_data:
+		print(jpi)
 # triple_list = dict_to_list(model_data)
 # dict_to_list_review(triple_list)
 
