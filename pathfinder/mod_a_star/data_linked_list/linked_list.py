@@ -21,9 +21,9 @@ def get_model_data():
 	return model_dict
 
 def model_data_review(model_dict):
-	for weekday in model_data:
+	for weekday in model_dict:
 		print(weekday)
-		weekday_data = model_data[weekday]
+		weekday_data = model_dict[weekday]
 		for time_unit in weekday_data:
 			print(time_unit)
 			time_unit_data = weekday_data[time_unit]
