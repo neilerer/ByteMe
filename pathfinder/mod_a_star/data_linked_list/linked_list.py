@@ -11,7 +11,7 @@ def get_model_data():
 	# get shit from file
 	f = open("data.p", "rb")
 	# load the pickle file
-	pathfinder_dict = pickle.load(f)
+	model_dict = pickle.load(f)
 	# close the pickle file
 	f.close()
 	# change directory
