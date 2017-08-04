@@ -50,7 +50,7 @@ for weekday in model_data:
 		time_unit_data = weekday_data[time_unit]
 		for jpi in time_unit_data:
 			print(jpi)
-			print("")
+			print(time_unit_data[jpi])
 # triple_list = dict_to_list(model_data)
 # dict_to_list_review(triple_list)
 
