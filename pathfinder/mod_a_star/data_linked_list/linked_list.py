@@ -20,21 +20,39 @@ def get_model_data():
 	# return
 	return model_dict
 
-def model_data_review(model_dict):
+def model_data_review_all_contents(model_dict):
 	for weekday in model_dict:
 		print(weekday)
-		weekday_data = model_dict[weekday]
+		weekday_data = model_dict	[weekday]
 		for time_unit in weekday_data:
 			print(time_unit)
 			time_unit_data = weekday_data[time_unit]
-			print(len(time_unit_data))
-			# for stop in time_unit_data:
-			# 	print(stop)
-			# 	print(time_unit_data[stop])
-			# 	# stop : [(start, next, time, route), . . . ]
+			for stop in time_unit_data:
+				print(stop)
+				print(time_unit_data[stop])
+				# stop : [(start, next, time, route), . . . ]
+
+def model_data_review_lengths(model_dict):
+	# open the destination file
+	destination = open("model_data_lengths.txt", "w")
+	# iterate over weekdays
+	for weekday in model_dict:
+		# record the weekday
+		destination.write("Day of the Week: {}\n\n".format(weekday))
+		# go into the weekday data
+		weekday_data = model_dict[weekday]
+		# iterate over time_units
+		for time_unit in weekday_data:
+			# record the time unit
+			destination.write("Time Unit: {}\n".format(time_unit))
+			# got into the time_unit data
+			time_unit_data = weekday_data[time_unit]
+			destination.write("Observations: {}\n\n".format(len(time_unit_data)))
+		destination.write("\n\n\n\n")
+	destination.close()
 
 model_dict = get_model_data()
-model_data_review(model_dict)
+model_data_review_lengths(model_dict)
 
 
 def dict_to_list(model_data):
