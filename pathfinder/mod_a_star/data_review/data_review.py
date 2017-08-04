@@ -16,7 +16,7 @@ def get_model_data():
 	f.close()
 	# change directory
 	os.chdir("../")
-	os.chdir("data_linked_list")
+	os.chdir("data_review")
 	# return
 	return model_dict
 
