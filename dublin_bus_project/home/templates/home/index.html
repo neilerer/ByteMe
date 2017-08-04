@@ -308,14 +308,14 @@
                         var first_direction = document.createElement("option");
                         first_direction.id='first_direction';
                         first_direction.value = 0;
-                        first_direction.innerHTML = String(jpids_and_stops[key][0])+" to "+String(jpids_and_stops[key][jpids_and_stops[key].length-1]);
+                        first_direction.innerHTML = "Towards "+String(stop_coordinates[jpids_and_stops[key][jpids_and_stops[key].length-1]][2]);
                         start+=1;
                     }
                     else if ((end==0)&&(selectedRoute+"1001" == key )){
                         var second_direction = document.createElement("option");
                         second_direction.id='second_direction';
                         second_direction.value = 1;
-                        second_direction.innerHTML = String(jpids_and_stops[key][0])+" to "+String(jpids_and_stops[key][jpids_and_stops[key].length-1]);
+                        second_direction.innerHTML = "Towards "+String(stop_coordinates[jpids_and_stops[key][jpids_and_stops[key].length-1]][2]);
                         end+=1;
                     }
             }
@@ -351,7 +351,7 @@
                 var stop = document.createElement("option");
                 stop.id=jpids_and_stops[selectedRouteDirection][i];
                 stop.value = i;
-                stop.innerHTML = jpids_and_stops[selectedRouteDirection][i];
+                stop.innerHTML = stop_coordinates[jpids_and_stops[selectedRouteDirection][i]][2];
                 document.getElementById("start_point").appendChild(stop);
             }
         }
@@ -395,11 +395,11 @@
        googleMap.setMarkers=setMarkers;
        function chooseStart(){
             selectedStart=document.getElementById("start_point").value;
-            for(i=selectedStart;i<jpids_and_stops[selectedRouteDirection].length-1;i++){
+            for(i=parseInt(selectedStart)+1;i<jpids_and_stops[selectedRouteDirection].length;i++){
                 var stop = document.createElement("option");
-                stop.id=jpids_and_stops[selectedRouteDirection][i+1];
-                stop.value = i+1;
-                stop.innerHTML = jpids_and_stops[selectedRouteDirection][i+1];
+                stop.id=jpids_and_stops[selectedRouteDirection][i];
+                stop.value = i;
+                stop.innerHTML = stop_coordinates[jpids_and_stops[selectedRouteDirection][i]][2];
                 document.getElementById("end_point").appendChild(stop);
             }
             document.getElementById("end_point").style.visibility="visible";

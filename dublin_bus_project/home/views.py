@@ -14,7 +14,7 @@ def index(request): #called from home urls.py file
         routes = pkl.load(route_file)
         routes=sorted(routes)
 
-    with open("home/stop_coordinates.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
+    with open("home/stop_coordinates_with_names.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
 
     with open("home/jpids_and_stops.json") as jpids_and_stops:
@@ -61,7 +61,7 @@ def get_route(request):
 
         with open("home/jpids_and_stops.json") as route_file: #reading dictionary {key:value} = {stop:[routes]}
             stops_on_routes = json.load(route_file)
-        with open("home/stop_coordinates.json") as stop_file: #reading dictionary {key:value} = {stop:[lat,long]}
+        with open("home/stop_coordinates_with_names.json") as stop_file: #reading dictionary {key:value} = {stop:[lat,long]}
             stop_coordinates = json.load(stop_file)
         print(os.getcwd())
         with open("../models/linear_model/pickle_files/"+selected_route+".pkl", "rb") as model_file:
