@@ -45,8 +45,12 @@ model_data = get_model_data()
 for weekday in model_data:
 	print(weekday)
 	weekday_data = model_data[weekday]
-	for jpi in weekday_data:
-		print(jpi)
+	for time_unit in weekday_data:
+		print(time_unit)
+		time_unit_data = weekday_data[time_unit]
+		for jpi in time_unit_data:
+			print(jpi)
+			print("")
 # triple_list = dict_to_list(model_data)
 # dict_to_list_review(triple_list)
 
