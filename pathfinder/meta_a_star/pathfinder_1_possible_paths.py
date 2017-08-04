@@ -10,7 +10,6 @@ possible_paths_dict = d2.possible_paths()
 
 # reference data
 all_stops_list = [stop for stop in stop_dict]
-# possible_paths_list = [path.strip().split("_") for path in possible_paths_dict]
 
 
 
@@ -40,9 +39,9 @@ def path_possible(start, end, stop_dict, possible_paths_dict):
 	# path_possible_output
 	return [possible, possible_paths_list]
 
-for stop in all_stops_list:
-	for other_stop in all_stops_list:
-		print(path_possible(stop, other_stop, stop_dict, possible_paths_dict))
+# for stop in all_stops_list:
+# 	for other_stop in all_stops_list:
+# 		print(path_possible(stop, other_stop, stop_dict, possible_paths_dict))
 
 def minimum_tuples_in_list(list_of_tuples):
 	minimum = len(list_of_tuples[0])
@@ -51,7 +50,6 @@ def minimum_tuples_in_list(list_of_tuples):
 			minimum = len(t)
 	tuple_list = [t for t in list_of_tuples if len(t) == minimum]
 	return tuple_list
-
 
 def possible_paths_for_pathfinder(path_possible_output):
 	boolean = path_possible_output[0]
