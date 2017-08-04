@@ -39,6 +39,10 @@ def dict_to_list_review(triple_list):
 		print(route_list)
 		print("")
 
+model_data = get_model_data()
+triple_list = dict_to_list(model_data)
+dict_to_list_review(triple_list)
+
 
 
 def linked_list_element_creation(route_list, index_prior, index_current):
@@ -85,8 +89,8 @@ def linked_list_for_export():
 	stop_linked_list = triple_list_to_linked_list(triple_list)
 	return stop_linked_list
 
-if __name__ == "__main__":
-	model_data = get_model_data()
-	triple_list = dict_to_list(model_data)
-	stop_linked_list = triple_list_to_linked_list(triple_list)
-	linked_list_review(stop_linked_list)
+# if __name__ == "__main__":
+# 	model_data = get_model_data()
+# 	triple_list = dict_to_list(model_data)
+# 	stop_linked_list = triple_list_to_linked_list(triple_list)
+# 	linked_list_review(stop_linked_list)
