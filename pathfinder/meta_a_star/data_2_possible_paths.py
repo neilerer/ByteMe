@@ -154,26 +154,14 @@ def possible_paths():
 			pp_dict[key] = tuple(value)
 	return pp_dict
 
-my_item = possible_paths()
-for item in my_item:
-	print(item)
-	print(my_item[item])
-	print("")
+def possible_paths_review(pp_dict):
+	for item in pp_dict:
+		print(item)
+		print(pp_dict[item])
+		print("")
 
-# if __name__ == "__main__":
-# 	stop_linked_list = get_stop_linked_list()
-# 	route_connections_dict = route_connections(stop_linked_list)
-# 	print(route_connections_dict)
 
-# 	been_list = list()
-# 	journey_id_list = list()
-# 	range_list = []
-# 	first_range = range(-3, 0, 1)
-# 	for i in first_range:
-# 		range_list.append(i)
-# 	second_range = range(1, 4, 1)
-# 	for i in second_range:
-# 		range_list.append(i)
-# 	for f in range_list:
-# 		for s in range_list:
-# 			print(find_shortest_path(f, s, route_connections_dict))
+
+if __name__ == "__main__":
+	pp_dict = possible_paths()
+	possible_paths_review(pp_dict)
