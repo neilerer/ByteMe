@@ -120,7 +120,7 @@ def all_shortest_paths():
 	shortest_paths = dict()
 	connections_dict = get_connections_dict()
 	for weekday in connections_dict:
-		for time_unit in weekday:
+		for time_unit in connections_dict[weekday]:
 			time_unit_dict = connections_dict[weekday][time_unit]
 			key = str(weekday) + "_" + str(time_unit)
 			shortest_paths[key] = dict()
