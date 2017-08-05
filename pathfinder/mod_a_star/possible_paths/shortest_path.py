@@ -141,16 +141,33 @@ def all_shortest_paths_to_file():
 
 
 
+def all_shortest_paths_to_file_individual():
+	connections_dict = get_connections_dict()
+	for weekday in connections_dict:
+		for time_unit in connections_dict[weekday]:
+			time_unit_dict = connections_dict[weekday][time_unit]
+			shortest_paths = dict()
+			key = str(weekday) + "_" + str(time_unit)
+			shortest_paths[key] = dict()
+			for start_route_id in time_unit_dict:
+				for end_route_id in time_unit_dict:
+					shortest_paths[key][(start_route_id, end_route_id)] = find_shortest_path(start_route_id, end_route_id, time_unit_dict)
+			destination = open(key + ".p", "wb")
+			pickle.dump(shortest_paths, destination)
+			destination.close()
+
+
+
+def which_shortest_path_to_file():
+	choice = input("Which program to you want to run: one file or multiple files? ")
+	if choice = "one":
+		all_shortest_paths_to_file()
+	elif choice = "multiple":
+		all_shortest_paths_to_file_individual()
+	else:
+		print("OK, I won't do anythign right now")
+
+
+
 if __name__ == "__main__":
-	all_shortest_paths_to_file()
-
-
-
-# connections_dict = get_connections_dict()
-# time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 7)
-# for start_route_id in time_unit_connections_dict:
-# 	for end_route_id in time_unit_connections_dict:
-# 		print("{} to {}".format(start_route_id, end_route_id))
-# 		sp = find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
-# 		print(sp)
-# 		print("")
+	which_shortest_path_to_file()
