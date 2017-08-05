@@ -82,6 +82,21 @@ def connections(model_dict):
 	return connections_dict
 
 
+# TO FILE
+def routes_to_file(model_dict):
+	model_dict = get_model_data()
+	routes_dict = routes(model_dict)
+	destination = open("rc_routes_dict.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(routes_dict, destination)
+	# close the file
+	destination.close()
 
-model_dict = get_model_data()
-connections_dict = connections(model_dict)
+def connections_to_file(model_dict):
+	model_dict = get_model_data()
+	connections_dict = connections(model_dict)
+	destination = open("rc_connections_dict.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(connections_dict, destination)
+	# close the file
+	destination.close()
