@@ -16,7 +16,7 @@ def get_model_data():
 	f.close()
 	# change directory
 	os.chdir("../")
-	os.chdir("pathfinder_possible_paths")
+	os.chdir("possible_paths")
 	# return
 	return model_dict
 
