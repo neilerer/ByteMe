@@ -21,24 +21,67 @@ def get_model_data():
 	return model_dict
 
 
-# break these into weekdays, time_units, and then stops
 
-def routes_at_stop(stop, stop_linked_list):
-	stop_data = stop_linked_list[stop]
+# ROUTES
+def routes_at_stop(stop, time_unit_data):
+	stop_data = time_unit_data[stop]
 	route_list = list()
 	for quadruple in stop_data:
-		route = quadruple[1]
-		route_list.append(route)
+		route = quadruple[3]
+		if route not in route_list:
+			route_list.append(route)
 	return route_list
 
-def route_connections(stop_linked_list):
-	rc_dict = dict()
-	for stop in stop_linked_list:
-		connected_stops = routes_at_stop(stop, stop_linked_list)
+def routes_in_time_unit(time_unit, weekday_data):
+	routes_in_time_unit_dict = dict()
+	time_unit_data = weekday_data[time_unit]
+	for stop in time_unit_data:
+		routes_in_time_unit_dict[stop] = routes_at_stop(stop, time_unit_data)
+	return routes_in_time_unit_dict
+
+def routes_in_weekday(weekday, model_dict):
+	routes_in_weekday_dict = dict()
+	weekday_data = model_dict[weekday]
+	for time_unit in weekday_data:
+		routes_in_weekday_dict[time_unit] = routes_in_time_unit(time_unit, weekday_data)
+	return routes_in_weekday_dict
+
+def routes(model_dict):
+	routes_dict = dict()
+	for weekday in model_dict:
+		routes_dict[weekday] = routes_in_weekday(weekday, model_dict)
+	return routes_dict
+
+
+
+# ROUTE CONNECTIONS
+def connections_in_time_unit(time_unit, weekday_data):
+	connections_in_time_unit_dict = dict()
+	routes_in_time_unit_dict = routes_in_time_unit(time_unit, weekday_data)
+	for stop in routes_in_time_unit_dict:
+		connected_stops = routes_in_time_unit_dict[stop]
 		for cs in connected_stops:
-			if cs not in rc_dict:
-				rc_dict[cs] = list()
+			if cs not in connections_in_time_unit_dict:
+				connections_in_time_unit_dict[cs] = list()
 			for other_cs in connected_stops:
-				if other_cs != cs and other_cs not in rc_dict[cs]:
-					rc_dict[cs].append(other_cs)
-	return rc_dict
+				if (other_cs != cs) and (other_cs not in connections_in_time_unit_dict[cs]):
+					connections_in_time_unit_dict[cs].append(other_cs)
+	return connections_in_time_unit_dict
+
+def connections_in_weekday(weekday, model_dict):
+	connections_in_weekday_dict = dict()
+	weekday_data = model_dict[weekday]
+	for time_unit in weekday_data:
+		connections_in_weekday_dict[time_unit] = connections_in_time_unit(time_unit, weekday_data)
+	return connections_in_weekday_dict
+
+def connections(model_dict):
+	connections_dict = dict()
+	for weekday in model_dict:
+		connections_dict[weekday] = connections_in_weekday(weekday, model_dict)
+	return connections_dict
+
+
+
+model_dict = get_model_data()
+connections_dict = connections(model_dict)
