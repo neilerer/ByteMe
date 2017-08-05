@@ -141,6 +141,12 @@ def all_shortest_paths_to_file():
 
 
 
+def find_shortest_path_value_modifier(journies_dict):
+	path = None
+	for journey_id in journies_dict:
+		path = path_dict[journey_id]
+	return path
+
 def all_shortest_paths_to_file_individual():
 	connections_dict = get_connections_dict()
 	for weekday in connections_dict:
@@ -151,7 +157,8 @@ def all_shortest_paths_to_file_individual():
 			shortest_paths[key] = dict()
 			for start_route_id in time_unit_dict:
 				for end_route_id in time_unit_dict:
-					shortest_paths[key][(start_route_id, end_route_id)] = find_shortest_path(start_route_id, end_route_id, time_unit_dict)
+					journies_dict = find_shortest_path(start_route_id, end_route_id, time_unit_dict)
+					shortest_paths[key][(start_route_id, end_route_id)] = find_shortest_path_value_modifier(journies_dict)
 			destination = open(key + ".p", "wb")
 			pickle.dump(shortest_paths, destination)
 			destination.close()
