@@ -17,4 +17,6 @@ def get_time_unit_path_dict(weekday, time_unit):
 
 
 
-print(get_time_unit_path_dict(0, 7))
+time_unit_path_dict = get_time_unit_path_dict(0, 7)
+for item in time_unit_path_dict:
+	print(item)
