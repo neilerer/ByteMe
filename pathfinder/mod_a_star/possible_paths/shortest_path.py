@@ -79,6 +79,8 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_route_id, ti
 			# iterate over possible next stops
 			for next_route_id in next_list:
 				if next_route_id not in been_list:
+					# add to the been_list
+					been_list.append(next_route_id)
 					# create a new journey id
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
@@ -106,13 +108,6 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 	found_shortest_path = result[0]
 	# continue
 	while found_shortest_path is False:
-		# explosition mitigation
-		if journey_id_list[-1] > 99999:
-			print("explosition")
-			been_list = []
-			journey_id_list = [100000]
-			temp_dict = journies_dict[100000]
-			journies_dict = temp_dict
 		result = continue_journey(journey_id_list, journies_dict, been_list, end_route_id, time_unit_connections_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
