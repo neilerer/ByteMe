@@ -116,11 +116,36 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 
 
 
-connections_dict = get_connections_dict()
-time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 7)
-for start_route_id in time_unit_connections_dict:
-	for end_route_id in time_unit_connections_dict:
-		print("{} to {}".format(start_route_id, end_route_id))
-		sp = find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
-		print(sp)
-		print("")
+def all_shortest_paths():
+	shortest_paths = dict()
+	connections_dict = get_connections_dict()
+	for weekday in connections_dict:
+		for time_unit in weekday:
+			time_unit_dict = connections_dict[weekday][time_unit]
+			key = str(weekday) + "_" + str(time_unit)
+			shortest_paths[key] = dict()
+			for start_route_id in time_unit_dict:
+				for end_route_id in time_unit_dict:
+					shortest_paths[key][(start_route_id, end_route_id)] = find_shortest_path(start_route_id, end_route_id, time_unit_dict)
+	return shortest_paths
+
+
+
+def all_shortest_paths_to_file():
+	shortest_paths = all_shortest_paths()
+	destination = open("shortest_paths.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(shortest_paths, destination)
+	# close the file
+	destination.close()
+
+
+
+# connections_dict = get_connections_dict()
+# time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 7)
+# for start_route_id in time_unit_connections_dict:
+# 	for end_route_id in time_unit_connections_dict:
+# 		print("{} to {}".format(start_route_id, end_route_id))
+# 		sp = find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
+# 		print(sp)
+# 		print("")

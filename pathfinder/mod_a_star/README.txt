@@ -8,4 +8,5 @@ data_review
 possible_paths
 - route_connections
 -- articulates the connections between each route
-- 
+- shortest_path
+-- an implementation of Dijkstra's algorithm is used to find and select the path form one route to another with minimum transfers
