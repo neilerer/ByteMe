@@ -34,9 +34,9 @@ def connections_dict_review():
 				time_unit_data = weekday_data[time_unit]
 				for item in time_unit_data:
 					destination.write("{}: ".format(item))
-					item_data = time_unit_data[item]
-					for thing in item_data:
-						destination.write("{}, ".format(thing))
+					route_data = time_unit_data[item]
+					for route in route_data:
+						destination.write("{}, ".format(route))
 					destination.write("\n")
 			destination.write("\n\n")
 		destination.write("\n\n\n\n")
