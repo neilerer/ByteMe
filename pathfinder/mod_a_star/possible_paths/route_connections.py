@@ -100,3 +100,9 @@ def connections_to_file(model_dict):
 	pickle.dump(connections_dict, destination)
 	# close the file
 	destination.close()
+
+
+
+if __name__ == "__main__":
+	routes_to_file()
+	connections_to_file()
