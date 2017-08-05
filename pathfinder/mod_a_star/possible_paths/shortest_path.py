@@ -86,7 +86,11 @@ def continue_journey(journey_id_list, journies_dict, been_list, end_route_id, ti
 					new_details = copy.deepcopy(path_details)
 					new_details.append(next_route_id)
 					ending_dict[journey_id] = new_details
-	return [False, ending_dict]
+	# return
+	if not ending_dict:
+		return [True, {0: None}]
+	else:
+		return [False, ending_dict]
 
 
 
