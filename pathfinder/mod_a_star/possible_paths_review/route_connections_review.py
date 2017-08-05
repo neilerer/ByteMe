@@ -1,5 +1,42 @@
 # imports
 import os
+import pickle
 
 
 
+# GET DATA
+def get_rc_connections_dict():
+	# change directory
+	os.chdir("../")
+	os.chdir("possible_paths")
+	# get shit from file
+	f = open("rc_connections_dict.p", "rb")
+	# load the pickle file
+	connections_dict = pickle.load(f)
+	# close the pickle file
+	f.close()
+	# change directory
+	os.chdir("../")
+	os.chdir("possible_paths_review")
+	# return
+	return connections_dict
+
+
+
+def connections_dict_review():
+	connections_dict = get_rc_connections_dict()
+	with open("connections_dict_review.txt", "w") as destination:
+		for weekday in connections_dict:
+			destination.write("Weekday: {}\n\n\n".format(weekday))
+			weekday_data = connections_dict[weekday]
+			for time_unit in weekday_data:
+				destination.write("Time Unit: {}\n".format(time_unit))
+				time_unit_data = weekday_data[time_unit]
+				for item in time_unit_data:
+					destination.write("{}: ".format(item))
+					item_data = time_unit_data[item]
+					for thing in item_data:
+						destination.write("{}, ".format(thing))
+					destination.write("\n")
+			destination.write("\n\n")
+		destination.write("\n\n\n\n")

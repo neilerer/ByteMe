@@ -4,6 +4,7 @@ import pickle
 
 
 
+# GET DATA
 def get_model_data():
 	# change directory
 	os.chdir("../")
