@@ -141,6 +141,11 @@ def all_shortest_paths_to_file():
 
 
 
+if __name__ == "__main__":
+	all_shortest_paths_to_file()
+
+
+
 # connections_dict = get_connections_dict()
 # time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 7)
 # for start_route_id in time_unit_connections_dict:
