@@ -144,7 +144,7 @@ def all_shortest_paths_to_file():
 def find_shortest_path_value_modifier(journies_dict):
 	path = None
 	for journey_id in journies_dict:
-		path = path_dict[journey_id]
+		path = journies_dict[journey_id]
 	return path
 
 def all_shortest_paths_to_file_individual():
