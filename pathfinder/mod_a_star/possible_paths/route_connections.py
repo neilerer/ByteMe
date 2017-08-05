@@ -83,7 +83,7 @@ def connections(model_dict):
 
 
 # TO FILE
-def routes_to_file(model_dict):
+def routes_to_file():
 	model_dict = get_model_data()
 	routes_dict = routes(model_dict)
 	destination = open("rc_routes_dict.p", "wb")
@@ -92,7 +92,7 @@ def routes_to_file(model_dict):
 	# close the file
 	destination.close()
 
-def connections_to_file(model_dict):
+def connections_to_file():
 	model_dict = get_model_data()
 	connections_dict = connections(model_dict)
 	destination = open("rc_connections_dict.p", "wb")
