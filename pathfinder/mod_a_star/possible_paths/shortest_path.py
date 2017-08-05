@@ -106,6 +106,13 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 	found_shortest_path = result[0]
 	# continue
 	while found_shortest_path is False:
+		# explosition mitigation
+		if journey_id_list[-1] > 99999:
+			print("explosition")
+			been_list = []
+			journey_id_list = [100000]
+			temp_dict = journies_dict[100000]
+			journies_dict = temp_dict
 		result = continue_journey(journey_id_list, journies_dict, been_list, end_route_id, time_unit_connections_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
