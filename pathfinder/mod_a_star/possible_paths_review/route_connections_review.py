@@ -40,3 +40,8 @@ def connections_dict_review():
 					destination.write("\n")
 			destination.write("\n\n")
 		destination.write("\n\n\n\n")
+
+
+
+if __name__ == "__main__":
+	connections_dict_review()
