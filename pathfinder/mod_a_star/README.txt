@@ -5,5 +5,6 @@ data_json
 data_review
 - gives you a feel for what's in data.p, which is stored in data_json
 
-pathfinder_possible_paths
-- 
+possible_paths
+- route_connections
+-- articulates the connections between each route
