@@ -27,7 +27,10 @@ def time_unit_path_dict_review(weekday, time_unit):
 	time_unit_dict = time_unit_path_dict[key]
 
 	for path_id in time_unit_dict:
-		path = time_unit_dict[path_id]
+		path_dict = time_unit_dict[path_id]
+		path = None
+		for journey_id in path_dict:
+			path = path_dict[journey_id]
 		print(path_id)
 		print(path)
 		print("")
