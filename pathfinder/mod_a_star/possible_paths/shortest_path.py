@@ -111,6 +111,8 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 
 
 connections_dict = get_connections_dict()
-time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 10)
-sp = find_shortest_path("00590", "00630", time_unit_connections_dict)
-print(sp)
+time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, 0, 7)
+for start_route_id in time_unit_connections_dict:
+	for end_other_route in time_unit_connections_dict:
+		sp = find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
+		print(sp)
