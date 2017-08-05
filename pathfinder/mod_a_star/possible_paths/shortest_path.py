@@ -160,9 +160,9 @@ def all_shortest_paths_to_file_individual():
 
 def which_shortest_path_to_file():
 	choice = input("Which program to you want to run: one file or multiple files? ")
-	if choice = "one":
+	if choice == "one":
 		all_shortest_paths_to_file()
-	elif choice = "multiple":
+	elif choice == "multiple":
 		all_shortest_paths_to_file_individual()
 	else:
 		print("OK, I won't do anythign right now")
