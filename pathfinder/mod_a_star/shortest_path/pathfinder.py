@@ -41,7 +41,7 @@ def time_unit_path_dict_review(weekday, time_unit):
 		# print(path)
 		# print("")
 
-time_unit_path_dict_review(0, 7)
+time_unit_path_dict_review(6, 13)
 
 
 # time_unit_path_dict = get_time_unit_path_dict(0, 7)
