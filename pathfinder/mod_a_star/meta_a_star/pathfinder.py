@@ -62,7 +62,7 @@ if __name__ == "__main__":
 		been_list = list()
 		journey_id_list = list()
 		journies_dict = dict()
-		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list)
+		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list, journies_dict)
 		print(start_sj)
 	print("")
 
