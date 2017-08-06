@@ -27,8 +27,8 @@ if __name__ == "__main__":
 	print("")
 
 	# testing path_possibilities
-	user_input.path_possibilities(journey_details)
+	path_possibilities = user_input.path_possibilities(journey_details)
 	print("Path Possibilities")
-	for pp in user_input:
+	for pp in path_possibilities:
 		print(pp)
 	print("")
