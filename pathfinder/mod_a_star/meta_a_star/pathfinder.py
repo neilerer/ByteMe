@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
 	# test find_shortest_path_candidates_from_multiple_options
 	print("Details of Reduced Path Possibilities")
-	reduced_path_possibilities = shortest_path.find_shortest_path_candidates_from_multiple_options(path_possibilities)
+	reduced_path_possibilities = shortest_path.find_shortest_path_candidates_from_multiple_options(path_possibilities, time_unit_connections_dict)
 	for rpp in reduced_path_possibilities:
 		print(rpp)
 	print("")
