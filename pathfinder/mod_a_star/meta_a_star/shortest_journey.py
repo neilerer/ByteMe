@@ -41,42 +41,20 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 
 
 
-# def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_set, journey_id_list, journies_dict):
-# 	# instantiate starting_dict
-# 	starting_dict = journies_dict
-# 	# sort starting_dict so that the shortest journey is considered
-# 	starting_dict = merge_sort.merge_sort_journies_dict(starting_dict)
-# 	# ending_dict
-# 	ending_dict = dict()
-# 	# been_set_update
-# 	been_set_update = set()
-# 	# continue the shortest journey
-# 	for journey_id in starting_dict:
-# 		# identify where the traveller is right now
-# 		current_journey_details = starting_dict[journey_id]
-# 		cj_time = current_journey_details[0]
-# 		cj_quadruple = current_journey_details[1][-1]
-# 		cj_stop_id = cj_quadruple[1]
-# 		cj_route = cj_quadruple[3]
-# 		# check if traveller has arrived
-# 		if cj_stop_id == end_stop_id:
-# 			ending_dict = dict()
-# 			ending_dict[journey_id] = current_journey_details
-# 		# otherwise we determine the next set of paths
-# 		else:
-
-
-# 	# update the been_set
-# 	for journey_id in starting_dict:
-
-
-
-
-
-
-
-
-
-
-
-
+def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict):
+	# time_unit_dict
+	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
+	# instantiate starting_dict
+	continuing_dict = journies_dict
+	# sort starting_dict so that the shortest journey is considered
+	continuing_dict = merge_sort.merge_sort_journies_dict(starting_dict)
+	# continue the shortest journey
+	current_journey = merge_sort.remove_first_entry_of_dict(continuing_dict)
+	# unpack current_journey
+	journey_id = current_journey[0]
+	current_journey_contents = current_journey[1]
+	current_journey_time = current_journey_contents[0]
+	been_set = current_journey_contents[1]
+	current_stop_id = current_journey_contents[2][-1][1]
+	# determine if this journey will be continued
+	# iterate over the quadruples of the next stop; extend the journey if a quadruple hasn't been visited before
