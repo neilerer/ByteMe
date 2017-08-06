@@ -4,6 +4,7 @@ import copy
 import pickle
 
 
+
 def get_time_unit_connections_dict(connections_dict, weekday, time_unit):
 	time_unit_connections_dict = connections_dict[weekday][time_unit]
 	return time_unit_connections_dict

@@ -3,6 +3,7 @@ import os
 import pickle
 
 
+
 def get_model_data():
 	# change directory
 	os.chdir("../")
@@ -18,6 +19,7 @@ def get_model_data():
 	os.chdir("shortest_path")
 	# return
 	return model_dict
+
 
 
 def get_connections_dict():

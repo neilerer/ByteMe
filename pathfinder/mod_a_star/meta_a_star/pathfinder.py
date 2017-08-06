@@ -10,6 +10,7 @@ model_dict = data.get_model_data()
 connections_dict = data.get_connections_dict()
 
 
+
 if __name__ == "__main__":
 	# testing user input
 	start_stop_id = 400
@@ -38,8 +39,14 @@ if __name__ == "__main__":
 	# testing find_shortest_path
 	time_unit_connections_dict = shortest_path.get_time_unit_connections_dict(connections_dict, weekday, time_unit)
 	print("Details of Path Possibilities")
+	shortest_path_candidates = list()
 	for pp in path_possibilities:
 		start_route_id = pp[0]
 		end_route_id = pp[1]
-		print(shortest_path.find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
+		shortest_path_candidates.append(shortest_path.find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
+	for sp_candidate in shortest_path_candidates:
+		print(sp_candidate)
 	print("")
+
+
+
