@@ -79,5 +79,13 @@ def combine_time_unit_path_dicts():
 
 
 
+def combined_time_unit_path_dicts_to_file():
+	time_unit_path_dicts = combine_time_unit_path_dicts()
+	destination = open("time_unit_path_dicts" + ".p", "wb")
+	pickle.dump(time_unit_path_dicts, destination)
+	destination.close()
+
+
+
 if __name__ == "__main__":
 	combine_time_unit_path_dicts()
