@@ -93,5 +93,18 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 		result = continue_journey(journey_id_list, journies_dict, been_list, end_route_id, time_unit_connections_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
+	# modify the return object
+	journey_path = None
+	for journey_id in journies_dict:
+		journey_path = journies_dict[journey_id]
 	# return
-	return journies_dict
+	return journey_path
+
+
+
+def find_shortest_path_candidates_from_multiple_options(path_possibilities):
+	length = len(path_possibilities[0])
+	for pp in path_possibilities:
+		start_route_id = pp[0]
+		end_route_id = pp[1]
+		sp = find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
