@@ -57,11 +57,8 @@ def get_time_unit_path_dict_file_names():
 	sp_to_pp()
 	file_name_list = list()
 	for file_name in glob.glob("*.p"):
-		try:
-			if int(file_name[0]):
-				file_name_list.append(file_name)
-		except:
-			pass
+		if file_name[1] == "_":
+			file_name_list.append(file_name)
 	pp_to_sp()
 	return file_name_list
 
