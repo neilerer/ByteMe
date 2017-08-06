@@ -33,18 +33,18 @@ def time_unit_path_dict_review(weekday, time_unit):
 		print("")
 
 
-		# path_dict = time_unit_dict[path_id]
-		# path = None
-		# for journey_id in path_dict:
-		# 	path = path_dict[journey_id]
-		# print(path_id)
-		# print(path)
-		# print("")
+def get_time_unit_path_dict_file_names():
+	os.chdir("../")
+	os.chdir("possible_paths")
+	file_name_list = list()
+	for file_name in glob.glob("*.p"):
+		try:
+			if int(file_name[0]):
+				file_name_list.append(file_name)
+		except:
+			pass
+	os.chdir("../")
+	os.chdir("shortest_path")
+	return file_name_list
 
-time_unit_path_dict_review(6, 13)
-
-
-# time_unit_path_dict = get_time_unit_path_dict(0, 7)
-# for time_unit_dict in time_unit_path_dict:
-# 	for item in time_unit_dict:
-# 		print(item)
+print(get_time_unit_path_dict_file_names())
