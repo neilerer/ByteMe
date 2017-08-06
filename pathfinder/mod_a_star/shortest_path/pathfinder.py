@@ -81,7 +81,8 @@ def combine_time_unit_path_dicts():
 
 def combined_time_unit_path_dicts_to_file():
 	time_unit_path_dicts = combine_time_unit_path_dicts()
-	print(time_unit_path_dicts["0_8"])
+	for item in time_unit_path_dicts:
+		print(item)
 	# destination = open("time_unit_path_dicts" + ".p", "wb")
 	# pickle.dump(time_unit_path_dicts, destination)
 	# destination.close()
