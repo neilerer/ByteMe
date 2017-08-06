@@ -25,3 +25,10 @@ if __name__ == "__main__":
 	for quadruple in end_details:
 		print(quadruple)
 	print("")
+
+	# testing path_possibilities
+	user_input.path_possibilities(journey_details)
+	print("Path Possibilities")
+	for pp in user_input:
+		print(pp)
+	print("")
