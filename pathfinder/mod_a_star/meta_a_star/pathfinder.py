@@ -36,10 +36,10 @@ if __name__ == "__main__":
 	print("")
 
 	# testing find_shortest_path
-	time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, weekday, time_unit)
+	time_unit_connections_dict = shortest_path.get_time_unit_connections_dict(connections_dict, weekday, time_unit)
 	print("Details of Path Possibilities")
 	for pp in path_possibilities:
 		start_route_id = pp[0]
 		end_route_id = pp[1]
-		print(find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
+		print(shortest_path.find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
 	print("")
