@@ -75,13 +75,14 @@ def combine_time_unit_path_dicts():
 		key = new_items[0]
 		time_unit_path_dict = new_items[1]
 		time_unit_path_dicts[key] = time_unit_path_dict
+	print(time_unit_path_dicts)
 	return time_unit_path_dicts
 
 
 
 def combined_time_unit_path_dicts_to_file():
 	time_unit_path_dicts = combine_time_unit_path_dicts()
-	destination = open("time_unit_path_dicts" + ".r", "wb")
+	destination = open("time_unit_path_dicts" + ".p", "wb")
 	pickle.dump(time_unit_path_dicts, destination)
 	destination.close()
 
