@@ -86,4 +86,6 @@ def combined_time_unit_path_dicts_to_file():
 
 
 if __name__ == "__main__":
-	combined_time_unit_path_dicts_to_file()
+	file_name_list = get_time_unit_path_dict_file_names()
+	for file_name in file_name_list:
+		print(file_name)
