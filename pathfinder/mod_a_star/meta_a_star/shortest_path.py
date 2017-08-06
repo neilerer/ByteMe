@@ -103,7 +103,7 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 
 
 def find_shortest_path_candidates_from_multiple_options(path_possibilities, time_unit_connections_dict):
-	minimum_length = len(path_possibilities[0])
+	minimum_length = 10000000000000
 	reduced_path_possibilities = list()
 	for pp in path_possibilities:
 		start_route_id = pp[0]
@@ -117,5 +117,5 @@ def find_shortest_path_candidates_from_multiple_options(path_possibilities, time
 		elif length == minimum_length:
 			reduced_path_possibilities.append(sp)
 		else:
-			print("here")
+			pass
 	return reduced_path_possibilities
