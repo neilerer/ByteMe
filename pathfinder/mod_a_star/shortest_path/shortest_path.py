@@ -18,8 +18,10 @@ if __name__ == "__main__":
 	start_details = journey_details[0]
 	end_details = journey_details[1]
 	print("Start Details")
-	print(start_details)
+	for quadruple in start_details:
+		print(quadruple)
 	print("")
 	print("End Details")
-	print(end_details)
+	for quadruple in end_details:
+		print(quadruple)
 	print("")
