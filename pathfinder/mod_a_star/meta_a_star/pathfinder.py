@@ -2,6 +2,7 @@
 import data
 import user_input
 import shortest_path
+import shortest_journey
 
 
 
@@ -55,4 +56,15 @@ if __name__ == "__main__":
 		print(rpp)
 	print("")
 
-	
+	# test start_journey
+	print("Start of Shortest Journey")
+	for path in reduced_path_possibilities:
+		been_list = list()
+		journey_id_list = list()
+		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list)
+		print(start_sj)
+	print("")
+
+
+
+
