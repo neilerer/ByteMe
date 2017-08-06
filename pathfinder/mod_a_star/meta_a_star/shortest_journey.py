@@ -7,12 +7,12 @@ def time_unit_model_dict(weekday, time_unit, model_dict):
 	# time_unit_dict
 	return model_dict[weekday][time_unit]
 
-def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list):
+def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list, journies_dict):
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
 	if start_stop_id == end_stop_id:
-		return [True, {0 : (start_stop_id, end_stop_id, 0.00, None)}]
+		return [True, {0 :[0.00, [(start_stop_id, end_stop_id, 0.00, None) ] ] } ]
 	# ending_dict
-	ending_dict = dict()
+	ending_dict = journies_dict
 	# instantiate journey_id
 	try:
 		journey_id = journey_id_list[-1] + 1
@@ -32,8 +32,21 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 			# record the journey_id
 			journey_id_list.append(journey_id)
 			# create the journey details
-			ending_dict[journey_id] = [quadruple]
+			ending_dict[journey_id] = [next_stop_journey_time, [quadruple]]
 			# increment the journey_id
 			journey_id += 1
 	# return
 	return [False, ending_dict]
+
+
+
+def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, been_list, journey_id_list, journies_dict):
+	# instantiate starting_dict
+	starting_dict = journies_dict
+	# sort starting_dict so that the shortest journey is considered
+
+
+
+
+
+
