@@ -117,5 +117,5 @@ def find_shortest_path_candidates_from_multiple_options(path_possibilities, time
 		elif length == minimum_length:
 			reduced_path_possibilities.append(sp)
 		else:
-			pass
+			print("here")
 	return reduced_path_possibilities
