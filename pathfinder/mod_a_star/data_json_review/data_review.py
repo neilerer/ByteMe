@@ -23,7 +23,7 @@ def get_model_data():
 def model_data_review_all_contents(model_dict):
 	for weekday in model_dict:
 		print(weekday)
-		weekday_data = model_dict	[weekday]
+		weekday_data = model_dict[weekday]
 		for time_unit in weekday_data:
 			print(time_unit)
 			time_unit_data = weekday_data[time_unit]
