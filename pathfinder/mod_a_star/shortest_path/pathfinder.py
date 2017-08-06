@@ -64,27 +64,6 @@ def get_time_unit_path_dict_file_names():
 
 
 
-def combine_time_unit_path_dicts():
-	time_unit_path_dicts = dict()
-	file_name_list = get_time_unit_path_dict_file_names()
-	for file_name in file_name_list:
-		new_items = get_time_unit_path_dict_by_file_name(file_name)
-		key = new_items[0]
-		time_unit_path_dict = new_items[1]
-		time_unit_path_dicts[key] = time_unit_path_dict
-	return time_unit_path_dicts
-
-
-
-def combined_time_unit_path_dicts_to_file():
-	time_unit_path_dicts = combine_time_unit_path_dicts()
-	for item in time_unit_path_dicts:
-		print(item)
-	# destination = open("time_unit_path_dicts" + ".p", "wb")
-	# pickle.dump(time_unit_path_dicts, destination)
-	# destination.close()
-
-
 if __name__ == "__main__":
 	file_name_list = get_time_unit_path_dict_file_names()
 	for file_name in file_name_list:
