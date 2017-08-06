@@ -23,17 +23,16 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 	# find the quadruples associated with potential next stops
 	list_of_start_stop_quadruples = time_unit_dict[start_stop_id]
 	# populate ending_dict
-	for stop_id in list_of_start_stop_quadruples:
+	for quadruple in list_of_start_stop_quadruples:
 		# extract information
-		start_quadruple = list_of_start_stop_quadruples[stop_id]
-		next_stop_id = start_quadruple[1]
-		next_stop_journey_time = start_quadruple[2]
-		next_stop_route = start_quadruple[3]
+		next_stop_id = quadruple[1]
+		next_stop_journey_time = quadruple[2]
+		next_stop_route = quadruple[3]
 		if (next_stop_id not in been_list) and (next_stop_route in path):
 			# record the journey_id
 			journey_id_list.append(journey_id)
 			# create the journey details
-			ending_dict[journey_id] = [start_quadruple]
+			ending_dict[journey_id] = [quadruple]
 			# increment the journey_id
 			journey_id += 1
 	# return
