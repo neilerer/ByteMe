@@ -12,7 +12,7 @@ model_metrics={}
 
 for data_file in glob.glob("C:/Users/Conor/Desktop/Summer Project/Linear Model/clean_data/*.csv"):
 	try:
-		# only "0001" or "1001" routes for noe
+		# only "0001" or "1001" routes for now
 		if data_file[-14:-10]=="0001" or data_file[-14:-10]=="1001":
 		
 			route=data_file[-18:-14].lstrip('0')
