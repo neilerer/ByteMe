@@ -1,11 +1,13 @@
 # imports
 import data
 import user_input
+import shortest_path
 
 
 
 # data
 model_dict = data.get_model_data()
+connections_dict = data.get_connections_dict()
 
 
 if __name__ == "__main__":
@@ -31,4 +33,13 @@ if __name__ == "__main__":
 	print("Path Possibilities")
 	for pp in path_possibilities:
 		print(pp)
+	print("")
+
+	# testing find_shortest_path
+	time_unit_connections_dict = get_time_unit_connections_dict(connections_dict, weekday, time_unit)
+	print("Details of Path Possibilities")
+	for pp in path_possibilities:
+		start_route_id = pp[0]
+		end_route_id = pp[1]
+		print(find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
 	print("")
