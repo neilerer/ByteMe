@@ -57,9 +57,6 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	current_journey_time = current_journey_contents[0]
 	been_set = current_journey_contents[1]
 	current_stop_id = current_journey_contents[2][-1][1]
-	current_journey_path = copy.deepcopy(current_journey_contents[2])
-	print("test: current_journey_path")
-	print(current_journey_path)
 	# evaluate the next stop after current_stop_id
 	list_of_next_stop_quadruples = time_unit_dict[current_stop_id]
 	# iterate over the quadruples
@@ -70,6 +67,9 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 		next_stop_route = quadruple[3]
 		# determine if a journey should be created
 		if (next_stop_id not in been_set) and (next_stop_route in path):
+			current_journey_path = copy.deepcopy(current_journey_contents[2])
+			print("test: current_journey_path")
+			print(current_journey_path)
 			# update been_set
 			been_set.add(next_stop_id)
 			# create a new journey id
