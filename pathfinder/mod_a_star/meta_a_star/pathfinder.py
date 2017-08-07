@@ -24,7 +24,7 @@ def pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, conne
 	# reduced_path_possibilities
 	reduced_path_possibilities = shortest_path.find_shortest_path_candidates_from_multiple_options(path_possibilities, time_unit_connections_dict)
 	# shorest_journey
-	the_shortest_journey = [None, None, "There is no bus journy from {} to {}".format(start_stop_id, end_stop_id)]
+	the_shortest_journey = [None, None, "There is no bus journey from {} to {}".format(start_stop_id, end_stop_id)]
 	for path in reduced_path_possibilities:
 		journey_id_list = list()
 		journies_dict = dict()
