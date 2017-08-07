@@ -98,7 +98,6 @@ def continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_con
 	# return
 	if not ending_dict:
 		return [True, {0: [None, None]}]
-		return [True, {0: None}]
 	else:
 		return [False, ending_dict]
 
