@@ -65,6 +65,16 @@ if __name__ == "__main__":
 		print(start_sj)
 	print("")
 
+	# test continue_journey
+	print("First continuation of Shortest Journey")
+	for path in reduced_path_possibilities:
+		journey_id_list = list()
+		journies_dict = dict()
+		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+		first_cont_of_sj = shortest_journey.continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+		print(first_cont_of_sj)
+	print("")
+
 
 
 

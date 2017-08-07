@@ -11,7 +11,7 @@ def time_unit_model_dict(weekday, time_unit, model_dict):
 def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict):
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
 	if start_stop_id == end_stop_id:
-		return [True, {0 :[0.00, [(start_stop_id, end_stop_id, 0.00, None) ] ] } ]
+		return [True, {0 :[0.00, None, [(start_stop_id, end_stop_id, 0.00, None) ] ] } ]
 	# ending_dict
 	ending_dict = journies_dict
 	# instantiate journey_id
@@ -29,6 +29,7 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 		next_stop_id = quadruple[1]
 		next_stop_journey_time = quadruple[2]
 		next_stop_route = quadruple[3]
+		# determine if a journey should be created
 		if (next_stop_id not in been_set) and (next_stop_route in path):
 			# record the journey_id
 			journey_id_list.append(journey_id)
@@ -44,10 +45,10 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict):
 	# time_unit_dict
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
-	# instantiate starting_dict
+	# instantiate continuing_dict
 	continuing_dict = journies_dict
-	# sort starting_dict so that the shortest journey is considered
-	continuing_dict = merge_sort.merge_sort_journies_dict(starting_dict)
+	# sort continuing_dict so that the shortest journey is considered
+	continuing_dict = merge_sort.merge_sort_journies_dict(continuing_dict)
 	# continue the shortest journey
 	current_journey = merge_sort.remove_first_entry_of_dict(continuing_dict)
 	# unpack current_journey
@@ -56,5 +57,32 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	current_journey_time = current_journey_contents[0]
 	been_set = current_journey_contents[1]
 	current_stop_id = current_journey_contents[2][-1][1]
-	# determine if this journey will be continued
-	# iterate over the quadruples of the next stop; extend the journey if a quadruple hasn't been visited before
+	# evaluate the next stop after current_stop_id
+	list_of_next_stop_quadruples = time_unit_dict[current_stop_id]
+	# iterate over the quadruples
+	for quadruple in list_of_start_stop_quadruples:
+		# extract information
+		next_stop_id = quadruple[1]
+		next_stop_journey_time = quadruple[2]
+		next_stop_route = quadruple[3]
+		# determine if a journey should be created
+		if (next_stop_id not in been_set) and (next_stop_route in path):
+			# update been_set
+			been_set.add(next_stop_id)
+			# create a new journey id
+			journey_id = journey_id_list[-1] + 1
+			journey_id_list.append(journey_id)
+			# record the journey_id
+			journey_id_list.append(journey_id)
+			# create the journey details
+			journey_path = current_journey_contents[2].append(quadruple)
+			continuing_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, journey_path]
+	# return
+	if not continuing_dict:
+		return [True, {0: None}]
+	else:
+		return [False, continuing_dict]
+
+
+
+
