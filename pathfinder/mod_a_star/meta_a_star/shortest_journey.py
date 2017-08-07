@@ -76,8 +76,13 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 			# create a new journey id
 			journey_id = journey_id_list[-1] + 1
 			journey_id_list.append(journey_id)
-			# create the journey details
-			journey_path = current_journey_path.append(quadruple)
+			# create the journey path
+			journey_path = list()
+			for item in current_journey_path:
+				journey_path.append(item)
+			journey_path.append(quadruple)
+			print("test")
+			print(journey_path)
 			continuing_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, journey_path]
 			print("test")
 			print(continuing_dict)
