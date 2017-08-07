@@ -89,4 +89,3 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 
 
 
-
