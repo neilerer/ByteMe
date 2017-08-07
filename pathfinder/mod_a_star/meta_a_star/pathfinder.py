@@ -14,8 +14,8 @@ connections_dict = data.get_connections_dict()
 
 if __name__ == "__main__":
 	# testing user input
-	start_stop_id = 400
-	end_stop_id = 600
+	start_stop_id = 765 #400
+	end_stop_id = 462 #600
 	weekday = 0
 	time_unit = 10
 	journey_details = user_input.user_input(start_stop_id, end_stop_id, weekday, time_unit, model_dict)
@@ -74,8 +74,6 @@ if __name__ == "__main__":
 		first_cont_of_sj = shortest_journey.continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		print(first_cont_of_sj)
 	print("")
-
-
 
 	# test find_shortest_journey
 	print("Shortest Journey")
