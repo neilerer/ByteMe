@@ -44,4 +44,4 @@ def stop_ids_to_file(model_dict):
 
 
 if __name__ == "__main__":
-	stop_ids_to_file()
+	stop_ids_to_file(model_dict)
