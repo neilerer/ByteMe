@@ -60,7 +60,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	# evaluate the next stop after current_stop_id
 	list_of_next_stop_quadruples = time_unit_dict[current_stop_id]
 	# iterate over the quadruples
-	for quadruple in list_of_start_stop_quadruples:
+	for quadruple in list_of_next_stop_quadruples:
 		# extract information
 		next_stop_id = quadruple[1]
 		next_stop_journey_time = quadruple[2]
