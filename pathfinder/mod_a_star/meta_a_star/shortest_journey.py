@@ -101,7 +101,8 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 			continuing_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, journey_path]
 	# return
 	if not continuing_dict:
-		return [True, {0: None}]
+		return [True, {journey_id: [None, been_set, journey_path]}]
+		# return [True, {0: None}]
 	else:
 		return [False, continuing_dict]
 
