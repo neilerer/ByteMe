@@ -114,11 +114,11 @@ def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, 
 		found_shortest_path = result[0]
 		journies_dict = result[1]
 	# modify the return object
-	journey_path = None
-	for journey_id in journies_dict:
-		journey_path = journies_dict[journey_id]
+	# journey_path = None
+	# for journey_id in journies_dict:
+	# 	journey_path = journies_dict[journey_id]
 	# return
-	return journey_path
+	return journies_dict
 	
 
 
