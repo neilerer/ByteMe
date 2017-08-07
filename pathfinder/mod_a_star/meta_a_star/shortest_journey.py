@@ -50,7 +50,9 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	# sort continuing_dict so that the shortest journey is considered
 	continuing_dict = merge_sort.merge_sort_journies_dict(continuing_dict)
 	# continue the shortest journey
-	current_journey = merge_sort.get_first_entry_of_dict(continuing_dict)
+	current_journey = merge_sort.remove_first_entry_of_dict(continuing_dict)
+	# ending_dict
+	ending_dict = dict()
 	# unpack current_journey
 	journey_id = current_journey[0]
 	current_journey_contents = current_journey[1]
@@ -77,17 +79,13 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 			journey_id = journey_id_list[-1] + 1
 			journey_id_list.append(journey_id)
 			# create the journey details
-			# journey_path = current_journey_path.append(quadruple)
-			print("test")
-			print(quadruple)
-			continuing_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, current_journey_path]
-			# delete the prior journey
-			del continuing_dict[journey_id_to_delete]
+			journey_path = current_journey_path.append(quadruple)
+			ending_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, journey_path]
 	# return
 	if not continuing_dict:
 		return [True, {0: None}]
 	else:
-		return [False, continuing_dict]
+		return [False, ending_dict]
 
 
 
