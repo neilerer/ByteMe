@@ -14,8 +14,8 @@ connections_dict = data.get_connections_dict()
 
 if __name__ == "__main__":
 	# testing user input
-	start_stop_id =  400 #765
-	end_stop_id = 600 #462 
+	start_stop_id =  765#400 
+	end_stop_id = 462#600  
 	weekday = 0
 	time_unit = 10
 	journey_details = user_input.user_input(start_stop_id, end_stop_id, weekday, time_unit, model_dict)
