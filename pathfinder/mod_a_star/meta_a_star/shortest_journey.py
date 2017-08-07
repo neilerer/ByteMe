@@ -60,7 +60,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	current_stop_id = current_journey_contents[2][-1][1]
 	# termination condition
 	if current_stop_id == end_stop_id:
-		return [True, current_journey]
+		return current_journey
 	# evaluate the next stop after current_stop_id
 	try:
 		list_of_next_stop_quadruples = time_unit_dict[current_stop_id]
@@ -113,10 +113,6 @@ def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, 
 		result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
-	# modify the return object
-	# journey_path = None
-	# for journey_id in journies_dict:
-	# 	journey_path = journies_dict[journey_id]
 	# return
 	return journies_dict
 	
