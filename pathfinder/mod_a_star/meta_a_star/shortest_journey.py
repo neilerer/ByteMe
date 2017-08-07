@@ -106,10 +106,13 @@ def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, 
 	found_shortest_path = result[0]
 	journies_dict = result[1]
 	# continue
-	while found_shortest_path is False:
-		result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
-		found_shortest_path = result[0]
-		journies_dict = result[1]
+	result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+	result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+	result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+	# while found_shortest_path is False:
+	# 	result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+	# 	found_shortest_path = result[0]
+	# 	journies_dict = result[1]
 	# modify the return object
 	journey_path = None
 	for journey_id in journies_dict:
