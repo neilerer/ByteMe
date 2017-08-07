@@ -87,7 +87,7 @@ def continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_con
 			for next_route_id in next_list:
 				if next_route_id not in been_set:
 					# add to the been_set
-					been_set.append(next_route_id)
+					been_set.add(next_route_id)
 					# create a new journey id
 					journey_id = journey_id_list[-1] + 1
 					journey_id_list.append(journey_id)
