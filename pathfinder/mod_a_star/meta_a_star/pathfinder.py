@@ -43,6 +43,28 @@ def pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, conne
 
 
 
+def pathfinder_for_django(the_shortest_journey):
+	# unpack the data
+	journey_time = the_shortest_journey[0]
+	journey_details = the_shortest_journey[2]
+	# generate a stop_id_journey
+	django_journey = dict()
+	for quadruple in journey_details:
+		# unpack the data
+		start_stop = quadruple[0]
+		time = quadruple[2]
+		route = quadruple[3]
+		# populate django_journey
+		if route in django_journey:
+			django_journey[route][0] += time
+			django_journey[route][1].append(start_stop)
+		else:
+			django_journey[route] = [time, [start_stop]]
+	# return
+	return django_journey
+
+
+
 if __name__ == "__main__":
 	# testing user input
 	start_stop_id =  400#765# 
@@ -139,6 +161,17 @@ if __name__ == "__main__":
 	print("")
 
 	# test pathfinder
-	print(pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict))
+	print("Pathfinder")
+	the_shortest_journey = pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict)
+	print(the_shortest_journey)
+	print("")
+	print("")
+	print("")
 
+	# testing pathfinder_for_django(the_shortest_journey)
+	print("Pathfinder for Django")
+	print(pathfinder_for_django(the_shortest_journey))
+	print("")
+	print("")
+	print("")
 
