@@ -78,6 +78,8 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 			journey_id_list.append(journey_id)
 			# create the journey details
 			# journey_path = current_journey_path.append(quadruple)
+			print("test")
+			print(quadruple)
 			continuing_dict[journey_id] = [current_journey_time + next_stop_journey_time, been_set, current_journey_path]
 			# delete the prior journey
 			del continuing_dict[journey_id_to_delete]
