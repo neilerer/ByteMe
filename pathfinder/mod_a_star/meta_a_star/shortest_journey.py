@@ -105,7 +105,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 		journey_path = list()
 		for quadruple in current_journey_contents[2]:
 			journey_path.append(quadruple)
-		journey_path.append("There is no bus journey from {} to {}".format(start_stop_id, end_stop_id))
+		journey_path.append("There is no bus journey from {} to {} via {}".format(start_stop_id, end_stop_id, path))
 		return [True, {journey_id: [None, been_set, journey_path]}]
 		# return [True, {0: None}]
 	else:
