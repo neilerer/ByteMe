@@ -34,7 +34,7 @@ def pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, conne
 			if sj_details[0] == None:
 				pass
 			else:
-				if the_shortest_journey is None:
+				if the_shortest_journey[0] is None:
 					the_shortest_journey = sj_details
 				else:
 					if sj_details[0] < the_shortest_journey[0]:
