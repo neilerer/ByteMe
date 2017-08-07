@@ -24,10 +24,15 @@ if __name__ == "__main__":
 	print("Start Details")
 	for quadruple in start_details:
 		print(quadruple)
+		print("")
+	print("")
 	print("")
 	print("End Details")
 	for quadruple in end_details:
 		print(quadruple)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# testing path_possibilities
@@ -35,6 +40,9 @@ if __name__ == "__main__":
 	print("Path Possibilities")
 	for pp in path_possibilities:
 		print(pp)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# testing find_shortest_path
@@ -47,6 +55,9 @@ if __name__ == "__main__":
 		shortest_path_candidates.append(shortest_path.find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict))
 	for sp_candidate in shortest_path_candidates:
 		print(sp_candidate)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# test find_shortest_path_candidates_from_multiple_options
@@ -54,6 +65,9 @@ if __name__ == "__main__":
 	reduced_path_possibilities = shortest_path.find_shortest_path_candidates_from_multiple_options(path_possibilities, time_unit_connections_dict)
 	for rpp in reduced_path_possibilities:
 		print(rpp)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# test start_journey
@@ -63,6 +77,9 @@ if __name__ == "__main__":
 		journies_dict = dict()
 		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		print(start_sj)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# test continue_journey
@@ -73,6 +90,9 @@ if __name__ == "__main__":
 		start_sj = shortest_journey.start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		first_cont_of_sj = shortest_journey.continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		print(first_cont_of_sj)
+		print("")
+	print("")
+	print("")
 	print("")
 
 	# test find_shortest_journey
@@ -82,4 +102,7 @@ if __name__ == "__main__":
 		journies_dict = dict()
 		sj = shortest_journey.find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		print(sj)
+		print("")
+	print("")
+	print("")
 	print("")
