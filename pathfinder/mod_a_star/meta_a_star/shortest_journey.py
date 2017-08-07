@@ -1,5 +1,4 @@
 # imports
-import copy
 import merge_sort
 
 
