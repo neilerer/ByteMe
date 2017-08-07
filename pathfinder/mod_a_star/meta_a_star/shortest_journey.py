@@ -91,11 +91,9 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 
 
 
-def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict):
+def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict):
 	# data objects
 	found_shortest_path = False
-	journey_id_list = list()
-	journies_dict = dict()
 	# start
 	result = start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 	found_shortest_path = result[0]

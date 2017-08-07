@@ -80,6 +80,8 @@ if __name__ == "__main__":
 	# test find_shortest_journey
 	print("Shortest Journey")
 	for path in reduced_path_possibilities:
-		sj = shortest_journey.find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict)
+		journey_id_list = list()
+		journies_dict = dict()
+		sj = shortest_journey.find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
 		print(sj)
 	print("")
