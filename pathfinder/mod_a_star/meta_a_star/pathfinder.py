@@ -58,6 +58,8 @@ def pathfinder_for_django(the_shortest_journey):
 		if route in django_journey:
 			django_journey[route][0] += time
 			django_journey[route][1].append(start_stop)
+		else:
+			django_journey[route] = [time, [start_stop]]
 	# return
 	return django_journey
 
