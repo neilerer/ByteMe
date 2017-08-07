@@ -68,7 +68,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 		# determine if a journey should be created
 		if (next_stop_id not in been_set) and (next_stop_route in path):
 			# create element of new part to add
-			current_journey_path = current_journey_contents[2]
+			current_journey_path = copy.deepcopy(current_journey_contents[2])
 			# update been_set
 			been_set.add(next_stop_id)
 			# note journey_id_to_delete
