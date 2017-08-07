@@ -161,6 +161,7 @@ def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict)
 		result = continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_connections_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
+		print(journies_dict)
 	# modify the return object
 	journey_path = None
 	for journey_id in journies_dict:
