@@ -86,14 +86,14 @@ def left_neighbours(stop_id, the_routes):
 	"""
 	# return object
 	left_dict = {}
-	# occurances
-	occurances = 0
-	# catalogue and tabulate the number of occurances of the left neighbour
+	# occurrences
+	occurrences = 0
+	# catalogue and tabulate the number of occurrences of the left neighbour
 	for route in the_routes:
 		# determine the left neighbour
 		neighbour = left_neighbour(stop_id, the_routes[route])
-		# increment the tabulation of occurances
-		occurances += 1
+		# increment the tabulation of occurrences
+		occurrences += 1
 		# evalute if the neighbour is None; if not, add it to the appropriate dictionary entry
 		if neighbour is not None:
 			if neighbour in left_dict:
@@ -102,7 +102,7 @@ def left_neighbours(stop_id, the_routes):
 				left_dict[neighbour] = 1
 	# convert left_dict values to percentages of total appearances
 	for neighbour in left_dict:
-		left_dict[neighbour] = left_dict[neighbour] / occurances
+		left_dict[neighbour] = left_dict[neighbour] / occurrences
 	# sort the diciontary
 	left_dict = merge_sort.merge_sort_dict_left_neighbours(left_dict)
 	# return
