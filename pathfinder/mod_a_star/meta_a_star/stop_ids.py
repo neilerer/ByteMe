@@ -17,6 +17,7 @@ def time_unit_dict(weekday, time_unit, model_dict):
 
 
 def stop_ids(model_dict):
+	# this loads fast enough that we should just load it into memory and only store model_dict on django
 	stop_id_dict = dict()
 	for weekday in model_dict:
 		stop_id_dict[weekday] = dict()
