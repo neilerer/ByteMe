@@ -7,6 +7,8 @@ def time_unit_model_dict(weekday, time_unit, model_dict):
 	# time_unit_dict
 	return model_dict[weekday][time_unit]
 
+
+
 def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict):
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
 	if start_stop_id == end_stop_id:
@@ -86,6 +88,32 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 		return [True, {0: None}]
 	else:
 		return [False, continuing_dict]
+
+
+
+def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict):
+	# data objects
+	found_shortest_path = False
+	journey_id_list = list()
+	journies_dict = dict()
+	# start
+	result = start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+	found_shortest_path = result[0]
+	journies_dict = result[1]
+	# continue
+	while found_shortest_path is False:
+		result = continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_dict, journey_id_list, journies_dict)
+		found_shortest_path = result[0]
+		journies_dict = result[1]
+	# modify the return object
+	journey_path = None
+	for journey_id in journies_dict:
+		journey_path = journies_dict[journey_id]
+	# return
+	return journey_path
+	
+
+
 
 
 
