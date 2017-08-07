@@ -60,7 +60,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	current_stop_id = current_journey_contents[2][-1][1]
 	# termination condition
 	if current_stop_id == end_stop_id:
-		return [True, current_journey]
+		return [True, {journey_id : current_journey_contents}]
 	# evaluate the next stop after current_stop_id
 	try:
 		list_of_next_stop_quadruples = time_unit_dict[current_stop_id]
