@@ -126,11 +126,12 @@ def route_ctt_to_file(route_ctt_output):
 
 
 if __name__ == "__main__":
-	# create the grid
+	#
 	grid_output = grid(10, 10)
+	# grid_review(grid_output)
 	route_dict = dict()
 	route_id_list = []
-	
+
 	route(2, "row", grid_output, route_dict, route_id_list)
 	route(2, "column", grid_output, route_dict, route_id_list)
 	route(7, "row", grid_output, route_dict, route_id_list)
@@ -138,8 +139,41 @@ if __name__ == "__main__":
 
 	route_dict_simple = route_simple(route_dict)
 	# route_simple_review(route_dict_simple)
-	
+
 	route_ctt_output = route_ctt(route_dict_simple)
-	route_ctt_review(route_ctt_output)
+	# route_ctt_review(route_ctt_output)
 
 	route_ctt_to_file(route_ctt_output)
+
+
+
+
+	# # create the grid
+	# grid_output = grid(500, 500)
+	# route_dict = dict()
+	# route_id_list = []
+
+	# column_list = set()
+	# for i in range(0, 200):
+	# 	route_id = random.randint(1, 499)
+	# 	column_list.add(route_id)
+	# column_list = list(column_list)
+
+	# row_list = set()
+	# for i in range(0, 200):
+	# 	route_id = random.randint(1, 499)
+	# 	row_list.add(route_id)
+	# row_list = list(row_list)
+
+	# for c in column_list:
+	# 	route(c, "row", grid_output, route_dict, route_id_list)
+	# for r in row_list:
+	# 	route(r, "row", grid_output, route_dict, route_id_list)
+
+	# route_dict_simple = route_simple(route_dict)
+	# # route_simple_review(route_dict_simple)
+	
+	# route_ctt_output = route_ctt(route_dict_simple)
+	# route_ctt_review(route_ctt_output)
+
+	# route_ctt_to_file(route_ctt_output)

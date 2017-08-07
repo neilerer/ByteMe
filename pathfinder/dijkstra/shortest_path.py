@@ -1,5 +1,6 @@
 # imports
 import datetime
+import pickle
 import time
 import copy
 import general
@@ -171,5 +172,22 @@ def shortest_path_test():
 		destination.write("\n")
 
 
+def testing_real_data():
+	# get shit from file
+	f = open("pathfinder_data.p", "rb")
+	# load the pickle file
+	pathfinder_dict = pickle.load(f)
+	# close the pickle file
+	f.close()
+
+	monday = pathfinder_dict[0]
+	nine_oclock = monday[9]
+
+	sp = find_shortest_path(768, 7571, nine_oclock)
+
+	return sp
+
+
 if __name__ == "__main__":
-	shortest_path_test()
+	# shortest_path_test()
+	print(testing_real_data())

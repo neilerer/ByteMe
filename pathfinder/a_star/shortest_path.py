@@ -1,6 +1,8 @@
 # imports
 import os
 import datetime
+import os
+import pickle
 import time
 import copy
 import general
@@ -179,5 +181,27 @@ def shortest_path_test():
 		destination.write("\n")
 
 
+def testing_real_data():
+	# get shit from file
+	os.chdir("../")
+	os.chdir("dijkstra")
+	f = open("pathfinder_data.p", "rb")
+	# load the pickle file
+	pathfinder_dict = pickle.load(f)
+	# close the pickle file
+	f.close()
+	os.chdir("../")
+	os.chdir("a_star")
+
+	monday = pathfinder_dict[0]
+	nine_oclock = monday[9]
+
+	target_routes = the_heuristic.create_target_routes(768, nine_oclock)
+
+	sp = find_shortest_path(7158, 7571, nine_oclock, target_routes)
+
+	return sp
+
 if __name__ == "__main__":
 	shortest_path_test()
+	# print(testing_real_data())

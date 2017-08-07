@@ -13,23 +13,13 @@ def key_to_list(key):
 	key_list = key.split("-")
 	return key_list
 
-def dict_display(file_name, jpi):
-	data = json_to_dict(file_name)[jpi]
-	for key in data:
-		key_list = key_to_list(key)
-		print("Key: {}".format(key_list))
-		print("Stop Sequence: {}".format(key_list[0]))
-		print("Stop ID: {}".format(key_list[1]))
-		print("Weekday: {}".format(key_list[2]))
-		print("Hour: {}".format(key_list[3]))
-		print("CTT: {}".format(data[key]))
-		print("")
+
 
 def route(jpi_dict, jpi, weekday_input, hour_input):
 	data = jpi_dict[jpi]
-
+	#
 	output_dict = dict()
-
+	#
 	for key in data:
 		key_list = key_to_list(key)
 		stop_sequence = key_list[0]
@@ -40,9 +30,9 @@ def route(jpi_dict, jpi, weekday_input, hour_input):
 
 		if weekday == weekday_input and hour == hour_input:
 			output_dict[stop_sequence] = (stop_id, ctt, jpi)
-
+	#
 	output_dict = merge_sort.merge_sort_route(output_dict)
-
+	#
 	return output_dict
 
 def route_list(output_dict):
@@ -112,53 +102,11 @@ def generate_pathfinder_input(file_name, outer_start, outer_end, inner_start, in
 	return pathfinder_dict
 
 
-
-
 if __name__ == "__main__":
-	# # get shit to file
-	# pathfinder_dict = generate_pathfinder_input("data_for_pathfinder.json", 0, 7, 0, 23)
-	# destination = open("pathfinder_data.p", "wb")
-	# # dump the data into the pickle file
-	# pickle.dump(pathfinder_dict, destination)
-	# # close the file
-	# destination.close()
-
-
-	# get shit from file
-	f = open("pathfinder_data.p", "rb")
-	# load the pickle file
-	pathfinder_dict = pickle.load(f)
-	# close the pickle file
-	f.close()
-
-
-	# monday = pathfinder_dict[0]
-	# nine_oclock = monday[9]
-	# for stop in nine_oclock:
-	# 	print(stop)
-	# 	print(nine_oclock[stop])
-	# 	print("")
-
-	for weekday in pathfinder_dict:
-		day_dict = pathfinder_dict[weekday]
-		for time_unit in day_dict:
-			time_unit_dict = day_dict[time_unit]
-			for stop in time_unit_dict:
-				stop_list = time_unit_dict[stop]
-				print(weekday)
-				print(time_unit)
-				print(stop)
-				print(stop_list)
-				print("")
-
-
-	# dict_display("data_for_pathfinder.json", "046A0001")
-
-	
-	# jpi_dict = json_to_dict("data_for_pathfinder.json")
-	# jpi = "046A0001"
-	# weekday_input = "1"
-	# hour_input = "9"
-	# my_route = route(jpi_dict, jpi, weekday_input, hour_input)
-	# my_route_list = route_list(my_route)
-	# print(pathfinder_input(my_route_list))
+	# get shit to file
+	pathfinder_dict = generate_pathfinder_input("data.json", 0, 7, 0, 23)
+	destination = open("data.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(pathfinder_dict, destination)
+	# close the file
+	destination.close()
