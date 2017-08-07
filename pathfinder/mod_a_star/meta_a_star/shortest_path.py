@@ -98,11 +98,11 @@ def continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_con
 	# return
 	if not continuing_dict:
 		new_path = list()
-			for item in current_path:
-				new_path.append(item)
-			journey_path.append("There is no path from {} to {}".format(start_route_id, end_route_id))
-			continuing_dict[journey_id] = [been_set, new_path]
-			[True, continuing_dict]
+		for item in current_path:
+			new_path.append(item)
+		journey_path.append("There is no path from {} to {}".format(start_route_id, end_route_id))
+		continuing_dict[journey_id] = [been_set, new_path]
+		[True, continuing_dict]
 	else:
 		return [False, continuing_dict]
 
