@@ -67,7 +67,13 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	except:
 		# return
 		if not continuing_dict:
-			return [True, {0: "{} is not in model_dict".format(current_stop_id)}]
+			# create journey_path
+			journey_path = list()
+			for quadruple in current_journey_contents[2]:
+				journey_path.append(quadruple)
+			journey_path.append("{} is not in model_dict".format(current_stop_id))
+			return [True, {journey_id: [None, been_set, journey_path]}]
+			# return [True, {0: "{} is not in model_dict".format(current_stop_id)}]
 		else:
 			return [False, continuing_dict]
 	# iterate over the quadruples
@@ -115,9 +121,3 @@ def find_shortest_journey(weekday, time_unit, start_stop_id, end_stop_id, path, 
 		journies_dict = result[1]
 	# return
 	return journies_dict
-	
-
-
-
-
-
