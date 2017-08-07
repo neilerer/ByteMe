@@ -144,16 +144,15 @@ def continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_con
 def find_shortest_path(start_route_id, end_route_id, time_unit_connections_dict):
 	# data objects
 	found_shortest_path = False
-	been_list = []
 	journey_id_list = []
 	journies_dict = dict()
 	# start
-	result = start_journey(start_route_id, end_route_id, time_unit_connections_dict, been_list, journey_id_list)
+	result = start_journey(start_route_id, end_route_id, time_unit_connections_dict, journey_id_list)
 	journies_dict = result[1]
 	found_shortest_path = result[0]
 	# continue
 	while found_shortest_path is False:
-		result = continue_journey(journey_id_list, journies_dict, been_list, end_route_id, time_unit_connections_dict)
+		result = continue_journey(journey_id_list, journies_dict, end_route_id, time_unit_connections_dict)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
 	# modify the return object
