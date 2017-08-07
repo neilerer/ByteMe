@@ -64,7 +64,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 	except:
 		# return
 		if not continuing_dict:
-			return [True, {0: None}]
+			return [True, {0: "{} is not in model_dict".format(current_stop_id)}]
 		else:
 			return [False, continuing_dict]
 	# iterate over the quadruples
