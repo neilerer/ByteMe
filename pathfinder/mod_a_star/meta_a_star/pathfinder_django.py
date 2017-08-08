@@ -23,8 +23,6 @@ def enter_correct_weekday(model_dict):
 
 def check_time_unit(weekday, time_unit, model_dict):
 	weekday_dict = model_dict[weekday]
-	for i in weekday_dict:
-		print(weekday_dict)
 	if time_unit in weekday_dict:
 		return True
 	else:
@@ -105,6 +103,11 @@ def run_the_pathfinder():
 
 
 if __name__ == "__main__":
-	run_the_pathfinder()
+	# run_the_pathfinder()
+	model_dict = data.get_model_data()
+	for weekday in model_dict:
+		for time_unit in model_dict[weekday]:
+		print(weekday, time_unit)
+	print("")
 
 
