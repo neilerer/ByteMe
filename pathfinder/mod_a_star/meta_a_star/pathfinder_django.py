@@ -55,7 +55,7 @@ def enter_correct_stop_id(weekday, time_unit, si_dict):
 	correct = False
 	while not correct:
 		try:
-			stop_id = input("Enter a starting stop id: ")
+			stop_id = int(input("Enter a starting stop id: "))
 			correct = check_stop_id(weekday, time_unit, model_dict, stop_id)
 		except:
 			print("I'm sorry, the stop id you entered is invalid.")
