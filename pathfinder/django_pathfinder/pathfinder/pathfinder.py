@@ -50,7 +50,7 @@ def pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, conne
 if __name__ == "__main__":
 	# testing user input
 	start_stop_id =  400#765# 
-	end_stop_id = 806#462#  
+	end_stop_id = 807#462#  
 	weekday = 0
 	time_unit = 10
 	journey_details = user_input.user_input(start_stop_id, end_stop_id, weekday, time_unit, model_dict)
