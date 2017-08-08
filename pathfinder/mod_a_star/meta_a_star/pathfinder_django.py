@@ -39,7 +39,7 @@ def enter_correct_value_from_list(value_list, input_message, except_message):
 			value = int(input(message))
 			correct = value in value_list
 		except:
-			print(output_message)
+			print(except_message)
 	return value
 
 
