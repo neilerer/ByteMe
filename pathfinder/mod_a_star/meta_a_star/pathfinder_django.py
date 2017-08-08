@@ -107,7 +107,7 @@ if __name__ == "__main__":
 	model_dict = data.get_model_data()
 	for weekday in model_dict:
 		for time_unit in model_dict[weekday]:
-		print(weekday, time_unit)
-	print("")
+			print(weekday, time_unit)
+		print("")
 
 
