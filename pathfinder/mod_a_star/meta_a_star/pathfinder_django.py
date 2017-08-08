@@ -23,6 +23,8 @@ def enter_correct_weekday(model_dict):
 
 def check_time_unit(weekday, time_unit, model_dict):
 	weekday_dict = model_dict[weekday]
+	for i in weekday_dict:
+		print(weekday_dict)
 	if time_unit in weekday_dict:
 		return True
 	else:
