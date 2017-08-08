@@ -69,24 +69,67 @@ def pathfinder_for_django(the_shortest_journey):
 	journey_details = the_shortest_journey[2]
 	# generate a stop_id_journey
 	django_journey = dict()
+	# instantiate prior data
+	prior_quadruple = journey_details[0]
+	prior_start = prior_quadruple[0]
+	prior_end = prior_quadruple[1]
+	prior_time = prior_quadruple[2]
+	prior_route = prior_quadruple[3]
+	# iterate over journey_details
 	for quadruple in journey_details:
 		# unpack the data
 		start_stop = quadruple[0]
+		end_stop = quadruple[1]
 		time = quadruple[2]
 		route = quadruple[3]
-		# populate django_journey
+		# route change event
+		if route != prior_route:
+			django_journey[prior_route][1].append(prior_end)
+		# regular updates
 		if route in django_journey:
 			django_journey[route][0] += time
 			django_journey[route][1].append(start_stop)
 		else:
 			django_journey[route] = [time, [start_stop]]
-	# add the last stop
+		# update priors
+		prior_start = start_stop
+		prior_end = end_stop
+		prior_time = time
+		prior_route = route
+	# add the last stop to the last segement
 	last_stop_data = journey_details[-1]
 	ls_route = last_stop_data[3]
 	ls_stop = last_stop_data[1]
 	django_journey[ls_route][1].append(ls_stop)
 	# return
 	return django_journey
+
+
+
+# def pathfinder_for_django(the_shortest_journey):
+# 	# unpack the data
+# 	journey_time = the_shortest_journey[0]
+# 	journey_details = the_shortest_journey[2]
+# 	# generate a stop_id_journey
+# 	django_journey = dict()
+# 	for quadruple in journey_details:
+# 		# unpack the data
+# 		start_stop = quadruple[0]
+# 		time = quadruple[2]
+# 		route = quadruple[3]
+# 		# populate django_journey
+# 		if route in django_journey:
+# 			django_journey[route][0] += time
+# 			django_journey[route][1].append(start_stop)
+# 		else:
+# 			django_journey[route] = [time, [start_stop]]
+	# # add the last stop to the last segement
+	# last_stop_data = journey_details[-1]
+	# ls_route = last_stop_data[3]
+	# ls_stop = last_stop_data[1]
+	# django_journey[ls_route][1].append(ls_stop)
+# 	# return
+# 	return django_journey
 
 
 
