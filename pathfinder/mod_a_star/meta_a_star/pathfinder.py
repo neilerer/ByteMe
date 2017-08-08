@@ -168,10 +168,3 @@ if __name__ == "__main__":
 	print("")
 	print("")
 
-	# testing pathfinder_for_django(the_shortest_journey)
-	print("Pathfinder for Django")
-	print(pathfinder_for_django(the_shortest_journey))
-	print("")
-	print("")
-	print("")
-
