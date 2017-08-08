@@ -4,6 +4,21 @@ import pathfinder
 
 
 
+def weekday_list(model_dict):
+	wd_list = list()
+	for weekday in model_dict:
+		wd_list.append(weekday)
+	return wd_list
+
+def time_unit_list(wd_list, model_dict):
+	tu_list = set()
+	for weekday in wd_list:
+		for time_unit in model_dict[weekday]:
+			tu_list.add(time_unit)
+	return list(tu_list)
+
+
+
 def check_weekday(weekday, model_dict):
 	if weekday in model_dict:
 		return True
@@ -14,7 +29,7 @@ def enter_correct_weekday(model_dict):
 	correct = False
 	while not correct:
 		try:
-			weekday = int(input("Enter a weekday from [0, 6]: "))
+			weekday = int(input("Enter a weekday: "))
 			correct = check_weekday(weekday, model_dict)
 		except:
 			Print("Please try another weekday; the one you entered does not exist.")
@@ -31,7 +46,7 @@ def enter_correct_time_unit(weekday, model_dict):
 	correct = False
 	while not correct:
 		try:
-			time_unit = int(input("Enter a time_unit [0, 23]: "))
+			time_unit = int(input("Enter a time_unit: "))
 			correct = check_time_unit(weekday, time_unit, model_dict)
 		except:
 			print("Please try another time_unit; the one you entered does not exist.")
@@ -102,14 +117,12 @@ def run_the_pathfinder():
 
 
 if __name__ == "__main__":
-	run_the_pathfinder()
+	# run_the_pathfinder()
 
 
 
-	# model_dict = data.get_model_data()
-	# for weekday in model_dict:
-	# 	for time_unit in model_dict[weekday]:
-	# 		print(weekday, time_unit)
-	# 	print("")
-
-
+	model_dict = data.get_model_data()
+	wd_list = weekday_list(model_dict)
+	tu_list = time_unit_list(wd_list, model_dict)
+	print(wd_list)
+	print(tu_list)
