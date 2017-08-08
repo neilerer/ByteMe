@@ -46,8 +46,7 @@ def pathfinder_for_django(the_shortest_journey):
 		# record the next stop
 		route_in_stop_list.append(next_stop)
 		# update the time
-		route_time = time_list[index]
-		route_time += time
+		time_list[index] += time
 	# return
 	pathfinder_dict = dict()
 	for route in route_list:
