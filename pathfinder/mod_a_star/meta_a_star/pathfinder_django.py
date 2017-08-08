@@ -32,7 +32,7 @@ def enter_correct_time_unit(weekday, model_dict):
 	correct = False
 	while not correct:
 		try:
-			time_unit = int(input("Enter a weekday [0, 23]: "))
+			time_unit = int(input("Enter a time_unit [0, 23]: "))
 			correct = check_time_unit(weekday, time_unit, model_dict)
 		except:
 			print("Please try another time_unit; the one you entered does not exist.")
