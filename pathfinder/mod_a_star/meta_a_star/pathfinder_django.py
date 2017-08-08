@@ -90,7 +90,8 @@ def run_the_pathfinder():
 	wd_list = weekday_list()
 	tu_list = time_unit_list(wd_list)
 	si_dict = stop_id_dict()
-	print(si_dict[0][10])
+	print(si_dict[0][10][1])
+	print(type(si_dict[0][10][1]))
 
 	# model_dict = data.get_model_data()
 	# connections_dict = data.get_connections_dict()
