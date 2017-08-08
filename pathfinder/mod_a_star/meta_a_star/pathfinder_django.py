@@ -19,58 +19,46 @@ def time_unit_list(wd_list):
 			tu_list.add(time_unit)
 	return list(tu_list)
 
+def stop_id_dict():
+	model_dict = data.get_model_data()
+	stop_id_dict = dict()
+	for weekday in model_dict:
+		stop_id_dict[weekday] = dict()
+		for time_unit in model_dict[weekday]:
+			stop_id_dict[weekday][time_unit] = list()
+			for stop_id in model_dict[weekday][time_unit]:
+				stop_id_dict[weekday][time_unit].append(stop_id)
+	return stop_id_dict
 
 
-def check_weekday(weekday, model_dict):
-	if weekday in model_dict:
-		return True
-	else:
-		return False
 
-def enter_correct_weekday(model_dict):
+def enter_correct_value_from_list(value_list, input_message, except_message):
 	correct = False
 	while not correct:
 		try:
-			weekday = int(input("Enter a weekday: "))
-			correct = check_weekday(weekday, model_dict)
+			value = int(input(message))
+			correct = value in value_list
 		except:
-			Print("Please try another weekday; the one you entered does not exist.")
+			print(output_message)
+	return value
 
 
 
-def check_time_unit(weekday, time_unit, model_dict):
-	if time_unit in model_dict[weekday]:
+def check_stop_id(weekday, time_unit, stop_id, si_dict):
+	time_unit_dict = si_dict[weekday][time_unit]
+	if stop_id in time_unit_dict:
 		return True
 	else:
 		return False
 
-def enter_correct_time_unit(weekday, model_dict):
-	correct = False
-	while not correct:
-		try:
-			time_unit = int(input("Enter a time_unit: "))
-			correct = check_time_unit(weekday, time_unit, model_dict)
-		except:
-			print("Please try another time_unit; the one you entered does not exist.")
-	return time_unit
-
-
-
-def check_stop_id(weekday, time_unit, model_dict, stop_id):
-	time_unit_dict = model_dict[weekday][time_unit]
-	if stop_id in time_unit:
-		return True
-	else:
-		return False
-
-def enter_correct_stop_id(weekday, time_unit, model_dict):
+def enter_correct_stop_id(weekday, time_unit, si_dict):
 	correct = False
 	while not correct:
 		try:
 			stop_id = input("Enter a starting stop id: ")
 			correct = check_stop_id(weekday, time_unit, model_dict, stop_id)
 		except:
-			Print("Please try another stop id; the one you entered does not exist.")
+			Print("I'm sorry, the stop id you entered is invalid.")
 	return stop_id
 
 
@@ -98,19 +86,21 @@ def pathfinder_for_django(the_shortest_journey):
 
 
 def run_the_pathfinder():
-	# welcome message
-	print("ByteMe's pathfinder is now running, so give it a go.")
 	# data
+	wd_list = weekday_list()
+	tu_list = time_unit_list(wd_list)
+	si_dict = stop_id_dict()
 	model_dict = data.get_model_data()
 	connections_dict = data.get_connections_dict()
 	# the operational component
+	print("Everything will be fast from here, so please use the pathfinder")
 	running = True
 	while running:
 		# user inputs
-		weekday = enter_correct_weekday(model_dict)
-		time_unit = enter_correct_time_unit(weekday, model_dict)
-		start_stop_id = enter_correct_stop_id(weekday, time_unit, model_dict, stop_id_dict)
-		end_stop_id = enter_correct_stop_id(weekday, time_unit, model_dict, stop_id_dict)
+		weekday = enter_correct_value_from_list(wd_list, "Please enter a weekday: ", "I'm sorry, that is invalid weekday.")
+		time_unit = enter_correct_value_from_list(tu_list, "Please enter a time_unit: ", "I'm sorry, that is invalid time_unit.")
+		start_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
+		end_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
 		# pathfinder
 		the_shortest_journey = pathfinder.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict)
 		print("Here is the suggested bus journey")
@@ -119,11 +109,4 @@ def run_the_pathfinder():
 
 
 if __name__ == "__main__":
-	# run_the_pathfinder()
-
-
-
-	wd_list = weekday_list()
-	tu_list = time_unit_list(wd_list)
-	print(wd_list)
-	print(tu_list)
+	run_the_pathfinder()
