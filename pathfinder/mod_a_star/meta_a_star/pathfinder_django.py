@@ -90,21 +90,23 @@ def run_the_pathfinder():
 	wd_list = weekday_list()
 	tu_list = time_unit_list(wd_list)
 	si_dict = stop_id_dict()
-	model_dict = data.get_model_data()
-	connections_dict = data.get_connections_dict()
-	# the operational component
-	print("Everything will be fast from here, so please use the pathfinder")
-	running = True
-	while running:
-		# user inputs
-		weekday = enter_correct_value_from_list(wd_list, "Please enter a weekday: ", "I'm sorry, that is invalid weekday.")
-		time_unit = enter_correct_value_from_list(tu_list, "Please enter a time_unit: ", "I'm sorry, that is invalid time_unit.")
-		start_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
-		end_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
-		# pathfinder
-		the_shortest_journey = pathfinder.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict)
-		print("Here is the suggested bus journey")
-		print(pathfinder_for_django(the_shortest_journey))
+	print(si_dict)
+
+	# model_dict = data.get_model_data()
+	# connections_dict = data.get_connections_dict()
+	# # the operational component
+	# print("Everything will be fast from here, so please use the pathfinder")
+	# running = True
+	# while running:
+	# 	# user inputs
+	# 	weekday = enter_correct_value_from_list(wd_list, "Please enter a weekday: ", "I'm sorry, that is invalid weekday.")
+	# 	time_unit = enter_correct_value_from_list(tu_list, "Please enter a time_unit: ", "I'm sorry, that is invalid time_unit.")
+	# 	start_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
+	# 	end_stop_id = enter_correct_stop_id(weekday, time_unit, si_dict)
+	# 	# pathfinder
+	# 	the_shortest_journey = pathfinder.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict)
+	# 	print("Here is the suggested bus journey")
+	# 	print(pathfinder_for_django(the_shortest_journey))
 
 
 
