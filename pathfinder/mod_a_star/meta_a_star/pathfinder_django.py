@@ -36,7 +36,7 @@ def enter_correct_value_from_list(value_list, input_message, except_message):
 	correct = False
 	while not correct:
 		try:
-			value = int(input("message"))
+			value = int(input(str(input_message)))
 			correct = value in value_list
 		except:
 			print(except_message)
@@ -58,7 +58,7 @@ def enter_correct_stop_id(weekday, time_unit, si_dict):
 			stop_id = input("Enter a starting stop id: ")
 			correct = check_stop_id(weekday, time_unit, model_dict, stop_id)
 		except:
-			Print("I'm sorry, the stop id you entered is invalid.")
+			print("I'm sorry, the stop id you entered is invalid.")
 	return stop_id
 
 
