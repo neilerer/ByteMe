@@ -87,15 +87,24 @@ def pathfinder_for_django(the_shortest_journey):
 
 def run_the_pathfinder():
 	# data
+	print("")
+	print("")
+	print("Generating and loading weekday list to memory . . . ")
 	wd_list = weekday_list()
+	print("Generating and loading time_unit list to memory . . . ")
 	tu_list = time_unit_list(wd_list)
+	print("Generating and loading stop_id dictionary to memory . . . ")
 	si_dict = stop_id_dict()
+	print("Loading the model_dict to memory . . . ")
 	model_dict = data.get_model_data()
+	print("Loading the connections_dict to memory . . . ")
 	connections_dict = data.get_connections_dict()
 	# the operational component
-	print("Everything will be fast from here, so please use the pathfinder")
 	running = True
 	while running:
+		# welcome
+		print("")
+		print("The pathfinder is ready to use.")
 		# user inputs
 		weekday = enter_correct_value_from_list(wd_list, "Please enter a weekday: ", "I'm sorry, that is invalid weekday.")
 		time_unit = enter_correct_value_from_list(tu_list, "Please enter a time_unit: ", "I'm sorry, that is invalid time_unit.")
@@ -105,6 +114,7 @@ def run_the_pathfinder():
 		the_shortest_journey = pathfinder.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict, connections_dict)
 		print("Here is the suggested bus journey")
 		print(pathfinder_for_django(the_shortest_journey))
+		print("")
 
 
 
