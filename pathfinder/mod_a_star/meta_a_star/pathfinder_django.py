@@ -36,7 +36,7 @@ def enter_correct_value_from_list(value_list, input_message, except_message):
 	correct = False
 	while not correct:
 		try:
-			value = int(input(message))
+			value = int(input("message"))
 			correct = value in value_list
 		except:
 			print(except_message)
