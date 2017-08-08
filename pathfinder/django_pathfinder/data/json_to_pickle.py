@@ -193,6 +193,9 @@ def jpi_into_pathfinder_format(jpi_dict):
 				quadruple = (prior[4], current[4], current[5], prior[2])
 				new_time_unit_list.append(quadruple)
 				index += 1
+				# last entry check
+				if index == length:
+					new_time_unit_list.append((current[4], None, 0.00, prior[2]))
 			# update the list
 			jpi_dict[weekday][time_unit] = new_time_unit_list
 	# return
@@ -236,14 +239,6 @@ def create_pathfinder_dict(model_dict):
 						destination_dict[stop].append(quadruple)
 					else:
 						destination_dict[stop] = [quadruple]
-				# add the last stop because the prior iteration would have skipped it
-				last_quadruple = jpi_dict[weekday][time_unit][-1]
-				last_stop = last_quadruple[1]
-				last_route = last_quadruple[3]
-				if last_stop in destination_dict:
-					destination_dict[last_stop].append((last_stop, None, 0.00, last_route))
-				else:
-					destination_dict[last_stop] = [(last_stop, None, 0.00, last_route)]
 	# return
 	return pathfinder_dict
 
@@ -282,27 +277,27 @@ def create_pathfinder_dict(model_dict):
 
 
 if __name__ == "__main__":
-	# data
-	model_dict = json_to_dict("data.json")
-	# pathfinder_dict
-	pathfinder_dict = create_pathfinder_dict(model_dict)
-	destination = open("data2.p", "wb")
-	# dump the data into the pickle file
-	pickle.dump(pathfinder_dict, destination)
-	# close the file
-	destination.close()
-
-	# # load the model data
+	# # data
 	# model_dict = json_to_dict("data.json")
-	# jpi_dict = get_jpi_observations(model_dict, "046A1001")
-	# jpi_dict = sort_jpi_observations(jpi_dict)
-	# jpi_dict = modify_jpi_time(jpi_dict)
-	# jpi_dict = jpi_into_pathfinder_format(jpi_dict)
-	# for weekday in jpi_dict:
-	# 	for time_unit in jpi_dict[weekday]:
-	# 		print(weekday, time_unit)
-	# 		print(jpi_dict[weekday][time_unit])
-	# 		print("")
+	# # pathfinder_dict
+	# pathfinder_dict = create_pathfinder_dict(model_dict)
+	# destination = open("data2.p", "wb")
+	# # dump the data into the pickle file
+	# pickle.dump(pathfinder_dict, destination)
+	# # close the file
+	# destination.close()
+
+	# load the model data
+	model_dict = json_to_dict("data.json")
+	jpi_dict = get_jpi_observations(model_dict, "046A1001")
+	jpi_dict = sort_jpi_observations(jpi_dict)
+	jpi_dict = modify_jpi_time(jpi_dict)
+	jpi_dict = jpi_into_pathfinder_format(jpi_dict)
+	for weekday in jpi_dict:
+		for time_unit in jpi_dict[weekday]:
+			print(weekday, time_unit)
+			print(jpi_dict[weekday][time_unit])
+			print("")
 	
 
 
