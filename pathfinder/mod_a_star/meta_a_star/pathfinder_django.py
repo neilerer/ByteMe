@@ -4,13 +4,15 @@ import pathfinder
 
 
 
-def weekday_list(model_dict):
+def weekday_list():
+	model_dict = data.get_model_data()
 	wd_list = list()
 	for weekday in model_dict:
 		wd_list.append(weekday)
 	return wd_list
 
 def time_unit_list(wd_list, model_dict):
+	model_dict = data.get_model_data()
 	tu_list = set()
 	for weekday in wd_list:
 		for time_unit in model_dict[weekday]:
@@ -97,7 +99,7 @@ def pathfinder_for_django(the_shortest_journey):
 
 def run_the_pathfinder():
 	# welcome message
-	print("ByteMe's pathfindr is now running, so give it a go.")
+	print("ByteMe's pathfinder is now running, so give it a go.")
 	# data
 	model_dict = data.get_model_data()
 	connections_dict = data.get_connections_dict()
@@ -121,7 +123,6 @@ if __name__ == "__main__":
 
 
 
-	model_dict = data.get_model_data()
 	wd_list = weekday_list(model_dict)
 	tu_list = time_unit_list(wd_list, model_dict)
 	print(wd_list)
