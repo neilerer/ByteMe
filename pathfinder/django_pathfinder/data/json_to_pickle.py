@@ -277,27 +277,27 @@ def create_pathfinder_dict(model_dict):
 
 
 if __name__ == "__main__":
-	# # data
-	# model_dict = json_to_dict("data.json")
-	# # pathfinder_dict
-	# pathfinder_dict = create_pathfinder_dict(model_dict)
-	# destination = open("data2.p", "wb")
-	# # dump the data into the pickle file
-	# pickle.dump(pathfinder_dict, destination)
-	# # close the file
-	# destination.close()
-
-	# load the model data
+	# data
 	model_dict = json_to_dict("data.json")
-	jpi_dict = get_jpi_observations(model_dict, "046A1001")
-	jpi_dict = sort_jpi_observations(jpi_dict)
-	jpi_dict = modify_jpi_time(jpi_dict)
-	jpi_dict = jpi_into_pathfinder_format(jpi_dict)
-	for weekday in jpi_dict:
-		for time_unit in jpi_dict[weekday]:
-			print(weekday, time_unit)
-			print(jpi_dict[weekday][time_unit])
-			print("")
+	# pathfinder_dict
+	pathfinder_dict = create_pathfinder_dict(model_dict)
+	destination = open("data2.p", "wb")
+	# dump the data into the pickle file
+	pickle.dump(pathfinder_dict, destination)
+	# close the file
+	destination.close()
+
+	# # load the model data
+	# model_dict = json_to_dict("data.json")
+	# jpi_dict = get_jpi_observations(model_dict, "046A1001")
+	# jpi_dict = sort_jpi_observations(jpi_dict)
+	# jpi_dict = modify_jpi_time(jpi_dict)
+	# jpi_dict = jpi_into_pathfinder_format(jpi_dict)
+	# for weekday in jpi_dict:
+	# 	for time_unit in jpi_dict[weekday]:
+	# 		print(weekday, time_unit)
+	# 		print(jpi_dict[weekday][time_unit])
+	# 		print("")
 	
 
 
