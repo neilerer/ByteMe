@@ -9,7 +9,7 @@ def get_model_data():
 	os.chdir("../")
 	os.chdir("data")
 	# get shit from file
-	f = open("data.p", "rb")
+	f = open("data2.p", "rb")
 	# load the pickle file
 	model_dict = pickle.load(f)
 	# close the pickle file
@@ -27,7 +27,7 @@ def get_connections_dict():
 	os.chdir("../")
 	os.chdir("data")
 	# get shit from file
-	f = open("rc_connections_dict.p", "rb")
+	f = open("rc_connections_dict2.p", "rb")
 	# load the pickle file
 	connections_dict = pickle.load(f)
 	# close the pickle file
