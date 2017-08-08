@@ -11,7 +11,7 @@ def weekday_list():
 		wd_list.append(weekday)
 	return wd_list
 
-def time_unit_list(wd_list, model_dict):
+def time_unit_list(wd_list):
 	model_dict = data.get_model_data()
 	tu_list = set()
 	for weekday in wd_list:
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
 
 
-	wd_list = weekday_list(model_dict)
-	tu_list = time_unit_list(wd_list, model_dict)
+	wd_list = weekday_list()
+	tu_list = time_unit_list(wd_list)
 	print(wd_list)
 	print(tu_list)
