@@ -31,7 +31,7 @@ def start_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model_di
 		next_stop_journey_time = quadruple[2]
 		next_stop_route = quadruple[3]
 		# determine if a journey should be created
-		if (next_stop_id not in been_set) and (next_stop_route in path):
+		if (next_stop_id not in been_set):# and (next_stop_route in path):
 			# record the journey_id
 			journey_id_list.append(journey_id)
 			# create the journey details
@@ -83,7 +83,7 @@ def continue_journey(weekday, time_unit, start_stop_id, end_stop_id, path, model
 		next_stop_journey_time = quadruple[2]
 		next_stop_route = quadruple[3]
 		# determine if a journey should be created
-		if (next_stop_id not in been_set) and (next_stop_route in path):
+		if (next_stop_id not in been_set):# and (next_stop_route in path):
 			# create element of new part to add
 			current_journey_path = current_journey_contents[2]
 			# update been_set

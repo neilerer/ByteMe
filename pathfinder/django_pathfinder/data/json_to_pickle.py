@@ -195,7 +195,7 @@ def jpi_into_pathfinder_format(jpi_dict):
 				index += 1
 				# last entry check
 				if index == length:
-					new_time_unit_list.append((current[4], current[4], 0.00, prior[2]))
+					new_time_unit_list.append((current[4], None, 0.00, prior[2]))
 			# update the list
 			jpi_dict[weekday][time_unit] = new_time_unit_list
 	# return
