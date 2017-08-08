@@ -80,6 +80,11 @@ def pathfinder_for_django(the_shortest_journey):
 			django_journey[route][1].append(start_stop)
 		else:
 			django_journey[route] = [time, [start_stop]]
+	# add the last stop
+	last_stop_data = journey_details[-1]
+	ls_route = last_stop_data[3]
+	ls_stop = last_stop_data[1]
+	django_journey[ls_route][1].append(ls_stop)
 	# return
 	return django_journey
 
