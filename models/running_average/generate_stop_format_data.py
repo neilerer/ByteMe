@@ -7,8 +7,9 @@ import source_data
 
 def get_jpi_names():
 	change_directories.to_jpi()
-	print(get_file_names.all_csv())
+	jpi_names = get_file_names.all_csv()
 	change_directories.from_jpi()
+	return jpi_names
 
 
 
