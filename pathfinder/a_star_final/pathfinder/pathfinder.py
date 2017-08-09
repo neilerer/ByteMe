@@ -8,7 +8,8 @@ def pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict):
 	journey_id_list = list()
 	journies_dict = dict()
 	been_set = set()
-	the_shortest_journey = a_star.a_star(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set)
+	destination_route_list = a_star.destination_route(end_stop_id, weekday, time_unit, model_dict)
+	the_shortest_journey = a_star.a_star(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list)
 	return the_shortest_journey
 
 
@@ -62,8 +63,8 @@ if __name__ == "__main__":
 	model_dict = data.get_model_data()
 
 	# inputs
-	start_stop_id =  4486
-	end_stop_id = 400
+	start_stop_id =  807
+	end_stop_id = 763
 	weekday = 0
 	time_unit = 10
 

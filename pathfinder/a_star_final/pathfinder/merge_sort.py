@@ -78,8 +78,41 @@ def merge_sort_journies_dict(d_input):
 
 
 
-def a_star_heuristic(continuing_dict, current_route):
+def a_star_heuristic_start(ending_dict, destination_route_list):
+	# dictionary objects
 	a_star_dict = dict()
+	other_dict = dict()
+	# sort ending_dict by destination route
+	while len(ending_dict) > 0:
+		# get the first part of the dictionary
+		list_data = remove_first_entry_of_dict(ending_dict)
+		key = list_data[0]
+		value = list_data[1]
+		route = value[1][-1][-1][3]
+		# put in the appropriate dictionary
+		if route in destination_route_list:
+			a_star_dict[key] = value
+		else:
+			other_dict[key] = value
+	# sort the two dictionaries
+	# a_star_dict = merge_sort_journies_dict(a_star_dict)
+	# other_dict = merge_sort_journies_dict(other_dict)
+	# return
+	return_dict = dict()
+	while len(a_star_dict) > 0:
+		list_data = remove_first_entry_of_dict(a_star_dict)
+		return_dict[list_data[0]] = list_data[1]
+	while len(other_dict) > 0:
+		list_data = remove_first_entry_of_dict(other_dict)
+		return_dict[list_data[0]] = list_data[1]
+	return return_dict
+
+
+
+def a_star_heuristic(continuing_dict, current_route, destination_route_list):
+	# dictionary objects
+	current_route_dict = dict()
+	destination_route_dict = dict()
 	other_dict = dict()
 	while len(continuing_dict) > 0:
 		# get the first candidate
@@ -89,13 +122,22 @@ def a_star_heuristic(continuing_dict, current_route):
 		route = value[1][-1][-1][3]
 		# put into appropriate dictionary
 		if route == current_route:
-			a_star_dict[key] = value
+			current_route_dict[key] = value
+		elif route in destination_route_list:
+			destination_route_dict[key] = value
 		else:
 			other_dict[key] = value
+	# sort the dicts
+	current_route_dict = merge_sort_journies_dict(current_route_dict)
+	destination_route_dict = merge_sort_journies_dict(destination_route_dict)
+	other_dict = merge_sort_journies_dict(other_dict)
 	# return
 	return_dict = dict()
-	while len(a_star_dict) > 0:
-		list_data = remove_first_entry_of_dict(a_star_dict)
+	while len(current_route_dict) > 0:
+		list_data = remove_first_entry_of_dict(current_route_dict)
+		return_dict[list_data[0]] = list_data[1]
+	while len(destination_route_dict) > 0:
+		list_data = remove_first_entry_of_dict(destination_route_dict)
 		return_dict[list_data[0]] = list_data[1]
 	while len(other_dict) > 0:
 		list_data = remove_first_entry_of_dict(other_dict)
