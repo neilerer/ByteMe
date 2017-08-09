@@ -2,6 +2,7 @@
 import json
 import pickle
 import merge_sort
+from operator import itemgetter
 
 
 
@@ -141,6 +142,12 @@ def create_pathfinder_dict(model_dict):
 						destination_dict[stop].append(quadruple)
 					else:
 						destination_dict[stop] = [quadruple]
+	# sort the stop level lists of quadruples by time so that when sourced in Dijkstra, they will be in appropriate order; we don't want to waste time sorting on every use of Dijkstra
+	for weekday in pathfinder_dict:
+		for time_unit in pathfinder_dict[weekday]:
+			for stop in pathfinder_dict[weekday][time_unit]:
+				list_of_quadruples = pathfinder_dict[weekday][time_unit][stop]
+				pathfinder_dict[weekday][time_unit][stop] = sorted(list_of_quadruples,key=itemgetter(2))
 	# return
 	return pathfinder_dict
 

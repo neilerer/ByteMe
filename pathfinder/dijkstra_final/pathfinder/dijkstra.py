@@ -60,6 +60,7 @@ def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model
 		current_journey_contents = current_journey[1]
 		current_journey_time = current_journey_contents[0]
 		current_stop_id = current_journey_contents[1][-1][1]
+		current_route = current_journey_contents[1][-1][3]
 		# termination condition
 		if current_stop_id == end_stop_id:
 			return [True, {journey_id : current_journey_contents}]
@@ -96,8 +97,13 @@ def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model
 				journey_path = list()
 				for item in current_journey_path:
 					journey_path.append(item)
-				journey_path.append(quadruple)
-				ending_dict[journey_id] = [current_journey_time + next_stop_journey_time, journey_path]
+				# wait time fudge factor; data to come from CD
+				if current_route == next_stop_route:
+					journey_path.append(quadruple)
+					ending_dict[journey_id] = [current_journey_time + next_stop_journey_time, journey_path]
+				else:
+					journey_path.append((quadruple[0], quadruple[1], quadruple[2] + 300, quadruple[3]))
+					ending_dict[journey_id] = [current_journey_time + next_stop_journey_time + 300, journey_path]
 	# return
 	if not ending_dict:
 		# create journey_path
