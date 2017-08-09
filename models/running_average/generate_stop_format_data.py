@@ -29,7 +29,7 @@ def get_headers():
 	for header in headers_list[1:0:1]:
 		if prime != header:
 			return [False, header]
-	return [True, headers_list]
+	return [True, prime]
 
 
 
