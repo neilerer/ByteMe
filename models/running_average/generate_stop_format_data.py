@@ -24,8 +24,17 @@ def get_headers():
 		headers_list.append(header)
 		jpi_data.close()
 	change_directories.from_jpi()
-	return headers_list
+	# confirm each header is identical
+	prime = headers_list[0]
+	for header in headers_list[1:0:1]:
+		if prime != header:
+			return [False, header]
+	return [True, headers_list]
+
+
 
 headers_list = get_headers()
-for header in headers_list:
-	print(header)
+if headers_list[0]:
+	print(headers_list[1])
+else:
+	print("Headers are not all the same.")
