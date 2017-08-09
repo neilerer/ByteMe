@@ -53,6 +53,38 @@ def minimum_transfers(the_shortest_journey, destination_route_list, start_stop_i
 
 
 
+def output_for_django(sj_list):
+	journey_dict = dict()
+	route_dict = dict()
+	current_route = None
+	for quadruple in sj_list:
+		# unpack
+		start = quadruple[0]
+		end = quadruple[1]
+		travel  =quadruple[2]
+		route = quadruple[3]
+		if route == current_route:
+			pass
+		else:
+			current_route = route
+			if route in route_dict:
+				route_dict[route] += 1
+			else:
+				route_dict[route] = 1
+		key = "{} Trip {}".format(route, str(route_dict[route]))
+		# 
+		if key in journey_dict:
+			journey_dict[key][0] += travel
+			journey_dict[key][1].append(end)
+		else:
+			journey_dict[key] = [0.0, None]
+			journey_dict[key][0] = travel
+			journey_dict[key][1] = [start, end]
+	# return
+	return journey_dict
+
+
+
 if __name__ == "__main__":
 	# data
 	print("Loading the model data . . .")
@@ -79,6 +111,18 @@ if __name__ == "__main__":
 	# test minimum_transfers
 	print("")
 	print("Minimum Transfers")
-	for quadruple in minimum_transfers(the_shortest_journey, destination_route_list, start_stop_id, end_stop_id, weekday, time_unit, model_dict):
+	min_trans = minimum_transfers(the_shortest_journey, destination_route_list, start_stop_id, end_stop_id, weekday, time_unit, model_dict)
+	for quadruple in min_trans:
 		print(quadruple)
+	print("")
+
+
+	# test output_for_django(sj_list)
+	print("")
+	print("Django Output")
+	print("Dijkstra")
+	print(output_for_django(the_shortest_journey[1]))
+	print("")
+	print("Minimum Transfers")
+	print(output_for_django(min_trans))
 	print("")
