@@ -6,15 +6,38 @@ import pickle as pkl
 import os
 import pandas as pd
 import urllib.request
+import pathfinder
+import pathfinder_django
 
 def index(request): #called from home urls.py file
+
+
+    # """PATHFINDER START"""
+    #
+    # with open("data.p",'rb') as data_pkl:
+    #     # results from every model input
+    #     pathfinder_data=pkl.load(data_pkl)
+    # with open("rc_connections_dict.p", 'rb') as connections_pkl:
+    #     # shortest path via routes start to end
+    #     pathfinder_connections=pkl.load(connections_pkl)
+    #
+    # wd_list=pathfinder_django.weekday_list()
+    # tu_list=pathfinder_django.time_unit_list(wd_list)
+    # si_dict=pathfinder_django.stop_id_dict()
+    #
+    # shortest_path_raw=pathfinder.pathfinder(3,17,400,4486,pathfinder_data,pathfinder_connections)
+    #
+    # print(pathfinder_django.pathfinder_for_django(shortest_path_raw))
+    #
+    # """PATHFINDER END"""
+
 
     # hardcoded list of currently available routes, needs to be generated for all routes later
     with open("../models/linear_model/route_list", "rb") as route_file:  # loading pickle file with routes
         routes = pkl.load(route_file)
         routes=sorted(routes)
 
-    with open("home/stop_coordinates_with_names.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
+    with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
 
     with open("home/jpids_and_stops.json") as jpids_and_stops:
@@ -61,7 +84,7 @@ def get_route(request):
 
         with open("home/jpids_and_stops.json") as route_file: #reading dictionary {key:value} = {stop:[routes]}
             stops_on_routes = json.load(route_file)
-        with open("home/stop_coordinates_with_names.json") as stop_file: #reading dictionary {key:value} = {stop:[lat,long]}
+        with open("home/stop_info.json") as stop_file: #reading dictionary {key:value} = {stop:[lat,long]}
             stop_coordinates = json.load(stop_file)
         print(os.getcwd())
         with open("../models/linear_model/pickle_files/"+selected_route+".pkl", "rb") as model_file:
