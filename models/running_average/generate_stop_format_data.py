@@ -28,13 +28,13 @@ def get_headers():
 	prime = headers_list[0]
 	for header in headers_list[1:0:1]:
 		if prime != header:
-			return [False, header]
-	return [True, prime]
+			return None
+	return prime
 
 
 
-headers_list = get_headers()
-if headers_list[0]:
-	print(headers_list[1])
-else:
-	print("Headers are not all the same.")
+def 
+
+
+# ['Year', 'Month', 'Day', 'Hours', 'Minute', 'Second', 'WeekDay', 'YearDay', 'Timestamp', 'LineID', 'Direction', 'JourneyPatternID', 'TimeFrame', 'VehicleJourneyID', 'Operator', 'Congestion', 'Longitude', 'Latitude', 'BusDelay', 'BlockID', 'VehicleID', 'StopID', 'AtStop', 'Temperature (C)', 'Dew Point (C)', 'Humidity (%)', 'Pressure (hPa)', 'Visibility (km)', 'Wind Direction', 'Wind Speed (km/h)', 'Gust Speed (km/h)', 'Precipitation', 'Events', 'Conditions']
+# ['WeekDay', 'Hours', 'Minute', 'Second', 'Timestamp', 'StopID', 'JourneyPatternID', 'VehicleJourneyID', 'VehicleID', 'Longitude', 'Latitude', 'Conditions']
