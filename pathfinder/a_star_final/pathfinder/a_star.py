@@ -9,7 +9,17 @@ def time_unit_model_dict(weekday, time_unit, model_dict):
 
 
 
-def start_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set):
+def destination_route(end_stop_id, weekday, time_unit, model_dict):
+	destination_route_list = list()
+	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
+	for quadruple in time_unit_dict[end_stop_id]:
+		route = quadruple[3]
+		destination_route_list.append(route)
+	return destination_route_list
+
+
+
+def start_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list):
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
 	if start_stop_id == end_stop_id:
 		return [True, {0 :[0.00, [(start_stop_id, end_stop_id, 0.00, None) ], None], }]
@@ -38,20 +48,20 @@ def start_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_di
 			ending_dict[journey_id] = [next_stop_journey_time, [quadruple], [next_stop_route]]
 			# increment the journey_id
 			journey_id += 1
-	# sort endin_dict
-	ending_dict = merge_sort.merge_sort_journies_dict(ending_dict)
+	# apply the a_star heuristic for the start
+	ending_dict = merge_sort.a_star_heuristic_start(ending_dict, destination_route_list)
 	# return
 	return [False, ending_dict]
 
 
 
-def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set):
+def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list):
 	# time_unit_dict
 	time_unit_dict = time_unit_model_dict(weekday, time_unit, model_dict)
 	# instantiate continuing_dict
 	continuing_dict = journies_dict
 	# sort continuing_dict so that the shortest journey is considered
-	continuing_dict = merge_sort.merge_sort_journies_dict(continuing_dict)
+	continuing_dict = merge_sort.a_star_heuristic_start(continuing_dict, destination_route_list)
 	# ending_dict
 	ending_dict = dict()
 	# continue the shortest journey
@@ -86,8 +96,7 @@ def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model
 			next_stop_id = quadruple[1]
 			next_stop_journey_time = quadruple[2]
 			next_stop_route = quadruple[3]
-			# determine if a journey should be created
-			if (next_stop_id not in been_set) and (next_stop_id is not None) and ((next_stop_route not in route_list) or (next_stop_route in route_list and next_stop_route == route_list[-1])):
+			if (next_stop_route in destination_route_list) and (next_stop_id not in been_set) and (next_stop_id is not None):
 				# create element of new part to add
 				current_journey_path = quadruple_list
 				# update been_set
@@ -102,7 +111,29 @@ def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model
 				for item in current_journey_path:
 					journey_path.append(item)
 				journey_path.append(quadruple)
+				# make new ending_dict
+				ending_dict = dict()
 				ending_dict[journey_id] = [current_journey_time + next_stop_journey_time, journey_path, route_list]
+				print(ending_dict)
+				return [False, ending_dict]
+			# determine if a journey should be created
+			else: 
+				if (next_stop_id not in been_set) and (next_stop_id is not None) and ((next_stop_route not in route_list) or (next_stop_route in route_list and next_stop_route == route_list[-1])):
+					# create element of new part to add
+					current_journey_path = quadruple_list
+					# update been_set
+					been_set.add(next_stop_id)
+					# update route_list
+					route_list.append(next_stop_route)
+					# create a new journey id
+					journey_id = journey_id_list[-1] + 1
+					journey_id_list.append(journey_id)
+					# create the journey path
+					journey_path = list()
+					for item in current_journey_path:
+						journey_path.append(item)
+					journey_path.append(quadruple)
+					ending_dict[journey_id] = [current_journey_time + next_stop_journey_time, journey_path, route_list]
 	# return
 	if not ending_dict:
 		# create journey_path
@@ -117,16 +148,16 @@ def continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model
 
 
 
-def a_star(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set):
+def a_star(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list):
 	# data objects
 	found_shortest_path = False
 	# start
-	result = start_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set)
+	result = start_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list)
 	found_shortest_path = result[0]
 	journies_dict = result[1]
 	# continue
 	while found_shortest_path is False:
-		result = continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set)
+		result = continue_shortest_path(weekday, time_unit, start_stop_id, end_stop_id, model_dict, journey_id_list, journies_dict, been_set, destination_route_list)
 		found_shortest_path = result[0]
 		journies_dict = result[1]
 	# return
