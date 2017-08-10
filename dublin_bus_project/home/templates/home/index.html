@@ -209,12 +209,10 @@
                     </div>
                 {% else %}
                     <div id="">
-                        <form>
+                        <form id="select_journey_form">
                             <input type="text" id="origin" placeholder="Origin"><br>
                             <input type="text" id="destination" placeholder="Destination"><br>
-                            <input type="text" placeholder="Time"><br>
-                            <input type="text" placeholder="Day"><br>
-                            <input type="submit" name="input_form" id="pathfinder_submit" value="Predict Travel Time">
+                            <input type="submit" name="input_form" id="pathfinder_submit" value="Show Journey Time">
 
                         </form>
                     </div>
@@ -448,6 +446,7 @@
                 {% endif %}
 
         {% else %}
+
                 function setOrigin(stopNumber){
                         if(document.getElementById('destination').value==stopNumber){
                             alert("Origin and destination must be different!");
@@ -465,6 +464,23 @@
                         }
                     }
                 googleMap.setDestination=setDestination;
+
+                function selectDayTime(){
+                    var formHTML=document.getElementById("select_journey_form").innerHTML;
+                    var newOptionsHTML="<select id='weekday'>";
+                    var weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+                    for(i=0; i<weekdays.length; i++){
+                        newOptionsHTML+="<option value='>"+String(i)+"'>"+weekdays[i]+"</option>";
+                    }
+                    newOptionsHTML+="</select><select id='hour'>"
+                    for (i=6; i<24; i++){
+                        newOptionsHTML+="<option value='>"+i+"'>"+i+"</option>";
+                    }
+                    newOptionsHTML+="</select>"
+                    formHTML+=newOptionsHTML;
+                    document.getElementById("select_journey_form").innerHTML=formHTML
+                }
+                googleMap.selectDayTime=selectDayTime;
 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
