@@ -1,6 +1,7 @@
 # imports
 import data
-import pathfinder
+import dijkstra_time
+import dijkstra_transfers
 
 
 
@@ -91,38 +92,21 @@ if __name__ == "__main__":
 	model_dict = data.get_model_data()
 
 	# inputs
-	start_stop_id =  807
-	end_stop_id = 763
+	start_stop_id =  768
+	end_stop_id = 1509
 	weekday = 0
 	time_unit = 10
 
 	# destination_roue_list
 	destination_route_list = destination_routes(end_stop_id, weekday, time_unit, model_dict)
 
-	# test pathfinder
-	print("")
-	print("")
-	print("Minimum Time")
-	the_shortest_journey = pathfinder.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict)
-	for quadruple in the_shortest_journey[1]:
-		print(quadruple)
-	print("")
 
 	# test minimum_transfers
 	print("")
-	print("Minimum Transfers")
-	min_trans = minimum_transfers(the_shortest_journey, destination_route_list, start_stop_id, end_stop_id, weekday, time_unit, model_dict)
-	for quadruple in min_trans:
+	print("Dijkstra Transfers")
+	min_trans = dijkstra_transfers.pathfinder(weekday, time_unit, start_stop_id, end_stop_id, model_dict)
+	print("Transfers: {}".format(min_trans[0]))
+	print("Path")
+	for quadruple in min_trans[1]:
 		print(quadruple)
-	print("")
-
-
-	# test output_for_django(sj_list)
-	print("")
-	print("Django Output")
-	print("Dijkstra")
-	print(output_for_django(the_shortest_journey[1]))
-	print("")
-	print("Minimum Transfers")
-	print(output_for_django(min_trans))
 	print("")
