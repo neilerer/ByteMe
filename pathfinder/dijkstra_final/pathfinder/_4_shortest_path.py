@@ -31,6 +31,27 @@ def possible_paths(grc_dict, start, end):
 			the_possible_paths[route_tuple].append(sub_list)
 	return the_possible_paths
 
+def possible_paths_dictionary(grc_dict, start, end):
+	the_possible_paths = possible_paths(grc_dict, start, end)
+	pp_dict = dict()
+	for route_tuple in the_possible_paths:
+		pp_dict[route_tuple] = dict()
+		route_tuple_dict = pp_dict[route_tuple]
+		path_list = the_possible_paths[route_tuple]
+		path_id = 0
+		for path in path_list:
+			pair_list = list()
+			for i in range(1, len(path)):
+				pair_list.append((path[i -1], path[i]))
+			route_tuple_dict[path_id] = dict()
+			path_id_dict = route_tuple_dict[path_id]
+			for i in range(0, len(pair_list)):
+				path_id_dict[route_tuple[i]] = pair_list[i]
+			path_id += 1
+	return pp_dict
+
+
+
 
 
 
@@ -72,3 +93,8 @@ if __name__ == "__main__":
 		print(route_tuple)
 		print(the_possible_paths[route_tuple])
 		print("")
+
+	pp_dict = possible_paths_dictionary(grc_dict, start, end)
+	for route_tuple in pp_dict:
+		print(route_tuple)
+		print(pp_dict[route_tuple])
