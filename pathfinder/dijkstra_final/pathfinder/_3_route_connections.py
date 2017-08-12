@@ -71,6 +71,7 @@ def route_connections(route_list, grd_dict):
 					s_stop = s_tuple[1]
 					if f_stop == s_stop:
 						key = (first_route, second_route)
+						# connecting stop
 						value = f_tuple[1]
 						if key not in route_connections_dict:
 							route_connections_dict[key] = [value]
@@ -78,7 +79,7 @@ def route_connections(route_list, grd_dict):
 							route_connections_dict[key].append(value)
 	return route_connections_dict
 
-def get_route_connections(model_dict, r_dict, weekday, time_unit, start, end):
+def get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end):
 	grc_dict = dict()
 	pr_dict = get_possible_routes(model_dict, r_dict, weekday, time_unit, start, end)
 	for i in range(0, len(pr_dict), 1):
@@ -104,7 +105,7 @@ if __name__ == "__main__":
 	start = 40
 	end = 4486
 
-	grc_dict = get_route_connections(model_dict, r_dict, weekday, time_unit, start, end)
+	grc_dict = get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end)
 	for item in grc_dict:
 		print(item)
 		print(grc_dict[item])
