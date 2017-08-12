@@ -52,16 +52,6 @@ def possible_paths_dictionary(grc_dict, start, end):
 
 
 
-
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
 	# data
 	print("Loading model dict . . .")
