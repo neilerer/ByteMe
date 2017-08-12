@@ -86,6 +86,12 @@ def get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, sta
 		route_list = pr_dict[i]
 		grd_dict = get_route_data(route_list, json_data, weekday, time_unit)
 		grc_dict[tuple(route_list)] = route_connections(route_list, grd_dict)
+	# THIS SEGMENT ONLY EXISTS SO THAT THIS CODE CAN RUN QUICKLY ON VERY LIGHTWEIGHT MACHINES, ALTHOUGH PRAGMATICALLY IS MAKES NO DIFFERENCE AS WE HAVE NO SIGHT OF WHICH STOPS ARE BEST FOR TRANSFERING
+	# reducing output so can run well on lightweight machines; otherwise would keep for robustness
+	for route_tuple in grc_dict:
+		for route_pair in grc_dict[route_tuple]:
+			grc_dict[route_tuple][route_pair] = [grc_dict[route_tuple][route_pair][-1]]
+	# return
 	return grc_dict
 
 

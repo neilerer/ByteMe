@@ -44,6 +44,25 @@ def ppt_dict_modification(pp_dict, json_data, weekday, time_unit):
 			path_id_dict = path_id_add_ctt(pp_dict[route_tuple][path_id], json_data, weekday, time_unit)
 			pp_dict[route_tuple][path_id] = path_id_dict
 
+def pathfinder(pp_dict):
+	pathfinder_dict = dict()
+	for route_tuple in pp_dict:
+		for path_id in pp_dict[route_tuple]:
+			suggested_path = pp_dict[route_tuple][path_id]
+			time = 0
+			for route in suggested_path:
+				time += suggested_path[route][2]
+			pathfinder_dict[time] = suggested_path
+	# sort pathfinder_dict
+	key_list = list()
+	for key in pathfinder_dict:
+		key_list.append(key)
+	key_list.sort()
+	final_dict = dict()
+	for key in key_list:
+		final_dict[key] = pathfinder_dict[key]
+	return final_dict
+
 
 
 
@@ -64,21 +83,23 @@ if __name__ == "__main__":
 	grc_dict = rc.get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end)
 
 	pp_dict = sp.possible_paths_dictionary(grc_dict, start, end)
-	for route_tuple in pp_dict:
-		print(route_tuple)
-		print(pp_dict[route_tuple])
-		print("")
+	# for route_tuple in pp_dict:
+	# 	print(route_tuple)
+	# 	print(pp_dict[route_tuple])
+	# 	print("")
 
 	# print(get_travel_time(json_data, 40, 6230, '00090', weekday, time_unit))
 	# print(get_travel_time(json_data, 6230, 336, '00830', weekday, time_unit))
 
 	ppt_dict_modification(pp_dict, json_data, weekday, time_unit)
-	for route_tuple in pp_dict:
-		print(route_tuple)
-		print(pp_dict[route_tuple])
-		print("")
+	# for route_tuple in pp_dict:
+	# 	print(route_tuple)
+	# 	print(pp_dict[route_tuple])
+	# 	print("")
 
-
-
+	pathfinder_dict = pathfinder(pp_dict)
+	for time in pathfinder_dict:
+		print(time)
+		print(pathfinder_dict[time])
 
 
