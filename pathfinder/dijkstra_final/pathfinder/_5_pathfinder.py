@@ -9,6 +9,44 @@ import _4_shortest_paths as sp
 
 
 
+def get_travel_time(json_data, first, second, route, weekday, time_unit):
+	first_ctt = 0
+	second_ctt = 0
+	for jpi in json_data:
+		if jpi[0:5] == route:
+			for key in json_data[jpi]:
+				key_list = key.strip().split("-")
+				position = int(key_list[0])
+				stop = int(key_list[1])
+				wd = int(key_list[2])
+				tu = int(key_list[3])
+				ctt = float(json_data[jpi][key])
+				key_list.append(ctt)
+				# 
+				if stop == first and wd == weekday and tu == time_unit:
+					first_ctt = ctt
+				if stop == second and wd == weekday and tu == time_unit:
+					second_ctt = ctt
+	# models give garbage outputs; this is a temp fix until that is resolved
+	return abs(abs(second_ctt) - abs(first_ctt))
+
+def path_id_add_ctt(path_id_dict, json_data, weekday, time_unit):
+	for route in path_id_dict:
+		first = path_id_dict[route][0]
+		second = path_id_dict[route][1]
+		travel_time = get_travel_time(json_data, first, second, route, weekday, time_unit)
+		path_id_dict[route] = (first, second, travel_time)
+	return path_id_dict
+
+def ppt_dict_modification(pp_dict, json_data, weekday, time_unit):
+	for route_tuple in pp_dict:
+		for path_id in pp_dict[route_tuple]:
+			path_id_dict = path_id_add_ctt(pp_dict[route_tuple][path_id], json_data, weekday, time_unit)
+			pp_dict[route_tuple][path_id] = path_id_dict
+
+
+
+
 if __name__ == "__main__":
 	# data
 	print("Loading model dict . . .")
@@ -30,3 +68,17 @@ if __name__ == "__main__":
 		print(route_tuple)
 		print(pp_dict[route_tuple])
 		print("")
+
+	# print(get_travel_time(json_data, 40, 6230, '00090', weekday, time_unit))
+	# print(get_travel_time(json_data, 6230, 336, '00830', weekday, time_unit))
+
+	ppt_dict_modification(pp_dict, json_data, weekday, time_unit)
+	for route_tuple in pp_dict:
+		print(route_tuple)
+		print(pp_dict[route_tuple])
+		print("")
+
+
+
+
+
