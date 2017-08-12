@@ -1,3 +1,6 @@
+# {0: [0, 61.83473320363646, [(768, 769, 61.83473320363646, '01451')]], 1: [0, 64.07522916619928, [(768, 2085, 64.07522916619928, '00471')]], 2: [0, 72.37828945081264, [(768, 769, 72.37828945081264, '046A1')]], 3: [0, 78.25674273527522, [(768, 769, 78.25674273527522, '039A0')]], 4: [0, 134.34609119887364, [(768, 772, 134.34609119887364, '084X1')]]}
+
+
 # imports
 import copy
 
@@ -30,7 +33,7 @@ def merge_on_time(d_1, d_2):
 		# create the traverse objects
 		key_1, key_2 = next(iter(d_1)), next(iter(d_2))
 		# value of interest
-		value_1, value_2 = d_1[key_1][0][2], d_2[key_2][0][2]
+		value_1, value_2 = d_1[key_1][1], d_2[key_2][1]
 		# put the lowest time in first
 		if value_1 < value_2:
 			d_return[key_1] = d_1[key_1]
@@ -61,7 +64,7 @@ def merge_on_transfers(d_1, d_2):
 		# create the traverse objects
 		key_1, key_2 = next(iter(d_1)), next(iter(d_2))
 		# value of interest
-		value_1, value_2 = d_1[key_1][0][0], d_2[key_2][0][0]
+		value_1, value_2 = d_1[key_1][0], d_2[key_2][0]
 		# put the lowest time in first
 		if value_1 < value_2:
 			d_return[key_1] = d_1[key_1]
@@ -133,7 +136,32 @@ def merge_sort_transfers(d_input):
 	# return
 	return d_return
 
+def end_route_first(d, end_routes_list):
+	# create the return object 
+	d_return = {}
+	d_temp = {}
+	# 
+	while len(d) > 0:
+		journey_id = next(iter(d))
+		quadruple = d[journey_id]
+		route = quadruple[2]
+		if route in end_routes_list:
+			d_return[journey_id] = quadruple
+		else:
+			d_temp[journey_id] = quadruple
+		del d[journey_id]
+
+	while len(d_temp) > 0:
+		journey_id = next(iter(d_temp))
+		quadruple = d_temp[journey_id]
+		d_return[journey_id] = quadruple
+		del d_temp[journey_id]
+
+	return d_return
+
+
 def merge_sort(d_input):
 	d_return = merge_sort_time(d_input)
 	d_return = merge_sort_transfers(d_return)
+	# d_return = end_route_first(d_return, end_routes_list)
 	return d_return
