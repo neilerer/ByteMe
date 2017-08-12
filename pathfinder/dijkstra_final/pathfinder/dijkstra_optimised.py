@@ -5,6 +5,34 @@ import time
 
 
 
+def weekday_list():
+	model_dict = data.get_model_data()
+	wd_list = list()
+	for weekday in model_dict:
+		wd_list.append(weekday)
+	return wd_list
+
+def time_unit_list(wd_list):
+	model_dict = data.get_model_data()
+	tu_list = set()
+	for weekday in wd_list:
+		for time_unit in model_dict[weekday]:
+			tu_list.add(time_unit)
+	return list(tu_list)
+
+def stop_id_dict():
+	model_dict = data.get_model_data()
+	stop_id_dict = dict()
+	for weekday in model_dict:
+		stop_id_dict[weekday] = dict()
+		for time_unit in model_dict[weekday]:
+			stop_id_dict[weekday][time_unit] = list()
+			for stop_id in model_dict[weekday][time_unit]:
+				stop_id_dict[weekday][time_unit].append(stop_id)
+	return stop_id_dict
+
+
+
 def stop_routes(stop_quadruples_list):
 	stop_routes_list = list()
 	for quadruple in stop_quadruples_list:
@@ -24,8 +52,6 @@ def shortest_path(weekday, time_unit, start, end, model_dict):
 	while not found:
 		# path_dict
 		path_dict = dijkstra_merge_sort.merge_sort(path_dict, end_routes_list)
-		# further end_routes_list tests
-		
 		# get current shortet journey
 		current_journey_details = dijkstra_merge_sort.remove_first_entry_of_dict(path_dict)[1]
 		transfers = current_journey_details[0]
@@ -40,7 +66,7 @@ def shortest_path(weekday, time_unit, start, end, model_dict):
 		# check if we've completed the trip
 		if end == current_stop:
 			found = True
-			return current_journey_details
+			return current_journey_details	
 		# mark that we've prior_stop as we'll now iterate over all its possible connections
 		visited.add(prior_stop)
 		# iterate over all possible connections of the prior_stop
@@ -50,7 +76,7 @@ def shortest_path(weekday, time_unit, start, end, model_dict):
 			further_journey_time = quadruple[2]
 			further_route = quadruple[3]
 			# determine what to do
-			if further_stop in visited or further_stop is None:
+			if further_stop in visited or further_stop is None or (current_route in end_routes_list and further_route not in end_routes_list):
 				pass
 			else:
 				journey_id += 1
@@ -64,6 +90,13 @@ if __name__ == "__main__":
 	# data
 	print("Loading the model data . . .")
 	model_dict = data.get_model_data()
+	print("Loading the weekday list")
+	wd_list = weekday_list()
+	print("Loading the time_unit list")
+	tu_list = time_unit_list(wd_list)
+	print("Loading the stop id dict")
+	si_dict = stop_id_dict()
+	print("")
 
 	# test 1
 	weekday = 0

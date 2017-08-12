@@ -160,8 +160,8 @@ def end_route_first(d, end_routes_list):
 	return d_return
 
 
-def merge_sort(d_input, end_routes_list):
+def merge_sort(d_input):
 	d_return = merge_sort_time(d_input)
 	d_return = merge_sort_transfers(d_return)
-	d_return = end_route_first(d_return, end_routes_list)
+	# d_return = end_route_first(d_return, end_routes_list)
 	return d_return
