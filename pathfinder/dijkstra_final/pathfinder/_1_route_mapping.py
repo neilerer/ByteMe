@@ -1,5 +1,5 @@
 # imports
-import data
+import _0_0_data as data
 
 
 

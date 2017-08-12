@@ -1,9 +1,7 @@
 # imports
-import data
-import dijkstra_merge_sort
+import _0_0_data as data
 import _1_route_mapping as rm
 import _2_route_planning as rp
-import time
 from operator import itemgetter
 
 

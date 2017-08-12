@@ -1,6 +1,6 @@
 # imports
-import data
-import merge_sort_paths
+import _0_0_data as data
+import _0_1_merge_sort_paths as merge_sort_paths
 import _1_route_mapping as rm
 import time
 

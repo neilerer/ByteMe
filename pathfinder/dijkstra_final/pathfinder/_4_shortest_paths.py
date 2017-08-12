@@ -1,6 +1,5 @@
 # imports
-import data
-import dijkstra_merge_sort
+import _0_0_data as data
 import _1_route_mapping as rm
 import _2_route_planning as rp
 import _3_route_connections as rc
@@ -63,8 +62,8 @@ if __name__ == "__main__":
 
 	weekday = 0
 	time_unit = 10
-	start = 40
-	end = 4486
+	start = 400
+	end = 807
 
 	grc_dict = rc.get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end)
 	for item in grc_dict:
@@ -88,3 +87,4 @@ if __name__ == "__main__":
 	for route_tuple in pp_dict:
 		print(route_tuple)
 		print(pp_dict[route_tuple])
+		print("")
