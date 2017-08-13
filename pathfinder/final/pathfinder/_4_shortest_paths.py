@@ -53,19 +53,19 @@ def possible_paths_dictionary(grc_dict, start, end):
 
 if __name__ == "__main__":
 	# data
-	print("Loading model dict . . .")
-	model_dict = data.get_model_data()
-	print("Loading route dict . . .")
-	r_dict = rm.routes_dict(model_dict)
-	print("Loading JSON data . . .")
-	json_data = data.get_actual_model_data()
+	print("Loading stop_dict . . .")
+	stop_dict = data.get_pickle_file("stop_dict.p")
+	print("Generating route dict . . .")
+	r_dict = rm.routes_dict(stop_dict)
+	print("Loading ctt_dict . . .")
+	ctt_dict = data.get_pickle_file("ctt_dict.p")
 
 	weekday = 0
 	time_unit = 10
 	start = 400
 	end = 807
 
-	grc_dict = rc.get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end)
+	grc_dict = rc.get_route_connections(stop_dict, ctt_dict, r_dict, weekday, time_unit, start, end)
 	for item in grc_dict:
 		print(item)
 		print(grc_dict[item])
