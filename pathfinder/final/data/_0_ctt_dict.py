@@ -45,7 +45,7 @@ def generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi):
 		if data[0] == weekday and data[1] == time_unit:
 			output_list.append((data[3], data[4], data[5]))
 	# sort the output_list
-	output_list = sorted(output_list, key=itemgetter(3))
+	output_list = sorted(output_list, key=itemgetter(0))
 	# return output_list
 	return output_list
 
@@ -56,8 +56,14 @@ if __name__ == "__main__":
 	json_data = json_to_dict("data.json")
 	# generate ctt_dict
 	ctt_dict = generate_ctt_dict(json_data)
-	ctt_dict[0][10]["077A1"] = generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, "077A1001")
-	print(ctt_dict[0][10]["077A1"])
+	# populate ctt_dict
+	for jpi in json_data:
+		for weekday in ctt_dict:
+			for time_unit in ctt_dict[weekday]:
+				for route in ctt_dict[weekday][time_unit]:
+					ctt_dict[weekday][time_unit][route] = generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi)
+	# ctt_dict[0][10]["077A1"] = generate_data_to_populate_ctt_dict(json_data, 0, 10, "077A1001")
+	# print(ctt_dict[0][10]["077A1"])
 	# get it to file
 	destination = open("ctt_dict.p", "wb")
 	# dump the data into the pickle file
