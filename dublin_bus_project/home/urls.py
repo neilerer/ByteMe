@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns=[
     url(r'^$', views.index, name='index'), #calls index function, this is used for the 'homepage'
-    url('route_selection', views.get_route, name='get_route'), #picking up selected route from the GET method, calling get_route function
+    url('select_journey', views.get_route, name='get_route'), #picking up selected route from the GET method, calling get_route function
 ]

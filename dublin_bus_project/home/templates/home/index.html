@@ -130,30 +130,30 @@
             var selectedStart;
             var selectedEnd;
         </script>
-        {% if estimated_time %}
-            <div>
-                <br><br>Expected journey time is: <br><b>{{ estimated_time }} minutes</b>
-                <br><br>
+        {% if suggested_route %}
+            <script>
+                var suggested_route={{ suggested_route|safe }};
+                var journey_costs={{ journey_costs|safe }};
+                var journey_time={{ journey_time|safe }};
+            </script>
+            <div id="journey_info">
+                <div id="recommended_route"></div>
+                <p id="est_time">
+                    Journey Time:
+                </p>
                 <table>
                     <tr><td>Leap Fare</td><td id="leap_fare"></td></tr>
                     <tr><td>Cash Fare</td><td id="cash_fare"></td></tr>
                 </table>
             </div>
             <script>
-                var leap_fares=['1.50','2.05','2.60'];
-                var cash_fares=['2.00','2.70','3.30'];
-                if({{ trip_length }} < 4){
-                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[0];
-                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[0];
+                var journeyInfoHTML="";
+                for (i=0;i<suggested_route.length;i++){
+                    alert(suggested_route[i]);
                 }
-                else if({{ trip_length }} < 14){
-                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[1];
-                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[1];
-                }
-                else{
-                    document.getElementById('leap_fare').innerHTML='€'+leap_fares[2];
-                    document.getElementById('cash_fare').innerHTML='€'+cash_fares[2];
-                }
+                document.getElementById('leap_fare').innerHTML='€'+journey_costs['leap'];
+                document.getElementById('cash_fare').innerHTML='€'+journey_costs['cash'];
+                document.getElementById('est_time').innerHTML+=journey_time+" mins";
             </script>
         {% else %}
                 {% if select_by_route %}
@@ -209,11 +209,11 @@
                     </div>
                 {% else %}
                     <div id="">
-                        <form id="select_journey_form">
-                            <input type="text" id="origin" placeholder="Origin"><br>
-                            <input type="text" id="destination" placeholder="Destination"><br>
+                        <form id="select_journey_form" method="get" action="select_journey"> {% csrf_token %}
+                            <input type="text" id="origin" placeholder="Origin" name="origin"><br>
+                            <input type="text" id="destination" placeholder="Destination" name="destination"><br>
+                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time</button>
                             <input type="submit" name="input_form" id="pathfinder_submit" value="Show Journey Time">
-
                         </form>
                     </div>
                 {% endif %}
@@ -225,7 +225,7 @@
     <div class="col-sm-9">
         <div class = "panel panel-default">
 
-        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:500px;">
+        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:33%;height:4%;">
         <div id="map" style="width:100%; height:500px;"></div>
         </div>
     </div>
@@ -352,7 +352,7 @@
     function googleMap() {
        var canvas=document.getElementById("map");
        myCenter=new google.maps.LatLng(53.4, -6.3);
-       var options={center: myCenter,zoom:10};
+       var options={center: myCenter,zoom:10,mapTypeControl:false};
        var map=new google.maps.Map(canvas,options);
 
        {% if select_by_route %}
@@ -466,19 +466,44 @@
                 googleMap.setDestination=setDestination;
 
                 function selectDayTime(){
-                    var formHTML=document.getElementById("select_journey_form").innerHTML;
-                    var newOptionsHTML="<select id='weekday'>";
-                    var weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-                    for(i=0; i<weekdays.length; i++){
-                        newOptionsHTML+="<option value='>"+String(i)+"'>"+weekdays[i]+"</option>";
+
+                    if(document.getElementById("time_date_btn").value==0){
+
+                        var element = document.getElementById("pathfinder_submit");
+                        element.outerHTML = "";
+                        delete element;
+
+                        var formHTML=document.getElementById("select_journey_form").innerHTML;
+                        var newOptionsHTML="<select id='weekday' name='day'><option selected disabled>Select Day</option>";
+                        var weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+                        for(i=0; i<weekdays.length; i++){
+                            newOptionsHTML+="<option value='"+String(i)+"'>"+weekdays[i]+"</option>";
+                        }
+                        newOptionsHTML+="</select><select id='hour' name='hour'><option selected disabled>Select Time</option>"
+                        for (i=6; i<24; i++){
+                            newOptionsHTML+="<option value='"+i+"'>"+i;
+                            if (i<12){newOptionsHTML+=" am"}
+                            else{newOptionsHTML+=" pm"}
+                            newOptionsHTML+="</option>";
+                        }
+                        newOptionsHTML+="</select><input type='submit' name='input_form' id='pathfinder_submit' value='Show Journey Time'>"
+                        formHTML+=newOptionsHTML;
+                        document.getElementById("select_journey_form").innerHTML=formHTML;
+
+                        document.getElementById("time_date_btn").value=1;
+
                     }
-                    newOptionsHTML+="</select><select id='hour'>"
-                    for (i=6; i<24; i++){
-                        newOptionsHTML+="<option value='>"+i+"'>"+i+"</option>";
+                    else{
+                        var element = document.getElementById("weekday");
+                        element.outerHTML = "";
+                        delete element;
+
+                        var element = document.getElementById("hour");
+                        element.outerHTML = "";
+                        delete element;
+
+                        document.getElementById("time_date_btn").value=0;
                     }
-                    newOptionsHTML+="</select>"
-                    formHTML+=newOptionsHTML;
-                    document.getElementById("select_journey_form").innerHTML=formHTML
                 }
                 googleMap.selectDayTime=selectDayTime;
 
