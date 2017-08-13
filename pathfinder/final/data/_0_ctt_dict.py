@@ -54,22 +54,25 @@ def generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi):
 if __name__ == "__main__":
 	# data
 	json_data = json_to_dict("data.json")
-	# generate ctt_dict
-	ctt_dict = generate_ctt_dict(json_data)
-	destination = open("ctt_dict.p", "wb")
-	pickle.dump(ctt_dict, destination)
-	destination.close()
+	# # generate ctt_dict
+	# ctt_dict = generate_ctt_dict(json_data)
+	# destination = open("ctt_dict.p", "wb")
+	# pickle.dump(ctt_dict, destination)
+	# destination.close()
 	# populate ctt_dict
 	for jpi in json_data:
-		# load ctt_dict
-		f = open("ctt_dict.p", "rb")
-		ctt_dict = pickle.load(f)
-		f.close()
+		# high level structure
+		ctt_dict = dict()
+		for i in range(0, 7, 1):
+			ctt_dict[i] = dict()
+			for j in range(0, 24, 1):
+				ctt_dict[i][j] = dict()
+		# route
+		route = jpi[0:5]
 		for weekday in ctt_dict:
 			for time_unit in ctt_dict[weekday]:
-				route = jpi[0:5]
 				ctt_dict[weekday][time_unit][route] = generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi)
-				destination = open("ctt_dict.p", "wb")
+				destination = open("ctt_dict_" + route + ".p", "wb")
 				pickle.dump(ctt_dict, destination)
 				destination.close()
 	# ctt_dict[0][10]["077A1"] = generate_data_to_populate_ctt_dict(json_data, 0, 10, "077A1001")
