@@ -57,6 +57,7 @@ if __name__ == "__main__":
 	# generate ctt_dict
 	ctt_dict = generate_ctt_dict(json_data)
 	ctt_dict[0][10]["077A1"] = generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, "077A1001")
+	print(ctt_dict[0][10]["077A1"])
 	# get it to file
 	destination = open("ctt_dict.p", "wb")
 	# dump the data into the pickle file
