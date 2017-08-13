@@ -71,5 +71,3 @@ if __name__ == "__main__":
 				destination = open("ctt_dict_" + route + ".p", "wb")
 				pickle.dump(ctt_dict, destination)
 				destination.close()
-
-
