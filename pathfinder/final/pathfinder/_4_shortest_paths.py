@@ -49,6 +49,19 @@ def possible_paths_dictionary(grc_dict, start, end):
 			path_id += 1
 	return pp_dict
 
+def clean_possible_paths_dicitonary(pp_dict):
+	clean_pp_dict = dict()
+	for route_tuple in pp_dict:
+		add_to_clean_pp_dict = True
+		for path_id in pp_dict[route_tuple]:
+			for route in pp_dict[route_tuple][path_id]:
+				if pp_dict[route_tuple][path_id][route][0] == pp_dict[route_tuple][path_id][route][1]:
+					add_to_clean_pp_dict = False
+			if add_to_clean_pp_dict:
+				clean_pp_dict[route_tuple] = pp_dict[route_tuple][path_id]
+	return clean_pp_dict
+
+
 
 
 if __name__ == "__main__":
@@ -87,4 +100,10 @@ if __name__ == "__main__":
 	for route_tuple in pp_dict:
 		print(route_tuple)
 		print(pp_dict[route_tuple])
+		print("")
+
+	clean_pp_dict = clean_possible_paths_dicitonary(pp_dict)
+	for route_tuple in clean_pp_dict:
+		print(route_tuple)
+		print(clean_pp_dict[route_tuple])
 		print("")
