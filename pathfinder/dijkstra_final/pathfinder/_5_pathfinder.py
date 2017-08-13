@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
 	# log entry
 	coder = "ojh"
-	log_entry = "This is the baseline run."
+	log_entry = "rearranging elements in rc get_route_data"
 	log_file.write(
 		"{}\n\n".format(datetime.datetime.now())
 		+

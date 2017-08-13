@@ -23,25 +23,32 @@ def get_possible_routes(model_dict, r_dict, weekday, time_unit, start_stop, end_
 	possible_routes.sort(key=len)
 	return possible_routes
 
+def key_partial_match(route, json_data):
+	for jpi in json_data:
+		if jpi[0:5] == route:
+			return jpi
+
 def get_route_data(route_list, json_data, weekday, time_unit):
 	grd_dict = dict()
 	for route in route_list:
 		grd_dict[route] = list()
-	for route in route_list:
-		for jpi in json_data:
-			if jpi[0:5] == route:
-				for key in json_data[jpi]:
-					key_list = key.strip().split("-")
-					position = int(key_list[0])
-					stop = int(key_list[1])
-					wd = int(key_list[2])
-					tu = int(key_list[3])
-					ctt = float(json_data[jpi][key])
-					key_list.append(ctt)
-					# 
-					if wd == weekday and tu == time_unit:
-						grd_dict[jpi[0:5]].append((position, stop, ctt))
-	for route in grd_dict:
+	# for route in route_list:
+		jpi = key_partial_match(route, json_data)
+		for key in json_data[jpi]:
+			# turnt he key into a list
+			key_list = key.strip().split("-")
+			wd = int(key_list[2])
+			tu = int(key_list[3])
+			# condition
+			if wd == weekday and tu == time_unit:
+				# more unpacking
+				position = int(key_list[0])
+				stop = int(key_list[1])
+				ctt = float(json_data[jpi][key])
+				key_list.append(ctt)
+				# appending
+				grd_dict[jpi[0:5]].append((position, stop, ctt)) 
+		# sorting
 		grd_dict[route].sort(key=itemgetter(0))
 	# return
 	return grd_dict
