@@ -48,7 +48,10 @@ def unique_journey_pattern_ids():
 			try:
 				# if one exists, add the jpi to the set
 				jpi = line.strip().split(",")[offset]
-				ujpi_set.add(jpi)
+				if jpi == "" or jpi == None:
+					pass
+				else:
+					ujpi_set.add(jpi)
 			except:
 				# otherwise, pass
 				pass
@@ -93,6 +96,7 @@ def populate_jpi_data():
 		# create index variables
 		timestamp_index = headers.index("Timestamp")
 		jpi_index = headers.index("JourneyPatternID")
+		as_index = headers.index("AtStop")
 		# change directory
 		combined_to_jpid()
 		# add to each existing file
