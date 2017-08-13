@@ -35,3 +35,12 @@ def get_actual_model_data():
 	os.chdir("pathfinder")
 	# return
 	return json_data
+
+
+if __name__ == "__main__":
+	json_data = get_actual_model_data()
+	for jpi in json_data:
+		for key in json_data[jpi]:
+			print(item)
+
+

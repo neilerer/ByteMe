@@ -9,24 +9,27 @@ import datetime
 
 
 
+def key_partial_match(route, json_data):
+	for jpi in json_data:
+		if jpi[0:5] == route:
+			return jpi
+
 def get_travel_time(json_data, first, second, route, weekday, time_unit):
 	first_ctt = 0
 	second_ctt = 0
-	for jpi in json_data:
-		if jpi[0:5] == route:
-			for key in json_data[jpi]:
-				key_list = key.strip().split("-")
-				position = int(key_list[0])
-				stop = int(key_list[1])
-				wd = int(key_list[2])
-				tu = int(key_list[3])
-				ctt = float(json_data[jpi][key])
-				key_list.append(ctt)
-				# 
-				if stop == first and wd == weekday and tu == time_unit:
-					first_ctt = ctt
-				if stop == second and wd == weekday and tu == time_unit:
-					second_ctt = ctt
+	jpi = key_partial_match(route, json_data)
+	# for jpi in json_data:
+	# 	if jpi[0:5] == route:
+	for key in json_data[jpi]:
+		# [position, stop, weekday, time_unit]
+		key_list = key.strip().split("-")
+		# conditions
+		if int(key_list[1]) == first and int(key_list[2]) == weekday and int(key_list[3]) == time_unit:
+			first_ctt = float(json_data[jpi][key])
+		elif int(key_list[1]) == first and int(key_list[2]) == weekday and int(key_list[3]) == time_unit:
+			second_ctt = float(json_data[jpi][key])
+		else:
+			pass
 	# models give garbage outputs; this is a temp fix until that is resolved
 	return abs(abs(second_ctt) - abs(first_ctt))
 
@@ -85,7 +88,7 @@ if __name__ == "__main__":
 
 	# log entry
 	coder = "ojh"
-	log_entry = "rearranging elements in rc get_route_data"
+	log_entry = "reduction of operations in pathfinder get_travel_time"
 	log_file.write(
 		"{}\n\n".format(datetime.datetime.now())
 		+

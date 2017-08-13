@@ -3,6 +3,7 @@ import _0_0_data as data
 import _1_route_mapping as rm
 import _2_route_planning as rp
 from operator import itemgetter
+import time
 
 
 def stop_routes(stop_quadruples_list):
@@ -32,22 +33,14 @@ def get_route_data(route_list, json_data, weekday, time_unit):
 	grd_dict = dict()
 	for route in route_list:
 		grd_dict[route] = list()
-	# for route in route_list:
 		jpi = key_partial_match(route, json_data)
 		for key in json_data[jpi]:
-			# turnt he key into a list
+			# turn the key into a list: [position, stop, weekday, time_unit]
 			key_list = key.strip().split("-")
-			wd = int(key_list[2])
-			tu = int(key_list[3])
 			# condition
-			if wd == weekday and tu == time_unit:
-				# more unpacking
-				position = int(key_list[0])
-				stop = int(key_list[1])
-				ctt = float(json_data[jpi][key])
-				key_list.append(ctt)
-				# appending
-				grd_dict[jpi[0:5]].append((position, stop, ctt)) 
+			if int(key_list[2]) == weekday and int(key_list[3]) == time_unit:
+				# appending (position, stop, ctt)
+				grd_dict[jpi[0:5]].append((int(key_list[0]), int(key_list[1]), float(json_data[jpi][key])))
 		# sorting
 		grd_dict[route].sort(key=itemgetter(0))
 	# return
@@ -58,30 +51,30 @@ def route_connections(route_list, grd_dict):
 	if len(route_list) < 1:
 		return None
 	elif len(route_list) == 1:
-		first_route = route_list[0]
-		for f_tuple in grd_dict[first_route]:
-			key = (first_route, first_route)
-			value = f_tuple[1]
-			if key not in route_connections_dict:
-				route_connections_dict[key] = [value]
+		# first_route = route_list[0]
+		for f_tuple in grd_dict[route_list[0]]:
+			#key = (route_list[0], route_list[0])
+			#value = f_tuple[1]
+			if (route_list[0], route_list[0]) not in route_connections_dict:
+				route_connections_dict[(route_list[0], route_list[0])] = [f_tuple[1]]
 			else:
-				route_connections_dict[key].append(value)
+				route_connections_dict[(route_list[0], route_list[0])].append(f_tuple[1])
 	else:
 		for i in range(1, len(route_list), 1):
-			first_route = route_list[i - 1]
-			second_route = route_list[i]
-			for f_tuple in grd_dict[first_route]:
-				for s_tuple in grd_dict[second_route]:
-					f_stop = f_tuple[1]
-					s_stop = s_tuple[1]
-					if f_stop == s_stop:
-						key = (first_route, second_route)
+			# first_route = route_list[i - 1]
+			# second_route = route_list[i]
+			for f_tuple in grd_dict[route_list[i - 1]]:
+				for s_tuple in grd_dict[route_list[i]]:
+					# f_stop = f_tuple[1]
+					# s_stop = s_tuple[1]
+					if f_tuple[1] == s_tuple[1]:
+						# key = (route_list[i - 1], route_list[i])
 						# connecting stop
-						value = f_tuple[1]
-						if key not in route_connections_dict:
-							route_connections_dict[key] = [value]
+						# value = f_tuple[1]
+						if (route_list[i - 1], route_list[i]) not in route_connections_dict:
+							route_connections_dict[(route_list[i - 1], route_list[i])] = [f_tuple[1]]
 						else:
-							route_connections_dict[key].append(value)
+							route_connections_dict[(route_list[i - 1], route_list[i])].append(f_tuple[1])
 	return route_connections_dict
 
 def get_route_connections(model_dict, json_data, r_dict, weekday, time_unit, start, end):
