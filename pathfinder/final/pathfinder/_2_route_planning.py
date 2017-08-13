@@ -1,6 +1,5 @@
 # imports
 import _0_0_data as data
-import _0_1_merge_sort_paths as merge_sort_paths
 import _1_route_mapping as rm
 import time
 
@@ -11,6 +10,15 @@ def get_other_direction(route):
 		return route[0:4]+"0"
 	else:
 		return route[0:4]+"1"
+
+
+
+def remove_first_entry_of_dict(d):
+	# return d.pop(next(iter(d)))
+	key = next(iter(d))
+	value = d[key]
+	d.pop(next(iter(d)))
+	return [key, value]
 
 
 
@@ -27,7 +35,7 @@ def minimum_transfers(r_dict, weekday, time_unit, start, end):
 	found = False
 	while not found:
 		# get current_details
-		current_details = merge_sort_paths.remove_first_entry_of_dict(path_dict)[1]
+		current_details = remove_first_entry_of_dict(path_dict)[1]
 		transfers = current_details[0]
 		path = current_details[1]
 		visited_route = path[-1]
@@ -54,10 +62,10 @@ def minimum_transfers(r_dict, weekday, time_unit, start, end):
 
 if __name__ == "__main__":
 	# data
-	print("Loading model dict . . .")
-	model_dict = data.get_model_data()
-	print("Loaidng route dict . . .")
-	r_dict = rm.routes_dict(model_dict)
+	print("Loading stop_dict . . .")
+	stop_dict = data.get_pickle_file("stop_dict.p")
+	print("Loaidng route_dict . . .")
+	r_dict = rm.routes_dict(stop_dict)
 
 	# test
 	weekday = 0
