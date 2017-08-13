@@ -332,3 +332,93 @@ Output
 
 
 
+2017-08-13 16:48:39.334073
+
+Comments
+reduction of operations in pathfinder get_travel_time
+
+Inputs
+weekday = 0
+time_unit = 10
+start = 400
+end = 807
+
+Performance
+2017-08-13 16:49:58.150931
+
+Comments
+reduction of operations in pathfinder get_travel_time
+
+Inputs
+weekday = 0
+time_unit = 10
+start = 400
+end = 807
+
+Performance
+grc_dict took 0.19980120658874512 to generate
+pp_dict took 0.0001499652862548828 to generate
+2017-08-13 16:53:53.560786
+
+Comments
+reduction of operations in pathfinder get_travel_time
+
+Inputs
+weekday = 0
+time_unit = 10
+start = 400
+end = 807
+
+Performance
+grc_dict took 0.05121588706970215 to generate
+pp_dict took 0.00027298927307128906 to generate
+2017-08-13 16:54:32.909739
+
+Comments
+reduction of operations in pathfinder get_travel_time
+
+Inputs
+weekday = 0
+time_unit = 10
+start = 400
+end = 807
+
+Performance
+grc_dict took 0.03277730941772461 to generate
+pp_dict took 0.0001480579376220703 to generate
+2017-08-13 16:58:19.461635
+
+Comments
+reduction of operations in pathfinder get_travel_time
+
+Inputs
+weekday = 0
+time_unit = 10
+start = 400
+end = 807
+
+Performance
+grc_dict took 0.2054598331451416 to generate
+pp_dict took 0.00015211105346679688 to generate
+pp_dict_modification took 0.0006079673767089844 to generate
+
+Output
+407 : {'00471': (400, 768, 368), '046A1': (768, 807, 39)}
+807 : {'015B0': (400, 400, 400), '00471': (400, 768, 368), '046A1': (768, 807, 39)}
+973 : {'015A0': (400, 1090, 690), '00090': (1090, 819, 271), '046A0': (819, 807, 12)}
+1693 : {'066B0': (400, 1445, 1045), '00370': (1445, 802, 643), '046A1': (802, 807, 5)}
+2813 : {'015B0': (400, 1303, 903), '00170': (1303, 2010, 707), '046A0': (2010, 807, 1203)}
+2855 : {'00081': (400, 2031, 1631), '046A0': (2031, 807, 1224)}
+2875 : {'00071': (400, 2041, 1641), '046A1': (2041, 807, 1234)}
+2895 : {'00041': (400, 2051, 1651), '00630': (2051, 2039, 12), '046A0': (2039, 807, 1232)}
+2905 : {'00041': (400, 2051, 1651), '00630': (2051, 2056, 5), '046A1': (2056, 807, 1249)}
+3255 : {'066B0': (400, 400, 400), '00081': (400, 2031, 1631), '046A0': (2031, 807, 1224)}
+4583 : {'00441': (400, 2895, 2495), '00170': (2895, 2010, 885), '046A0': (2010, 807, 1203)}
+7431 : {'00660': (400, 3918, 3518), '00671': (3918, 406, 3512), '046A0': (406, 807, 401)}
+8717 : {'00081': (400, 4962, 4562), '00070': (4962, 2040, 2922), '046A1': (2040, 807, 1233)}
+10967 : {'00441': (400, 6074, 5674), '01420': (6074, 794, 5280), '046A1': (794, 807, 13)}
+11773 : {'00670': (400, 6089, 5689), '00661': (6089, 406, 5683), '046A0': (406, 807, 401)}
+
+
+
+
