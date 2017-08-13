@@ -36,22 +36,18 @@ def generate_ctt_dict(json_data):
 				destination[data[2]] = list()
 	return ctt_dict
 
-def populate_ctt_dict_for_given_jpi(json_data, ctt_dict, jpi):
+def generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi):
+	# output_list
+	output_list = list()
 	# populate ctt_dict
 	for key in json_data[jpi]:
-		for key in json_data[jpi]:
-			data = unpack_observation(json_data, jpi, key)
-			destination = ctt_dict[data[0]][data[1]]
-			destination[data[2]].append((data[3], data[4], data[5]))
-
-def sort_ctt_dict(ctt_dict):
-	# sort the route-level data
-	for weekday in ctt_dict:
-		for time_unit in ctt_dict[weekday]:
-			for route in ctt_dict[weekday][time_unit]:
-				ctt_dict[weekday][time_unit][route] = sorted(ctt_dict[weekday][time_unit][route], key = itemgetter(0))
-	# return
-	return ctt_dict
+		data = unpack_observation(json_data, jpi, key)
+		if data[0] == weekday and data[1] == time_unit:
+			output_list.append((data[3], data[4], data[5]))
+	# sort the output_list
+	output_list = sorted(output_list, key=itemgetter(3))
+	# return output_list
+	return output_list
 
 
 
@@ -60,8 +56,7 @@ if __name__ == "__main__":
 	json_data = json_to_dict("data.json")
 	# generate ctt_dict
 	ctt_dict = generate_ctt_dict(json_data)
-	ctt_dict = populate_ctt_dict_for_given_jpi(json_data, ctt_dict, "077A1001")
-	ctt_dict = sort_ctt_dict(ctt_dict)
+	ctt_dict[0][10]["077A1"] = generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, "077A1001")
 	# get it to file
 	destination = open("ctt_dict.p", "wb")
 	# dump the data into the pickle file
