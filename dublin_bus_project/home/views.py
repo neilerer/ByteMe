@@ -132,3 +132,11 @@ def get_route(request):
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
+def get_timetable(request): #request
+    with open('home/results/tt017A0001.txt', 'r') as output:
+        tt_file = json.load(output)
+
+    context = []
+    template = loader.get_template('home/timetable.html')
+    return HttpResponse(template.render(context, response)
+    #return HttpResponse("<h2>HEY!</h2>")
