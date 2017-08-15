@@ -18,12 +18,3 @@ def get_pickle_file(file_name):
 	os.chdir("../")
 	os.chdir("pathfinder")
 	return python_data
-
-
-if __name__ == "__main__":
-	json_data = get_actual_model_data()
-	for jpi in json_data:
-		for key in json_data[jpi]:
-			print(item)
-
-
