@@ -13,11 +13,8 @@ def stop_routes(stop_quadruples_list):
 	return stop_routes_list
 
 def get_possible_routes(stop_dict, r_dict, weekday, time_unit, start_stop, end_stop):
-	# data
-	start_routes = stop_routes(stop_dict[weekday][time_unit][start_stop])
-	end_routes = stop_routes(stop_dict[weekday][time_unit][end_stop])
 	# inputs
-	possible_pairs = [(start, end) for start in start_routes for end in end_routes]
+	possible_pairs = [(start, end) for start in stop_routes(stop_dict[weekday][time_unit][start_stop]) for end in stop_routes(stop_dict[weekday][time_unit][end_stop])]
 	# generation
 	possible_routes = [rp.minimum_transfers(r_dict, weekday, time_unit, start_route, end_route) for (start_route, end_route) in possible_pairs]
 	# sorting

@@ -13,6 +13,7 @@ from operator import itemgetter
 def get_travel_time(ctt_dict, weekday, time_unit, route, first, second):
 	first_ctt = 0
 	second_ctt = 0
+	# if ctt_dict were a dictionary, this would be much faster; might change if I have time
 	for triple in ctt_dict[weekday][time_unit][route]:
 		if triple[1] == first:
 			first_ctt = triple[2]

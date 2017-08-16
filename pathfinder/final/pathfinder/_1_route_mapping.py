@@ -25,12 +25,11 @@ def routes_dict(stop_dict):
 			for stop in stop_dict[weekday][time_unit]:
 				stop_and_routes_list = routes_at_stop(stop_dict, weekday, time_unit, stop)
 				route_list = stop_and_routes_list[1]
-				destination_dict = r_dict[weekday][time_unit]
 				for route in route_list:
-					if route not in destination_dict:
-						destination_dict[route] = set()
+					if route not in r_dict[weekday][time_unit]:
+						r_dict[weekday][time_unit][route] = set()
 					for other_route in route_list:
-						destination_dict[route].add(other_route)
+						r_dict[weekday][time_unit][route].add(other_route)
 	# return
 	return r_dict
 
