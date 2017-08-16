@@ -1,6 +1,10 @@
+"""Using Python's GeoPy to map human-readable location names to the GPS co-ordinate of each bus stop"""
+
 import geopy
 import json
 from time import sleep
+
+# https://geopy.readthedocs.io/en/1.10.0/
 
 geolocator = geopy.Nominatim()
 
