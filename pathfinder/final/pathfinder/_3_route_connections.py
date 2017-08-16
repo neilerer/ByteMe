@@ -72,7 +72,6 @@ def get_route_connections(stop_dict, ctt_dict, r_dict, weekday, time_unit, start
 	# reducing output so can run well on lightweight machines; otherwise would keep for robustness
 	for route_tuple in grc_dict:
 		for route_pair in grc_dict[route_tuple]:
-			print(grc_dict[route_tuple][route_pair])
 			grc_dict[route_tuple][route_pair] = [grc_dict[route_tuple][route_pair][-1]]
 	# return
 	return grc_dict

@@ -10,7 +10,8 @@ import itertools
 def possible_paths_individual(grc_dict, route_tuple, start, end):
 	possible_paths_list = [[start]]
 	for connection in grc_dict[route_tuple]:
-		possible_paths_list.append(grc_dict[route_tuple][connection])
+		if grc_dict[route_tuple][connection][0] != start and grc_dict[route_tuple][connection][0] != end:
+			possible_paths_list.append(grc_dict[route_tuple][connection])
 	possible_paths_list.append([end])
 	return possible_paths_list
 
@@ -86,26 +87,26 @@ if __name__ == "__main__":
 	# 	print("")
 
 	possible_paths_dict = possible_paths_entire(grc_dict, start, end)
-	print("Possible Paths Dict")
-	for item in possible_paths_dict:
-		print(item)
-		print(possible_paths_dict[item])
-		print("")
+	# print("Possible Paths Dict")
+	# for item in possible_paths_dict:
+	# 	print(item)
+	# 	print(possible_paths_dict[item])
+	# 	print("")
 
-	# the_possible_paths = possible_paths(grc_dict, start, end)
+	the_possible_paths = possible_paths(grc_dict, start, end)
 	# for route_tuple in the_possible_paths:
 	# 	print(route_tuple)
 	# 	print(the_possible_paths[route_tuple])
 	# 	print("")
 
-	# pp_dict = possible_paths_dictionary(grc_dict, start, end)
+	pp_dict = possible_paths_dictionary(grc_dict, start, end)
 	# for route_tuple in pp_dict:
 	# 	print(route_tuple)
 	# 	print(pp_dict[route_tuple])
 	# 	print("")
 
-	# clean_pp_dict = clean_possible_paths_dicitonary(pp_dict)
-	# for route_tuple in clean_pp_dict:
-	# 	print(route_tuple)
-	# 	print(clean_pp_dict[route_tuple])
-	# 	print("")
+	clean_pp_dict = clean_possible_paths_dicitonary(pp_dict)
+	for route_tuple in clean_pp_dict:
+		print(route_tuple)
+		print(clean_pp_dict[route_tuple])
+		print("")
