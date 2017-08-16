@@ -283,6 +283,7 @@
                     longSum=0;
                     stopCount=0;
                     for(var key in returned_stops){
+                        alert(key);
                         var polylineCoords=new Array();
                         for(i=0; i<returned_stops[key].length; i++){
 
@@ -299,7 +300,6 @@
                                     var marker = new google.maps.Marker({position:myPosition});
                                     marker.setMap(map);
                                     var route=key.slice(0,4).replace(/^0+/, '');
-
                                     var message="Stop "+String(returned_stops[key][i])+"<br>"+stop_coordinates[returned_stops[key][i]][2]+"<br>"+"Route: "+route;
                                     addInfoWindow(marker,message);
                                     markers.push(marker);

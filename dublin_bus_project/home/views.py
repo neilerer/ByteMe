@@ -178,7 +178,6 @@ def get_route(request):
 
         with open("home/dublin_bus_fares.json") as price_file:
             prices = json.load(price_file)
-        print(prices)
         leap_fares = prices['leap_fares']
         cash_fares = prices['cash_fares']
         journey_cost_leap,journey_cost_cash=0,0
@@ -218,7 +217,7 @@ def get_route(request):
             icon=parsed_json.get('current_observation').get('icon')
         )
         """APIS END"""
-
+        print(journey_info)
         context = {'suggested_route':journey_info,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
