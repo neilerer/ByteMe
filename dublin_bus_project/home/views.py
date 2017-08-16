@@ -6,10 +6,11 @@ import pickle as pkl
 import os
 import pandas as pd
 import urllib.request
-import pathfinder
-import minimum_transfers
 import datetime
-from math import sin, cos, sqrt, atan2, radians
+import _1_route_mapping as rm
+import _3_route_connections as rc
+import _4_shortest_paths as sp
+import _5_pathfinder as pf
 
 def index(request): #called from home urls.py file
 
@@ -72,63 +73,120 @@ def get_route(request):
         else:
             selected_day=datetime.date.today().weekday()
 
+        selected_day=int(selected_day)
+
         if request.GET.get("hour"):
             selected_hour=request.GET.get("hour")
         else:
             selected_hour=str(datetime.datetime.now().time())
             selected_hour=int(selected_hour[:2])
 
+        selected_hour=int(selected_hour)
+
         """PATHFINDER START"""
-        with open("data.p", 'rb') as data_pkl:
-            # results from every model input
-            pathfinder_data = pkl.load(data_pkl)
+        with open("ctt_dict.p",'rb') as ctt_dict_pkl:
+            ctt_dict=pkl.load(ctt_dict_pkl)
 
-        pathfinder_output=[]
-        min_time=99999999999
-        best_journey=0
-        for close_to_origin in stop_coordinates[str(selected_origin)][4]: # closest stops to origin
-            close_to_origin=int(close_to_origin)
-            for close_to_destination in stop_coordinates[str(selected_destination)][4]:
-                close_to_destination=int(close_to_destination)
-                try:
-                    shortest_path_raw = pathfinder.pathfinder(selected_day, selected_hour, close_to_origin, close_to_destination, pathfinder_data)
-                    destination_route_list = minimum_transfers.destination_routes(close_to_destination, selected_day, selected_hour, pathfinder_data)
-                    min_tran = minimum_transfers.minimum_transfers(shortest_path_raw, destination_route_list, close_to_origin, close_to_destination, selected_day, selected_hour,pathfinder_data)
-                    print("min_tran done")
-                    new_pathfinder_output=minimum_transfers.output_for_django(min_tran)
-                    total_journey_time = 0
-                    for trip in new_pathfinder_output:
-                        total_journey_time += new_pathfinder_output[trip][0]
-                    if best_journey==0:
-                        best_journey=new_pathfinder_output
-                    if total_journey_time<min_time:
-                        min_time=total_journey_time
-                        best_journey=new_pathfinder_output
-                    print("new_pathfinder done")
-                    pathfinder_output.append(new_pathfinder_output)
-                except:
-                    continue
-        print(min_time)
-        print(best_journey)
+        with open("stop_dict.p",'rb') as stop_dict_pkl:
+            stop_dict=pkl.load(stop_dict_pkl)
 
+        r_dict = rm.routes_dict(stop_dict)
+
+        grc_dict = rc.get_route_connections(stop_dict, ctt_dict, r_dict, selected_day, selected_hour, selected_origin, selected_destination)
+
+        pp_dict = sp.possible_paths_dictionary(grc_dict, selected_origin, selected_destination)
+
+        clean_pp_dict = sp.clean_possible_paths_dicitonary(pp_dict)
+
+        pathfinder_dict = pf.pathfinder(clean_pp_dict, ctt_dict, selected_day, selected_hour)
+
+        # possibilities=[pathfinder_dict]
+        #
+        # print(possibilities)
+
+        # come back to this loop - not working
+        # possibilities=[]
+        # for near_origin in stop_coordinates[str(selected_origin)][4]:
+        #     for near_destination in stop_coordinates[str(selected_destination)][4]:
+        #
+        #         r_dict=rm.routes_dict(stop_dict)
+        #
+        #         grc_dict = rc.get_route_connections(stop_dict, ctt_dict, r_dict, selected_day, selected_hour, near_origin, near_destination)
+        #
+        #         pp_dict = sp.possible_paths_dictionary(grc_dict, near_origin, near_destination)
+        #
+        #         clean_pp_dict = sp.clean_possible_paths_dicitonary(pp_dict)
+        #
+        #         pathfinder_dict = pf.pathfinder(clean_pp_dict, ctt_dict, selected_day, selected_hour)
+        #
+        #         possibilities.append(pathfinder_dict)
+        #
+        # print(possibilities)
         """PATHFINDER END"""
 
-        # #journey time calc
-        # total_journey_time=0
-        # for trip in pathfinder_output:
-        #     total_journey_time+=pathfinder_output[trip][0]
+        # """PATHFINDER START"""
+        # with open("data.p", 'rb') as data_pkl:
+        #     # results from every model input
+        #     pathfinder_data = pkl.load(data_pkl)
+        #
+        # pathfinder_output=[]
+        # min_time=99999999999
+        # best_journey=0
+        # for close_to_origin in stop_coordinates[str(selected_origin)][4]: # closest stops to origin
+        #     close_to_origin=int(close_to_origin)
+        #     for close_to_destination in stop_coordinates[str(selected_destination)][4]:
+        #         close_to_destination=int(close_to_destination)
+        #         try:
+        #             shortest_path_raw = pathfinder.pathfinder(selected_day, selected_hour, close_to_origin, close_to_destination, pathfinder_data)
+        #             destination_route_list = minimum_transfers.destination_routes(close_to_destination, selected_day, selected_hour, pathfinder_data)
+        #             min_tran = minimum_transfers.minimum_transfers(shortest_path_raw, destination_route_list, close_to_origin, close_to_destination, selected_day, selected_hour,pathfinder_data)
+        #             print("min_tran done")
+        #             new_pathfinder_output=minimum_transfers.output_for_django(min_tran)
+        #             total_journey_time = 0
+        #             for trip in new_pathfinder_output:
+        #                 total_journey_time += new_pathfinder_output[trip][0]
+        #             if best_journey==0:
+        #                 best_journey=new_pathfinder_output
+        #             if total_journey_time<min_time:
+        #                 min_time=total_journey_time
+        #                 best_journey=new_pathfinder_output
+        #             print("new_pathfinder done")
+        #             pathfinder_output.append(new_pathfinder_output)
+        #         except:
+        #             continue
+        # print(min_time)
+        # print(best_journey)
+        #
+        # """PATHFINDER END"""
 
-        total_journey_time=int(round(min_time)/60)
+        # #journey time calc
+        for trip in pathfinder_dict:
+            total_journey_time=float(trip)
+            journey_info=pathfinder_dict[trip]
+            break
+        total_journey_time=int(round(total_journey_time)/60)
+
+        returned_stops={}
+        for trip in journey_info:
+            jpid=trip+"001"
+            stops_on_jpid=stops_on_routes[jpid]
+            start_point=stops_on_jpid.index(str(journey_info[trip][0]))
+            end_point=stops_on_jpid.index(str(journey_info[trip][1]))
+            returned_stops[jpid]=stops_on_jpid[start_point:end_point+1]
 
         """JOURNEY COST START"""
-        leap_fares = [1.50, 2.05, 2.60]
-        cash_fares = [2.00, 2.70, 3.30]
+
+        with open("home/dublin_bus_fares.json") as price_file:
+            prices = json.load(price_file)
+        print(prices)
+        leap_fares = prices['leap_fares']
+        cash_fares = prices['cash_fares']
         journey_cost_leap,journey_cost_cash=0,0
-        for key in pathfinder_output:
-            if len(pathfinder_output[key][1])-1<4:
+        for key in returned_stops:
+            if len(returned_stops[key])-1<4:
                 journey_cost_leap+=leap_fares[0]
                 journey_cost_cash+=cash_fares[0]
-            elif len(pathfinder_output[key][1])-1<14:
+            elif len(returned_stops[key])-1<14:
                 journey_cost_leap += leap_fares[1]
                 journey_cost_cash += cash_fares[1]
             else:
@@ -161,7 +219,7 @@ def get_route(request):
         )
         """APIS END"""
 
-        context = {'suggested_route':pathfinder_output,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
+        context = {'suggested_route':journey_info,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
