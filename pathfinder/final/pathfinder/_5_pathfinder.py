@@ -30,12 +30,14 @@ def pathfinder(clean_pp_dict, ctt_dict, weekday, time_unit):
 	for route_tuple in clean_pp_dict:
 		pathfinder_list = [0.00, dict()]
 		path = clean_pp_dict[route_tuple]
+		route_count = 0
 		for route in path:
 			start = path[route][0]
 			end = path[route][1]
 			travel_time = get_travel_time(ctt_dict, weekday, time_unit, route, start, end)
-			pathfinder_list[0] += travel_time
-			pathfinder_list[1][route] = (start, end, travel_time)
+			pathfinder_list[0] += travel_time + (route_count * 300)
+			pathfinder_list[1][route] = (start, end, travel_time + (route_count * 300))
+			route_count = 1
 		pathfinder_dict[pathfinder_list[0]] = pathfinder_list[1]
 	# sort pathfinder_dict
 	key_list = list()
@@ -61,8 +63,8 @@ if __name__ == "__main__":
 	# inputs
 	weekday = 0
 	time_unit = 10
-	start = 2065
-	end = 768
+	start = 1070
+	end = 1354
 
 	# generated data
 	grc_start = time.time()
