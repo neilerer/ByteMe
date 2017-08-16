@@ -2,6 +2,7 @@
 import _0_0_data as data
 import _1_route_mapping as rm
 import time
+import _0_1_merge_sort_paths as ms
 
 
 
@@ -64,7 +65,7 @@ if __name__ == "__main__":
 	# data
 	print("Loading stop_dict . . .")
 	stop_dict = data.get_pickle_file("stop_dict.p")
-	print("Loaidng route_dict . . .")
+	print("Loading route_dict . . .")
 	r_dict = rm.routes_dict(stop_dict)
 
 	# test

@@ -61,8 +61,8 @@ if __name__ == "__main__":
 	# inputs
 	weekday = 0
 	time_unit = 10
-	start = 400
-	end = 4486
+	start = 2065
+	end = 768
 
 	# generated data
 	grc_start = time.time()

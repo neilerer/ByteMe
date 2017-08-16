@@ -43,6 +43,7 @@ def generate_data_to_populate_ctt_dict(json_data, weekday, time_unit, jpi):
 	for key in json_data[jpi]:
 		data = unpack_observation(json_data, jpi, key)
 		if data[0] == weekday and data[1] == time_unit:
+			# (stop_sequence, stop_id, ctt))
 			output_list.append((data[3], data[4], data[5]))
 	# sort the output_list
 	output_list = sorted(output_list, key=itemgetter(0))
