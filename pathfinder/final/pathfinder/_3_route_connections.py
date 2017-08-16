@@ -24,7 +24,7 @@ def get_possible_routes(stop_dict, r_dict, weekday, time_unit, start_stop, end_s
 	possible_routes.sort(key=len)
 	return possible_routes
 
-def route_connections(route_list, ctt_dict, weekday, time_unit):
+def route_connections(route_list, ctt_dict, weekday, time_unit, end):
 	route_connections_dict = dict()
 	if len(route_list) < 1:
 		return None
@@ -37,6 +37,9 @@ def route_connections(route_list, ctt_dict, weekday, time_unit):
 				route_connections_dict[(route_list[0], route_list[0])] = [f_tuple[1]]
 			else:
 				route_connections_dict[(route_list[0], route_list[0])].append(f_tuple[1])
+			# don't need to check past the destination
+			if f_tuple[1] == end:
+				return route_connections_dict
 	else:
 		for i in range(1, len(route_list), 1):
 			# first_route = route_list[i - 1]
@@ -53,6 +56,9 @@ def route_connections(route_list, ctt_dict, weekday, time_unit):
 							route_connections_dict[(route_list[i - 1], route_list[i])] = [f_tuple[1]]
 						else:
 							route_connections_dict[(route_list[i - 1], route_list[i])].append(f_tuple[1])
+						# don't need to check past the destination
+						if f_tuple[1] == end:
+							return route_connections_dict
 	return route_connections_dict
 
 def get_route_connections(stop_dict, ctt_dict, r_dict, weekday, time_unit, start, end):
@@ -61,11 +67,12 @@ def get_route_connections(stop_dict, ctt_dict, r_dict, weekday, time_unit, start
 	for i in range(0, len(pr_dict), 1):
 		route_list = pr_dict[i]
 		# grd_dict = get_route_data(route_list, json_data, weekday, time_unit)
-		grc_dict[tuple(route_list)] = route_connections(route_list, ctt_dict, weekday, time_unit)
+		grc_dict[tuple(route_list)] = route_connections(route_list, ctt_dict, weekday, time_unit, end)
 	# THIS SEGMENT ONLY EXISTS SO THAT THIS CODE CAN RUN QUICKLY ON VERY LIGHTWEIGHT MACHINES, ALTHOUGH PRAGMATICALLY IS MAKES NO DIFFERENCE AS WE HAVE NO SIGHT OF WHICH STOPS ARE BEST FOR TRANSFERING
 	# reducing output so can run well on lightweight machines; otherwise would keep for robustness
 	for route_tuple in grc_dict:
 		for route_pair in grc_dict[route_tuple]:
+			print(grc_dict[route_tuple][route_pair])
 			grc_dict[route_tuple][route_pair] = [grc_dict[route_tuple][route_pair][-1]]
 	# return
 	return grc_dict
@@ -84,8 +91,8 @@ if __name__ == "__main__":
 
 	weekday = 0
 	time_unit = 10
-	start = 40
-	end = 4486
+	start = 2065
+	end = 768
 
 	grc_dict = get_route_connections(stop_dict, ctt_dict, r_dict, weekday, time_unit, start, end)
 	for item in grc_dict:
