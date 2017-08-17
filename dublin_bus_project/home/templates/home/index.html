@@ -69,6 +69,43 @@
             font-size:12px;
             font-family: Calibri;
         }
+        #select_journey_form{
+            font-family: Calibri, Arial;
+            font-size: 12px;
+        }
+        #origin, #destination{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+        #hour, #weekday{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+        #time_date_btn{
+            background-color:navy;
+            margin: 10px;
+            height:20px;
+            width:85%;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        #pathfinder_submit{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+
+
 
     </style>
 </head>
@@ -176,7 +213,7 @@
                         <form id="select_journey_form" method="get" action="select_journey"> {% csrf_token %}
                             <input type="text" id="origin" placeholder="Origin (select on map)" name="origin" onchange="googleMap.checkOriginInput()"><br>
                             <input type="text" id="destination" placeholder="Destination (select on map)" name="destination" onchange="googleMap.checkDestinationInput()"><br>
-                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time</button>
+                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time &darr;</button>
                             <input onclick="googleMap.enable()" type="submit" name="input_form" id="pathfinder_submit" value="Show Journey Time">
                         </form>
                     </div>
@@ -283,7 +320,6 @@
                     longSum=0;
                     stopCount=0;
                     for(var key in returned_stops){
-                        alert(key);
                         var polylineCoords=new Array();
                         for(i=0; i<returned_stops[key].length; i++){
 
@@ -343,7 +379,9 @@
           {% else %}
                 function setOrigin(stopNumber){
                         if(document.getElementById('destination').value==stopNumber){
-                            alert("Origin and destination must be different!");
+                            if(document.getElementById('destination').value!=""&&document.getElementById('origin').value!=""){
+                                alert("Origin and destination must be different!");
+                            }
                         } else {
                         document.getElementById('origin').value=stopNumber;
                         }
@@ -352,7 +390,9 @@
 
                     function setDestination(stopNumber){
                         if(document.getElementById('origin').value==stopNumber){
-                            alert("Origin and destination must be different!");
+                            if(document.getElementById('destination').value!=""&&document.getElementById('origin').value!=""){
+                                alert("Origin and destination must be different!");
+                            }
                         } else {
                         document.getElementById('destination').value=stopNumber;
                         }
@@ -409,15 +449,12 @@
                         formHTML+=newOptionsHTML;
                         document.getElementById("select_journey_form").innerHTML=formHTML;
 
-                        alert(selectedOrigin);
-                        alert(formHTML);
-
                         enable();
                         setOrigin(selectedOrigin);
                         setDestination(selectedDestination);
 
-                        alert(formHTML);
                         document.getElementById("time_date_btn").value=1;
+                        document.getElementById("time_date_btn").innerHTML="Select Custom Day and Time &uarr;";
                     }
                     else{
                         var element = document.getElementById("weekday");
@@ -429,6 +466,7 @@
                         delete element;
 
                         document.getElementById("time_date_btn").value=0;
+                        document.getElementById("time_date_btn").innerHTML="Select Custom Day and Time &darr;";
                     }
                 }
                 googleMap.selectDayTime=selectDayTime;
