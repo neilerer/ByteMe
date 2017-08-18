@@ -26,7 +26,7 @@ def number_of_features():
 	feature_list = None
 	length = 0
 	with open("combined.csv") as source:
-		feature_list = source.readline().strip().split()
+		feature_list = source.readline().strip().split(",")
 		length = len(feature_list)
 	# return to the start
 	os.chdir("../../")
