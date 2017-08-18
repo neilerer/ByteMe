@@ -23,14 +23,18 @@ def number_of_features():
 	os.chdir("../../")
 	os.chdir("data/combined/")
 	# open the file
+	feature_list = None
 	length = 0
 	with open("combined.csv") as source:
-		length = len(source.readline().strip().split())
+		feature_list = source.readline().strip().split()
+		length = len(feature_list)
 	# return to the start
 	os.chdir("../../")
 	os.chdir("functions/combined/")
 	# return
-	return length
+	return [length, feature_list]
+
+
 
 
 
@@ -39,5 +43,8 @@ if __name__ == "__main__":
 	n_f = number_of_features()
 	print("Summary of combined.csv")
 	print("There are {} observations".format(n_o))
-	print("There are {} features".format(n_f))
+	print("There are {} features".format(n_f[0]))
 	print("There are {} data points".format(n_o * n_f))
+	print("The features are:")
+	for feature in n_f[1]:
+		print(feature)
