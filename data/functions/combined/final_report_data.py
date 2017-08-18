@@ -13,7 +13,7 @@ def number_of_observations():
 		for line in source:
 			count += 1
 	# return to the start
-	os.chdir("../../../")
+	os.chdir("../../")
 	os.chdir("functions/combined/")
 	# return
 	return count - 1
@@ -27,7 +27,7 @@ def number_of_features():
 	with open("combined.csv") as source:
 		length = len(source.readline().strip().split())
 	# return to the start
-	os.chdir("../../../")
+	os.chdir("../../")
 	os.chdir("functions/combined/")
 	# return
 	return length
