@@ -44,7 +44,7 @@ if __name__ == "__main__":
 	print("Summary of combined.csv")
 	print("There are {} observations".format(n_o))
 	print("There are {} features".format(n_f[0]))
-	print("There are {} data points".format(n_o * n_f))
+	print("There are {} data points".format(n_o * n_f[0]))
 	print("The features are:")
 	for feature in n_f[1]:
 		print(feature)
