@@ -3,7 +3,7 @@ import os
 
 
 
-def number_of_observations()
+def number_of_observations():
 	# go to directory with data
 	os.chdir("../../")
 	os.chdir("data/combined/")
