@@ -4,6 +4,9 @@ import _0_data as data
 
 
 def routes_at_stop(stop_dict, weekday, time_unit, stop):
+	"""
+	This function generates a list of all the routes at a stop
+	"""
 	stop_data = stop_dict[weekday][time_unit][stop]
 	route_list = list()
 	for quadruple in stop_data:
@@ -13,6 +16,9 @@ def routes_at_stop(stop_dict, weekday, time_unit, stop):
 	return [stop, route_list]
 
 def routes_dict(stop_dict):
+	"""
+	This function creates a weekday-time_unit-stop associative array that contains all the routes for the stop at that time and day
+	"""
 	# make the framework
 	r_dict = dict()
 	for weekday in stop_dict:
