@@ -106,6 +106,7 @@
             height:20px;
             margin: 10px;
             width:85%;
+            border-radius: 3px;
         }
 
 
@@ -203,6 +204,7 @@
                 var journeyInfoHTML="";
                 for(var key in returned_stops){
                     var route=key.slice(0,4).replace(/^0+/, '');
+
                     journeyInfoHTML+="Take the <b>"+route+"</b> bus from "+"<br><b>Stop "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br>to <b>Stop "+returned_stops[key][returned_stops[key].length-1]+"</b><br>"+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+"<br><br>";
                 }
                 document.getElementById('leap_fare').innerHTML='<t>'+'€'+journey_costs['leap'];
@@ -213,7 +215,7 @@
             </script>
         {% else %}
                     <div id="">
-                        <form id="select_journey_form" method="get" action="select_journey"> {% csrf_token %}
+                        <form id="select_journey_form" method="get" action="select_journey" onsubmit="return googleMap.validateMyForm();"> {% csrf_token %}
                             <input type="text" id="origin" placeholder="Origin (select on map)" name="origin" onchange="googleMap.checkOriginInput()"><br>
                             <input type="text" id="destination" placeholder="Destination (select on map)" name="destination" onchange="googleMap.checkDestinationInput()"><br>
                             <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time &darr;</button>
@@ -229,7 +231,7 @@
     <div class="col-sm-9">
         <div class = "panel panel-default">
 
-        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:33%;height:4%;">
+        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:33%;height:6%;">
         <div id="map" style="width:100%; height:500px;"></div>
         </div>
     </div>
@@ -478,6 +480,20 @@
                     document.getElementById('destination').disabled=false;
                 }
                 googleMap.enable=enable;
+                function validateMyForm(){
+                    if(document.getElementById("origin").value==""||document.getElementById("destination").value==""){
+                        alert("Please make sure you've selected an origin and destination!");
+                        return false;
+                    }
+                    if(document.getElementById("time_date_btn").value==1){
+                        if(!document.getElementById("weekday").value||!document.getElementById("hour").value){
+                            alert("Please make sure you've selected a time and day!");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                googleMap.validateMyForm=validateMyForm;
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                     var pos = {
