@@ -6,18 +6,27 @@ from operator import itemgetter
 
 
 def json_to_dict(file_name):
+	"""
+	This function makes transforming a json file into a Python dictionary easier to read in the code
+	"""
 	with open(file_name) as json_data:
 		return json.load(json_data)
 
 
 
 def key_to_list(key):
+	"""
+	This makes turning a string common to this task easier to read in the code
+	"""
 	key_list = key.split("-")
 	return key_list
 
 
 
 def unpack_observation(model_dict, jpi, key):
+	"""
+	This functions unpacks the dense information in the key of the JSON associative array and combines it with the value into a Python list
+	"""
 	# unpack the data
 	key_data = key_to_list(key)
 	stop_sequence = int(key_data[0])
@@ -30,6 +39,9 @@ def unpack_observation(model_dict, jpi, key):
 	return [weekday, time_unit, route, stop_sequence, stop_id, ctt]
 
 def generate_jpi_dict_shell():
+	"""
+	This function generates a shell for a weekday-time_unit associative array
+	"""
 	# create the outermost layer
 	shell_dict = dict()
 	# iterate over the weekdays
@@ -42,6 +54,9 @@ def generate_jpi_dict_shell():
 	return shell_dict
 
 def get_jpi_observations(model_dict, jpi):
+	"""
+	This function will take a JPI and, for each entry for that JPI in the model dicionary, unpack that information and save it in a jpi-weekday-time_unit dictionary that will eventually be added to a larger dictionary
+	"""
 	# create jpi_dict
 	jpi_dict = generate_jpi_dict_shell()
 	# iterate over the keys
@@ -57,9 +72,15 @@ def get_jpi_observations(model_dict, jpi):
 	return jpi_dict
 
 def get_key(a_list):
+	"""
+	This function makes a simple operation more readable
+	"""
 	return a_list[3]
 
 def sort_jpi_observations(jpi_dict):
+	"""
+	This functions takes a set of obseratations for a given jpi-weekday-time_unit and orders them so as to match the order of the jpi
+	"""
 	for weekday in jpi_dict:
 		for time_unit in jpi_dict[weekday]:
 			time_unit_list = jpi_dict[weekday][time_unit]
@@ -68,6 +89,9 @@ def sort_jpi_observations(jpi_dict):
 	return jpi_dict
 
 def modify_jpi_time(jpi_dict):
+	"""
+	This function converst CTT into a the time it takes to get to this stop from the prior stop
+	"""
 	for weekday in jpi_dict:
 		for time_unit in jpi_dict[weekday]:
 			time_unit_list = jpi_dict[weekday][time_unit]
@@ -79,6 +103,9 @@ def modify_jpi_time(jpi_dict):
 	return jpi_dict
 
 def jpi_into_pathfinder_format(jpi_dict):
+	"""
+	This function transforms the data into an array-based implementation of a linked-list data structure to enable an efficient implementation of Dijkstra's Algorithm
+	"""
 	for weekday in jpi_dict:
 		for time_unit in jpi_dict[weekday]:
 			# data
@@ -104,6 +131,9 @@ def jpi_into_pathfinder_format(jpi_dict):
 	return jpi_dict
 
 def jpi_unpacking(model_dict, jpi):
+	"""
+	This is an aggregator function 
+	"""
 	jpi_dict = get_jpi_observations(model_dict, jpi)
 	jpi_dict = sort_jpi_observations(jpi_dict)
 	jpi_dict = modify_jpi_time(jpi_dict)
@@ -113,6 +143,9 @@ def jpi_unpacking(model_dict, jpi):
 
 
 def generate_pathfinder_dict_shell():
+	"""
+	This generates a weekday-time_unit shell
+	"""
 	# create the outermost layer
 	shell_dict = dict()
 	# iterate over the weekdays
@@ -125,6 +158,9 @@ def generate_pathfinder_dict_shell():
 	return shell_dict
 
 def create_pathfinder_dict(model_dict):
+	"""
+	This function aggregates all of the above functions to create a weekday-time_unit-stop associative array that enables a linked-list version of Dijkstra's Algorithm to be run efficiently
+	"""
 	# create the shell
 	pathfinder_dict = generate_pathfinder_dict_shell()
 	# populate the shell by iterating over the model_dict
