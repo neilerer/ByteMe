@@ -3,8 +3,9 @@ import _0_data as data
 import _1_route_mapping as rm
 import time
 
+
+
 def remove_first_entry_of_dict(d):
-	# return d.pop(next(iter(d)))
 	key = next(iter(d))
 	value = d[key]
 	d.pop(next(iter(d)))
@@ -13,6 +14,11 @@ def remove_first_entry_of_dict(d):
 
 
 def minimum_transfers(r_dict, weekday, time_unit, start_route, end_route):
+	"""
+	This function is is an implementation of Dijkstra's Algorithm
+	Routes are nodes
+	Edges connect routes that intersect and have weight 1, representing a transfer from one route to another
+	"""
 	maximum_paths = 3
 	possible_paths = list()
 	visited = set()
@@ -71,10 +77,3 @@ if __name__ == "__main__":
 	print(end_time - start_time)
 
 
-	# for start in r_dict[weekday][time_unit]:
-	# 	for end in r_dict[weekday][time_unit]:
-	# 		print(start, end)
-	# 		route_set = minimum_transfers(r_dict, weekday, time_unit, start, end)
-	# 		for rs in route_set:
-	# 			print(rs)
-	# 		print("")

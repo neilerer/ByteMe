@@ -7,15 +7,6 @@ import datetime
 
 
 
-def remove_first_entry_of_dict(d):
-	# return d.pop(next(iter(d)))
-	key = next(iter(d))
-	value = d[key]
-	d.pop(next(iter(d)))
-	return [key, value]
-
-
-
 def stops_by_weekday_and_time_unit():
 	output_dict = dict()
 	stop_dict = data.get_pickle_file("stop_dict.p")
@@ -26,20 +17,6 @@ def stops_by_weekday_and_time_unit():
 			for stop in stop_dict[weekday][time_unit]:
 				output_dict[weekday][time_unit].append(stop)
 	return output_dict
-
-
-
-def check_stop(stops, stop_id):
-	for weekday in stops:
-		print("Checking {}".format(weekday))
-		for time_unit in stops[weekday]:
-			print("Checking hour {}".format(time_unit))
-			if stop_id in stops[weekday][time_unit]:
-				print("Found: {} is in {} at {}".format(stop_id, weekday, time_unit))
-			else:
-				print("Not Found: {} is not in {} at {}".format(stop_id, weekday, time_unit))
-		print("")
-
 
 
 
@@ -74,6 +51,8 @@ def test_the_shortest_path(stop_dict, r_dict):
 	key = sp[0]
 	value = sp[1]
 	destination.write("The Shortest Path\n")
+	destination.write("Start Stop: {}\n".format(start))
+	destination.write("End Stop: {}\n".format(end))
 	destination.write("Routes Used: {}\n".format(key))
 	destination.write("Journey Time: {}\n".format(value[0]))
 	destination.write("Path Taken:\n")

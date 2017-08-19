@@ -6,6 +6,9 @@ import pickle
 
 
 def get_pickle_file(file_name):
+	"""
+	This is a utility function to obtain a byte-file from storage and load it into memory.
+	"""
 	# change directory
 	os.chdir("../")
 	os.chdir("data")

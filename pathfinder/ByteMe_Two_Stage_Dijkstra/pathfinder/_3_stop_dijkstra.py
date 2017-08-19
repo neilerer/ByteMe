@@ -4,19 +4,21 @@ import _1_route_mapping as rm
 import _2_route_dijkstra as rs
 import time
 
-# references
-# stop_id : [(stop_id, next_stop_id, time, route), . . . ]
-
 
 
 def remove_first_entry_of_dict(d):
-	# return d.pop(next(iter(d)))
+	"""
+	This function removes, by popping, the first element in a Python dictionary
+	"""
 	key = next(iter(d))
 	value = d[key]
 	d.pop(next(iter(d)))
 	return [key, value]
 
 def merge_on_journey_time(d_1, d_2):
+	"""
+	This function is one part of an implementation of mergesort for Python dictionaries
+	"""
 	# create the return object 
 	d_return = {}
 	# get the latest stop until one dict is empty
@@ -45,6 +47,9 @@ def merge_on_journey_time(d_1, d_2):
 	return d_return
 
 def merge_sort_on_journey_time(d_return):
+	"""
+	This function is the second part of an implementation of mergesort for python dictionaries
+	"""
 	# objects
 	d_1 = {}
 	d_2 = {}
@@ -70,6 +75,11 @@ def merge_sort_on_journey_time(d_return):
 	return d_return
 
 def shortest_path(stop_dict, route_list, weekday, time_unit, start, end):
+	"""
+	This function is an implementation of Dijkstra's Algorithm
+	Nodes are bus stops
+	Edges are the travel and wait times (occurs in the case of a transfer) between stops
+	"""
 	# preliminary data
 	visited_stop = set()
 	journey_id = -1
@@ -126,12 +136,18 @@ def shortest_path(stop_dict, route_list, weekday, time_unit, start, end):
 
 
 def stop_routes(stop_quadruples_list):
+	"""
+	This function generates a list of all the stops are a given stop
+	"""
 	stop_routes_list = list()
 	for quadruple in stop_quadruples_list:
 		stop_routes_list.append(quadruple[3])
 	return stop_routes_list
 
 def get_possible_routes(stop_dict, r_dict, weekday, time_unit, start_stop, end_stop):
+	"""
+	This function uses the route-based implementation of Dijkstra's Algorithm to generate a set of possible shortest paths
+	"""
 	# inputs
 	possible_pairs = [(start, end) for start in stop_routes(stop_dict[weekday][time_unit][start_stop]) for end in stop_routes(stop_dict[weekday][time_unit][end_stop])]
 	# generation
@@ -145,6 +161,10 @@ def get_possible_routes(stop_dict, r_dict, weekday, time_unit, start_stop, end_s
 
 
 def the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end):
+	"""
+	This function takes the results of the route-based and stop-based implementations of Dijkstra's algorithm and generates the shortest paths bewtween two stops
+	The list is ranked by a heuristic of time and transfers that matches an assumption that passengers would only transfer bus lines if it saved at least five minutes from their journey
+	"""
 	possible_routes = get_possible_routes(stop_dict, r_dict, weekday, time_unit, start, end)
 	shortest_path_dict = dict()
 	for route_list in possible_routes:
