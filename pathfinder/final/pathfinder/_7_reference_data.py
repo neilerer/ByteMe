@@ -25,6 +25,16 @@ def check_stop(stops, stop_id):
 		print("")
 
 
+
+
 if __name__ == "__main__":
-	stops = stops_by_weekday_and_time_unit()
-	check_stop(stops, 807)
+	# stops = stops_by_weekday_and_time_unit()
+	# check_stop(stops, 807)
+
+	ctt_dict = data.get_pickle_file("ctt_dict.p")
+
+	for weekday in ctt_dict:
+		for time_unit in ctt_dict[weekday]:
+			for route in ctt_dict[weekday][time_unit]:
+				print(route)
+				print(ctt_dict[weekday][time_unit][route])
