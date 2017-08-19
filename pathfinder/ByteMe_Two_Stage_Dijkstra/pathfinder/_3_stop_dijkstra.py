@@ -155,7 +155,13 @@ def the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end):
 			shortest_path_dict[tuple(route_list)] = sp
 	# sort shorest_path_dict by journey_time
 	shortest_path_dict = merge_sort_on_journey_time(shortest_path_dict)
-	return shortest_path_dict
+	# because our front end will only manage one route suggestion
+	sp = remove_first_entry_of_dict(shortest_path_dict)
+	routes_used = list()
+	for quadruple in sp[1][1]:
+		if quadruple[3] not in routes_used:
+			routes_used.append(quadruple[3])
+	return [routes_used, sp[1]]
 
 
 
@@ -169,16 +175,21 @@ if __name__ == "__main__":
 	# inputs
 	weekday = 0
 	time_unit = 10
-	start = 3057
-	end = 3058
+	start = 400
+	end = 807
 
 	start_time = time.time()
-	sp_dict = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
+	sp = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
 	end_time = time.time() - start_time
 
-	for route in sp_dict:
-		print("")
-		print(route)
-		print(sp_dict[route])
-		print("")
-	print(end_time)
+	print("")
+	print("Routes used")
+	print(sp[0])
+	print("")
+	print("Journey Time")
+	print(sp[1][0])
+	print("")
+	print("The Shortest Path")
+	for quadruple in sp[1][1]:
+		print(str(quadruple))
+	print("")
