@@ -78,4 +78,6 @@ def routes(file_name):
 if __name__ == "__main__":
 	my_dict = routes("00010001.csv")
 	for item in my_dict:
+		print(item)
 		print(my_dict[item])
+		print("")

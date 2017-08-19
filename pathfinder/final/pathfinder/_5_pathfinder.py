@@ -48,6 +48,14 @@ def pathfinder(clean_pp_dict, ctt_dict, weekday, time_unit):
 	final_dict = dict()
 	for key in key_list:
 		final_dict[key] = pathfinder_dict[key]
+	# # this is a formatting section so that no JS is require on the front end to show the entire path
+	# for time in final_dict:
+	# 	path_dict = final_dict[time]
+	# 	for route in path_dict:
+	# 		route_tuple = path_dict[route]
+	# 		start = route_tuple[0]
+	# 		end = route_tuple[1]
+	# 		index_start = ctt_dict[weekday][time_unit][route]
 	return final_dict
 
 
@@ -64,8 +72,8 @@ if __name__ == "__main__":
 	# inputs
 	weekday = 0
 	time_unit = 10
-	start = 1019
-	end = 1353
+	start = 3058
+	end = 3057
 
 	# generated data
 	grc_start = time.time()
