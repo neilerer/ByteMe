@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+
+    <script>
+        var jpids_and_stops={{ jpids_and_stops|safe }};
+        var stop_coordinates={{ stop_coordinates|safe }};
+    </script>
+
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" type='text/css'/>
+    <title>Timetables</title>
+
+    <style>
+        .navbar {
+          background-color: navy;
+        }
+        .navbar-inverse .navbar-nav > li > a {
+          color : yellow;
+        }
+        .navbar-inverse .navbar-header > a {
+          color : yellow;
+        }
+         footer {
+          background-color: navy;
+          color: yellow;
+          padding: 20px;
+        }
+         .panel-default > .panel-heading {
+            color: yellow;
+            background-color: navy;
+        }
+        .panel body schedule{
+        font-size: 20px;
+        text-align:center;
+        }
+         #form_container{}
+         #form_containertt{
+         text-align:center}
+        .icon-small {
+            height:18px;
+            margin:0;
+            padding:0;
+        }
+
+        .icon-medium {
+            height:22px;
+            margin:0;
+            padding:0;
+        }
+        #about{
+            padding:10px;
+        }
+        input {
+        color:black;
+        max-width: 80px;}
+        .row-centered {
+        text-align:center;}
+        .col-centered {
+            display:inline-block;
+            float:none;
+            /* reset the text-align */
+            text-align:left;
+            /* inline-block space fix */
+            margin-right:-4px;
+        }
+
+        .col-min {
+            /* custom min width */
+            min-width:250px;
+            max-width:330px;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://safe-sea-28160.herokuapp.com/">Dublin Bus Journey Time Predictor</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="home/index.html">Home</a></li>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+            <div class="dropdown-menu" style="width: 300px;">
+    <div id="about">
+
+  <h3> A big welcome to our journey predicting web app from Team ByteMe.</h3>
+        We are happy you chose us, and only hope that after using our service you feel the same way.
+        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
+        two long months ago.<br>
+        Our main objective in building this app, was to put the commuter first. We drew upon our past
+        experiences as commuters ourselves, and asked ourselves the question, "what would make our
+        commuting experience better?"<br>
+        The answer to that question is what you see before you in the form of this intuitive and informative
+        app.<br>
+        We hope you have as much fun using it as we did building it.<br>
+        Team ByteMe
+
+    </div>
+  </div>
+        <li><a href="#">Timetables</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSel">ENG</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+            	        <li><a id="navIta" href="#" class="language"> <img id="imgNavIta" src="http://www.roemheld.de/IT/DATA/Images/Address/Italien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavIta">Italiano</span></a></li>
+                        <li><a id="navDeu" href="#" class="language"> <img id="imgNavDeu" src="http://www.roemheld.de/IT/DATA/Images/Address/Deutschland.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavDeu">Deutsch</span></a></li>
+        			    <li><a id="navFra" href="#" class="language"><img id="imgNavFra" src="http://www.roemheld.de/IT/DATA/Images/Address/Frankreich.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavFra">Francais</span></a></li>
+        			    <li><a id="navEng" href="#" class="language"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavEng">English</span></a></li>
+                        <li><a id="navSpa" href="#" class="language"> <img id="imgNavSpa" src="http://www.roemheld.de/IT/DATA/Images/Address/Spanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSpa">Español</span></a></li>
+
+        	        </ul>
+                </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid", style="background-color:white">
+
+    <script>
+            var routeNumber;
+        </script>
+    <!--FORM CONTIANER, INPUT FIELD-->
+    <div class="row row-centered">
+      <div class="col-xs-6 col-centered col-min" style="background-color:white;">
+          <div class = "panel panel-default" style="background-color:blue;">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">Search Timetables</h3>
+            </div>
+            <div class = "panel-body" style="background-color:white;">
+                <div id="" >
+                    <form id="select_timetable" method="get" action="select_timetable">
+                        <label> Route Number </label>
+                        <input id="routeNumber" type="text" name="routeNumber">
+                        <input id="tt_submit" type="submit" name="input_form" value="Search">
+                    </form>
+                </div>
+            </div>
+          </div>
+      </div>
+         </div>
+
+    <!--ROUTE DESCRIPTION-->
+    <div class="row row-centered">
+        <script>
+            var tt_data ={{ tt_data|safe }};
+        </script>
+
+        {% if tt_data.items %}
+              <div class="col-xs-6 col-centered col-min" style="background-color:white;">
+                  <div class = "panel panel-default" style="background-color:blue;">
+                    <div class = "panel-heading text-center">
+                        <script>
+
+                        </script>
+                        <h3 class = "panel-title">Timetable for Route {{ tt_data.jpid.0 }}</h3>
+                    </div>
+                    <div class = "panel-body schedule" style="background-color:white;text-align:left;">
+                        <p>{% if tt_data.stops%}
+                            From stop {{tt_data.stops.0}} to stop {{tt_data.stops.1}}
+                        {% endif %}</p></div>
+                  </div>
+              </div>
+    </div>
+
+
+    <!--THIS IS THE THREE DISTINCT SECTIONS FOR DISPLAYING THE TIMETABLES-->
+    <div class="row content">
+              <!--MONDAY-->
+              <div class="col-sm-4" style="background-color:white;">
+                  <div class = "panel panel-default" style="background-color:white;">
+                    <div class = "panel-heading text-center">
+                        <h3 class = "panel-title">Monday - Friday</h3>
+                    </div>
+                    <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
+                        <p>{% for x in tt_data.weekday%}
+                        {{x}}
+                        {% endfor %}</p></div>
+                  </div>
+              </div>
+
+                <!--SATURDAY-->
+                <div class="col-sm-4" style="background-color:white;">
+                  <div class = "panel panel-default" style="background-color:blue;">
+                    <div class = "panel-heading text-center">
+                        <h3 class = "panel-title">Saturday</h3></div>
+                    <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
+                        <p>{% for x in tt_data.sat%}
+                            {{x}}
+                           {% endfor %}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!--SUNDAY-->
+                <div class="col-sm-4" style="background-color:white;">
+                      <div class = "panel panel-default" style="background-color:blue;">
+                        <div class = "panel-heading text-center">
+                            <h3 class = "panel-title">Sunday</h3>
+                        </div>
+                        <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
+                            <p>{% for x in tt_data.sun%}
+                                {{x}}
+                               {% endfor %}</p></div>
+                        </div>
+                </div>
+    </div>
+    {% endif %}
+
+
+<footer class="footer text-center">
+    <div class="container">
+
+    <a href="#" class="btn btn-social-icon btn-twitter">
+        <i class="fa fa-twitter"></i>
+    </a>
+        <a href="#" class="btn btn-social-icon btn-facebook">
+        <i class="fa fa-facebook"></i>
+    </a>
+    <a class="btn btn-social-icon btn-google">
+        <i class="fa fa-google-plus"></i>
+    </a>
+    </div>
+</footer>
+ </div>
+<script></script>
+</body>
+</html>

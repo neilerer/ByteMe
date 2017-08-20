@@ -219,3 +219,71 @@ def get_route(request):
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
+
+
+#TIMETABLE LANDING PAGE
+def timetable(request):
+
+    with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
+        stop_coordinates = json.load(stop_file)
+
+    with open("home/jpids_and_stops.json") as jpids_and_stops:
+        jpids_and_stops = json.load(jpids_and_stops)
+
+    # # CHOSEN ROUTE DICT
+    # with open("home/tt015B0001.json", 'r') as filename:
+    #     for line in filename:
+    #         tt_dict = json.loads(line)
+    #
+    #     tt_data = dict(
+    #         jpid=tt_dict.get('jpid'),
+    #         stops=tt_dict.get('stops'),
+    #         weekday=tt_dict.get('Weekday'),
+    #         sat=tt_dict.get('Sat'),
+    #         sun=tt_dict.get('Sun')
+    #     )
+
+    context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates} #, 'tt_data':tt_data}
+    template = loader.get_template('home/timetable.html')
+    return HttpResponse(template.render(context, request))
+
+
+
+#TIMETABLE RESULTS PAGE
+def get_timetable(request):
+
+        with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
+            stop_coordinates = json.load(stop_file)
+
+        with open("home/jpids_and_stops.json") as jpids_and_stops:
+            jpids_and_stops = json.load(jpids_and_stops)
+
+        # if request.method=="GET":
+        #     routeNumberTT=int(request.GET.get('routeNumber'))
+        # get_direction = "tt0" + str(routeNumberTT) + "0001"
+        #
+        # for key, value in jpids_and_stops.items():
+
+        if request.method=="GET":
+            routeNumberTT=str(request.GET.get('routeNumber'))
+
+        fileNum= "tt0" + str(routeNumberTT) + "0001"
+        print(fileNum)
+        path= "home/" + str(fileNum) + ".json"
+        # CHOSEN ROUTE DICT
+        #tt015B0001
+        with open(path, 'r') as filename:
+            for line in filename:
+                tt_dict = json.loads(line)
+
+            tt_data = dict(
+                jpid=tt_dict.get('jpid'),
+                stops=tt_dict.get('stops'),
+                weekday=tt_dict.get('Weekday'),
+                sat=tt_dict.get('Sat'),
+                sun=tt_dict.get('Sun')
+            )
+
+        context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates, 'tt_data': tt_data}
+        template = loader.get_template('home/timetable.html')
+        return HttpResponse(template.render(context, request))
