@@ -2,7 +2,7 @@
 import _0_data as data
 import _1_route_mapping as rm
 import _2_route_dijkstra as rs
-import time
+# import time
 
 
 
@@ -74,6 +74,17 @@ def merge_sort_on_journey_time(d_return):
 	# return
 	return d_return
 
+
+
+def routes_used(current_details):
+	routes_used = list()
+	for quadruple in current_details:
+		if quadruple[3] not in routes_used:
+			routes_used.append(quadruple[3])
+	return routes_used
+
+
+
 def shortest_path(stop_dict, route_list, weekday, time_unit, start, end):
 	"""
 	This function is an implementation of Dijkstra's Algorithm
@@ -82,14 +93,14 @@ def shortest_path(stop_dict, route_list, weekday, time_unit, start, end):
 	"""
 	# preliminary data
 	visited_stop = set()
-	journey_id = -1
+	journey_id = 0
 	path_dict = dict()
 	if start == end:
 		return [start]
 	# get the initial paths
 	for stop_tuple in stop_dict[weekday][time_unit][start]:
 		# only check those in the route tuple
-		if stop_tuple[3] in route_list:
+		if stop_tuple[3] in route_list[0]:
 			# [journey time, list of routes been in, path]
 			path_dict[journey_id] = [stop_tuple[2], [stop_tuple]]
 	# sort path_dict by journey_time
@@ -117,7 +128,6 @@ def shortest_path(stop_dict, route_list, weekday, time_unit, start, end):
 		else:
 			# current_stop = current_details[1][-1][1]
 			for stop_tuple in stop_dict[weekday][time_unit][current_details[1][-1][1]]:
-				# it must be on a designated route
 				if stop_tuple[3] not in route_list:
 					pass
 				else:
@@ -144,72 +154,62 @@ def stop_routes(stop_quadruples_list):
 		stop_routes_list.append(quadruple[3])
 	return stop_routes_list
 
-def get_possible_routes(stop_dict, r_dict, weekday, time_unit, start_stop, end_stop):
+def the_shortest_path(stop_dict, r_dict, weekday, time_unit, start_stop, end_stop):
 	"""
-	This function uses the route-based implementation of Dijkstra's Algorithm to generate a set of possible shortest paths
+	This function combines deploys the route-based and then the stop-based Dijkstra's Algorithms to return the shortest path as measured by transfers and time
 	"""
 	# inputs
-	possible_pairs = [(start, end) for start in stop_routes(stop_dict[weekday][time_unit][start_stop]) for end in stop_routes(stop_dict[weekday][time_unit][end_stop])]
-	# generation
-	possible_routes = list()
+	possible_pairs = [(start_route, end_route) for start_route in stop_routes(stop_dict[weekday][time_unit][start_stop]) for end_route in stop_routes(stop_dict[weekday][time_unit][end_stop])]
+	# iteration
 	for (start_route, end_route) in possible_pairs:
-		possible_routes = possible_routes + rs.minimum_transfers(r_dict, weekday, time_unit, start_route, end_route)
-	# sorting
-	possible_routes.sort(key=len)
-	return possible_routes
-
-
-
-def the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end):
-	"""
-	This function takes the results of the route-based and stop-based implementations of Dijkstra's algorithm and generates the shortest paths bewtween two stops
-	The list is ranked by a heuristic of time and transfers that matches an assumption that passengers would only transfer bus lines if it saved at least five minutes from their journey
-	"""
-	possible_routes = get_possible_routes(stop_dict, r_dict, weekday, time_unit, start, end)
-	shortest_path_dict = dict()
-	for route_list in possible_routes:
-		sp = shortest_path(stop_dict, route_list, weekday, time_unit, start, end)
+		# route_list
+		possible_routes = rs.minimum_transfers(r_dict, weekday, time_unit, start_route, end_route)
+		# possible_routes.sort(key=len), not necessary as is self-sorted by construction . . . duh
+		# shortest path
+		sp = False
+		length = len(possible_routes)
+		count = 0
+		while not sp and count < length:
+			sp = shortest_path(stop_dict, possible_routes[count], weekday, time_unit, start_stop, end_stop)
+			count += 1
 		if sp is None:
 			pass
 		else:
-			shortest_path_dict[tuple(route_list)] = sp
-	# sort shorest_path_dict by journey_time
-	shortest_path_dict = merge_sort_on_journey_time(shortest_path_dict)
-	# because our front end will only manage one route suggestion
-	sp = remove_first_entry_of_dict(shortest_path_dict)
-	routes_used = list()
-	for quadruple in sp[1][1]:
-		if quadruple[3] not in routes_used:
-			routes_used.append(quadruple[3])
-	return [routes_used, sp[1]]
+			routes_used = list()
+			for quadruple in sp[1]:
+				if quadruple[3] not in routes_used:
+					routes_used.append(quadruple[3])
+			return [routes_used, sp]
 
 
 
-if __name__ == "__main__":
-	# data
-	print("Loading stop_dict . . .")
-	stop_dict = data.get_pickle_file("stop_dict.p")
-	print("Loading route_dict . . .")
-	r_dict = rm.routes_dict(stop_dict)
+# if __name__ == "__main__":
+# 	# data
+# 	print("Loading stop_dict . . .")
+# 	stop_dict = data.get_pickle_file("stop_dict.p")
+# 	print("Loading route_dict . . .")
+# 	r_dict = rm.routes_dict(stop_dict)
 
-	# inputs
-	weekday = 0
-	time_unit = 10
-	start = 400
-	end = 807
+# 	# inputs
+# 	weekday = 0
+# 	time_unit = 10
+# 	start = 400
+# 	end = 4486
 
-	start_time = time.time()
-	sp = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
-	end_time = time.time() - start_time
+# 	start_time = time.time()
+# 	sp = False
+# 	while not sp:
+# 		sp = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
+# 	end_time = time.time() - start_time
 
-	print("")
-	print("Routes used")
-	print(sp[0])
-	print("")
-	print("Journey Time")
-	print(sp[1][0])
-	print("")
-	print("The Shortest Path")
-	for quadruple in sp[1][1]:
-		print(str(quadruple))
-	print("")
+# 	print("")
+# 	print("Routes used")
+# 	print(sp[0])
+# 	print("")
+# 	print("Journey Time")
+# 	print(sp[1][0])
+# 	print("")
+# 	print("The Shortest Path")
+# 	for quadruple in sp[1][1]:
+# 		print(str(quadruple))
+# 	print("")

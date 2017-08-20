@@ -40,12 +40,12 @@ def routes_dict(stop_dict):
 	return r_dict
 
 
-if __name__ == "__main__":
-	stop_dict = data.get_pickle_file("stop_dict.p")
-	r_dict = routes_dict(stop_dict)
-	for weekday in r_dict:
-		for time_unit in r_dict[weekday]:
-			for route in r_dict[weekday][time_unit]:
-				print(weekday, time_unit, route)
-				print(r_dict[weekday][time_unit][route])
-				print("")
+# if __name__ == "__main__":
+# 	stop_dict = data.get_pickle_file("stop_dict.p")
+# 	r_dict = routes_dict(stop_dict)
+# 	for weekday in r_dict:
+# 		for time_unit in r_dict[weekday]:
+# 			for route in r_dict[weekday][time_unit]:
+# 				print(weekday, time_unit, route)
+# 				print(r_dict[weekday][time_unit][route])
+# 				print("")
