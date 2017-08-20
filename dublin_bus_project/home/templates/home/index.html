@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    {% load keyvalue_lat %} <!-- activating filter functions for accessing dictionary values, used below -->
+    {% load keyvalue_long %}
+    {% load keyvalue_startpoint %}
+    {% load keyvalue_endpoint %}
+    {% load jpid_stops %}
+
+    <script>
+        var routes={{ routes|safe }};
+        var jpids_and_stops={{ jpids_and_stops|safe }};
+        var stop_coordinates={{ stop_coordinates|safe }};
+        var weather_data={{ weather_data|safe }};
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}" type='text/css'/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" type='text/css'/>
+    <title>Dublin Bus Journey Time Predictor</title>
+    <style>
+        body{
+            font-family:Calibri, Arial;
+        }
+        .navbar {
+          background-color: navy;
+        }
+        .navbar-inverse .navbar-nav > li > a {
+          color : yellow;
+        }
+        .navbar-inverse .navbar-header > a {
+          color : yellow;
+        }
+         footer {
+          background-color: navy;
+          color: yellow;
+          padding: 20px;
+        }
+         .panel-default > .panel-heading {
+            color: yellow;
+            background-color: navy;
+        }
+         #form_container{
+        }
+        .icon-small {
+            height:18px;
+            margin:0;
+            padding:0;
+        }
+
+        .icon-medium {
+            height:22px;
+            margin:0;
+            padding:0;
+        }
+        #about{
+            padding:10px;
+        }
+        #est_time{
+            text-align:center;
+            font-size:12px;
+            font-family: Calibri;
+        }
+        #cost_table{
+            margin:auto;
+            text-align:center;
+            font-size:12px;
+            font-family: Calibri;
+        }
+        #select_journey_form{
+            font-family: Calibri, Arial;
+            font-size: 12px;
+        }
+        #origin, #destination{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+        #hour, #weekday{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+        #time_date_btn{
+            background-color:navy;
+            margin: 10px;
+            height:20px;
+            width:85%;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        #pathfinder_submit{
+            font-size:12px;
+            height:20px;
+            margin: 10px;
+            width:85%;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<!--navbar adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_webpage&stacked=h-->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://safe-sea-28160.herokuapp.com/">Dublin Bus Journey Time Predictor</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+            <div class="dropdown-menu" style="width: 300px;">
+    <div id="about">
+
+  <h3> A big welcome to our journey predicting web app from Team ByteMe.</h3>
+        We are happy you chose us, and only hope that after using our service you feel the same way.
+        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
+        two long months ago.<br>
+        Our main objective in building this app, was to put the commuter first. We drew upon our past
+        experiences as commuters ourselves, and asked ourselves the question, "what would make our
+        commuting experience better?"<br>
+        The answer to that question is what you see before you in the form of this intuitive and informative
+        app.<br>
+        We hope you have as much fun using it as we did building it.<br>
+        Team ByteMe
+
+    </div>
+  </div>
+        <li><a href="#">Timetables</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSel">ENG</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+            	        <li><a id="navIta" href="#" class="language"> <img id="imgNavIta" src="http://www.roemheld.de/IT/DATA/Images/Address/Italien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavIta">Italiano</span></a></li>
+                        <li><a id="navDeu" href="#" class="language"> <img id="imgNavDeu" src="http://www.roemheld.de/IT/DATA/Images/Address/Deutschland.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavDeu">Deutsch</span></a></li>
+        			    <li><a id="navFra" href="#" class="language"><img id="imgNavFra" src="http://www.roemheld.de/IT/DATA/Images/Address/Frankreich.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavFra">Francais</span></a></li>
+        			    <li><a id="navEng" href="#" class="language"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavEng">English</span></a></li>
+                        <li><a id="navSpa" href="#" class="language"> <img id="imgNavSpa" src="http://www.roemheld.de/IT/DATA/Images/Address/Spanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSpa">Español</span></a></li>
+
+        	        </ul>
+                </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<!--containers and rows adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_blog&stacked=h-->
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+        <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title" id="form_heading">Select your journey</h3>
+            </div>
+            <div class = "panel-body">
+        <script>
+            var selectedRoute;
+            var selectedDirection;
+            var selectedStart;
+            var selectedEnd;
+        </script>
+        {% if suggested_route %}
+            <script>
+                var suggested_route={{ suggested_route|safe }};
+                var journey_costs={{ journey_costs|safe }};
+                var journey_time={{ journey_time|safe }};
+                var jpids_and_stops={{ jpids_and_stops|safe }};
+                var returned_stops={{ returned_stops|safe }};
+            </script>
+            <div id="journey_info">
+                <div id="recommended_route"></div>
+                <p id="est_time">
+                </p>
+                <table id="cost_table">
+                    <tr><td>Leap Fare: </td><td id="leap_fare"></td></tr>
+                    <tr><td>Cash Fare: </td><td id="cash_fare"></td></tr>
+                </table>
+            </div>
+            <script>
+                document.getElementById("form_heading").innerHTML="Your Journey";
+                var journeyInfoHTML="";
+                for(var key in returned_stops){
+                    var route=key.slice(0,4).replace(/^0+/, '');
+                    journeyInfoHTML+="Take the <b>"+route+"</b> bus from "+"<br><b>Stop "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br>to <b>Stop "+returned_stops[key][returned_stops[key].length-1]+"</b><br>("+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+")<br><br>";
+                }
+                document.getElementById('leap_fare').innerHTML='<t>'+'€'+journey_costs['leap'];
+                document.getElementById('cash_fare').innerHTML='<t>'+'€'+journey_costs['cash'];
+                document.getElementById('est_time').innerHTML+=journeyInfoHTML+"Total Journey Time: <b>"+journey_time+" mins</b>";
+
+
+            </script>
+        {% else %}
+                    <div id="">
+                        <form id="select_journey_form" method="get" action="select_journey"> {% csrf_token %}
+                            <input type="text" id="origin" placeholder="Origin (select on map)" name="origin" onchange="googleMap.checkOriginInput()"><br>
+                            <input type="text" id="destination" placeholder="Destination (select on map)" name="destination" onchange="googleMap.checkDestinationInput()"><br>
+                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time &darr;</button>
+                            <input onclick="googleMap.enable()" type="submit" name="input_form" id="pathfinder_submit" value="Show Journey Time">
+                        </form>
+                    </div>
+
+        {% endif %}
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class = "panel panel-default">
+
+        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:33%;height:4%;">
+        <div id="map" style="width:100%; height:500px;"></div>
+        </div>
+    </div>
+  </div>
+
+    <div class="row content">
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">What's on!</h3>
+            </div>
+
+            <div class = "panel-body">
+                <img src="static/images/events_dublin.png" alt="dublin_events" class="center-block" width="304" height="236">
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+            <div class = "panel-heading text-center">
+                <h3 class = "panel-title">Twitter feed</h3>
+            </div>
+
+            <div class = "panel-body">
+                <a class="twitter-timeline" data-lang="en" data-width="440" data-height="230" href="https://twitter.com/dublinbusnews">Tweets by dublinbusnews</a>
+
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-4">
+          <div class = "panel panel-default">
+              <div class = "panel-heading text-center">
+                  <h3 class = "panel-title">Current Weather</h3>
+              </div>
+
+              <div class = "panel-body">
+                  <div id="weather">
+                      {% if weather_data.items %}
+                      <div id="iconImg">
+                          <img src="static/css/icons/black/png/128x128/{{ weather_data.icon }}.png" alt="Weather Icon" style="display:block;vertical-align:middle;margin:auto;" class="center-block" width="304" height="176"/>
+                      </div>
+                      <div id="wData" style="display:block;vertical-align:middle;margin:auto;">
+                          <p style="text-align:center">{{ weather_data.weather}}</p>
+                          <p style="text-align:center">{{ weather_data.temp_c}} &degC | {{ weather_data.pressure }} kPa | {{ weather_data.wind }} km/h</p>
+                      </div>
+                      {% endif %}
+                  </div>
+
+            </div>
+
+          </div>
+
+    </div>
+    </div>
+</div>
+
+<!--Footer adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_webpage&stacked=h-->
+<footer class="footer text-center">
+    <div class="container">
+
+    <a href="#" class="btn btn-social-icon btn-twitter">
+        <i class="fa fa-twitter"></i>
+    </a>
+        <a href="#" class="btn btn-social-icon btn-facebook">
+        <i class="fa fa-facebook"></i>
+    </a>
+    <a class="btn btn-social-icon btn-google">
+        <i class="fa fa-google-plus"></i>
+    </a>
+    </div>
+</footer>
+    <script>
+    function googleMap() {
+       var canvas=document.getElementById("map");
+       myCenter=new google.maps.LatLng(53.4, -6.3);
+       var options={center: myCenter,zoom:10,mapTypeControl:false};
+       var map=new google.maps.Map(canvas,options);
+
+          {% if suggested_route %}
+                elem=document.getElementById("map_search_box")
+                elem.outerHTML="";
+                delete elem;
+
+                function mapRoute(){
+                    var markers=[];
+                    var infoWindows=[];
+                    latSum=0;
+                    longSum=0;
+                    stopCount=0;
+                    for(var key in returned_stops){
+                        var polylineCoords=new Array();
+                        for(i=0; i<returned_stops[key].length; i++){
+
+                            lat=stop_coordinates[returned_stops[key][i]][0];
+                            long=stop_coordinates[returned_stops[key][i]][1];
+                            var myPosition= new google.maps.LatLng(lat,long);
+                            polylineCoords.push(myPosition);
+
+                            latSum+=parseFloat(lat);
+                            longSum+=parseFloat(long);
+                            stopCount+=1;
+
+                            if(i==0||i==returned_stops[key].length-1){
+                                    var marker = new google.maps.Marker({position:myPosition});
+                                    marker.setMap(map);
+                                    var route=key.slice(0,4).replace(/^0+/, '');
+                                    var message="Stop "+String(returned_stops[key][i])+"<br>"+stop_coordinates[returned_stops[key][i]][2]+"<br>"+"Route: "+route;
+                                    addInfoWindow(marker,message);
+                                    markers.push(marker);
+                            }
+                        }
+                        var polyline = new google.maps.Polyline({
+                                    path: polylineCoords,
+                                    strokeColor: '#357EC7',
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 4,
+                                    fillColor: '#FF0000',
+                                    fillOpacity: 0.35,
+                                    map: map
+                                    });
+                        polyline.setMap(map);
+                    }
+                    var newLat=latSum/stopCount;
+                    var newLong=longSum/stopCount;
+                    map.setCenter(new google.maps.LatLng(newLat, newLong));
+                    map.setZoom(11);
+
+                     function addInfoWindow(marker, message){
+                        var infoWindow = new google.maps.InfoWindow({content:message});
+                        infoWindows.push(infoWindow);
+                        google.maps.event.addListener(marker, 'click', function(){
+                            closeAllInfoWindows();
+                            infoWindow.open(map,marker);
+                            });
+                    }
+
+                    function closeAllInfoWindows() {
+                          for (var i=0;i<infoWindows.length;i++) {
+                             infoWindows[i].close();
+                            }
+                    }
+                }
+                mapRoute();
+
+
+
+          {% else %}
+                function setOrigin(stopNumber){
+                        if(document.getElementById('destination').value==stopNumber){
+                            if(document.getElementById('destination').value!=""&&document.getElementById('origin').value!=""){
+                                alert("Origin and destination must be different!");
+                            }
+                        } else {
+                        document.getElementById('origin').value=stopNumber;
+                        }
+                }
+                googleMap.setOrigin=setOrigin;
+
+                    function setDestination(stopNumber){
+                        if(document.getElementById('origin').value==stopNumber){
+                            if(document.getElementById('destination').value!=""&&document.getElementById('origin').value!=""){
+                                alert("Origin and destination must be different!");
+                            }
+                        } else {
+                        document.getElementById('destination').value=stopNumber;
+                        }
+                    }
+                googleMap.setDestination=setDestination;
+
+                function checkOriginInput(){
+                    var input=document.getElementById("origin").value;
+                    var indicator=false;
+                    for (var key in stop_coordinates){
+                        if(key==input){indicator=true;}
+                    }
+                    if (!indicator){
+                        alert("Not valid origin input");
+                        document.getElementById("origin").value="";
+                    }
+                }
+                googleMap.checkOriginInput=checkOriginInput;
+                function checkDestinationInput(){
+                    var input=document.getElementById("destination").value;
+                    var indicator=false;
+                    for (var key in stop_coordinates){
+                        if(key==input){indicator=true;}
+                    }
+                    if (!indicator){
+                        alert("Not valid destination input");
+                        document.getElementById("destination").value="";
+                    }
+                }
+                googleMap.checkDestinationInput=checkDestinationInput;
+                function selectDayTime(){
+
+                    if(document.getElementById("time_date_btn").value==0){
+
+                        var element = document.getElementById("pathfinder_submit");
+                        element.outerHTML = "";
+                        delete element;
+
+                        var selectedOrigin=document.getElementById("origin").value;
+                        var selectedDestination=document.getElementById("destination").value;
+
+                        var formHTML=document.getElementById("select_journey_form").innerHTML;
+                        var newOptionsHTML="<select id='weekday' name='day'><option selected disabled>Select Day</option>";
+                        var weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+                        for(i=0; i<weekdays.length; i++){
+                            newOptionsHTML+="<option value='"+String(i)+"'>"+weekdays[i]+"</option>";
+                        }
+                        newOptionsHTML+="</select><select id='hour' name='hour'><option selected disabled>Select Time</option>"
+                        for (i=6; i<24; i++){
+                            newOptionsHTML+="<option value='"+i+"'>"+i+":00";
+                            newOptionsHTML+="</option>";
+                        }
+                        newOptionsHTML+="</select><input type='submit' name='input_form' id='pathfinder_submit' value='Show Journey Time'>"
+                        formHTML+=newOptionsHTML;
+                        document.getElementById("select_journey_form").innerHTML=formHTML;
+
+                        enable();
+                        setOrigin(selectedOrigin);
+                        setDestination(selectedDestination);
+
+                        document.getElementById("time_date_btn").value=1;
+                        document.getElementById("time_date_btn").innerHTML="Select Custom Day and Time &uarr;";
+                    }
+                    else{
+                        var element = document.getElementById("weekday");
+                        element.outerHTML = "";
+                        delete element;
+
+                        var element = document.getElementById("hour");
+                        element.outerHTML = "";
+                        delete element;
+
+                        document.getElementById("time_date_btn").value=0;
+                        document.getElementById("time_date_btn").innerHTML="Select Custom Day and Time &darr;";
+                    }
+                }
+                googleMap.selectDayTime=selectDayTime;
+                function enable(){
+                    document.getElementById('origin').disabled=false;
+                    document.getElementById('destination').disabled=false;
+                }
+                googleMap.enable=enable;
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                      };
+                    var marker = new google.maps.Marker({position:pos,icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'});
+                    marker.setMap(map);
+                    map.setCenter(pos);
+                    map.setZoom(15);
+                    }, function() {
+                            handleLocationError(true, infoWindow, map.getCenter());
+                    });
+                } else {
+                      // Browser doesn't support Geolocation
+                      handleLocationError(false, infoWindow, map.getCenter());
+                }
+                      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                      infoWindow.setPosition(pos);
+                      infoWindow.setContent(browserHasGeolocation ?
+                      'Error: The Geolocation service failed.' :
+                      'Error: Your browser doesn\'t support geolocation.');
+                }
+
+                var markers=[];
+                var infoWindows=[];
+                for (var key in stop_coordinates){
+                    var lat=parseFloat(stop_coordinates[key][0]);
+                    var long=parseFloat(stop_coordinates[key][1]);
+                    var myPosition= new google.maps.LatLng(lat,long);
+                    var marker = new google.maps.Marker({position:myPosition,
+                            icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                            });
+                    marker.setMap(map);
+                    var message="<p>Stop Number: "+key+"<br>"+stop_coordinates[key][2]+"<br><br>Routes Serviced: "+stop_coordinates[key][3]+"<br><br><button onclick='googleMap.setOrigin("+String(key)+")'>Select as Origin</button> or <button onclick='googleMap.setDestination("+String(key)+")'>Select as Destination</button></p>";
+                    addInfoWindow(marker,message);
+                    markers.push(marker);
+                }
+
+                function addInfoWindow(marker, message){
+                    var infoWindow = new google.maps.InfoWindow({content:message});
+                    infoWindows.push(infoWindow);
+                    google.maps.event.addListener(marker, 'click', function(){
+                        closeAllInfoWindows();
+                        infoWindow.open(map,marker);
+                        });
+                }
+
+                function closeAllInfoWindows() {
+                      for (var i=0;i<infoWindows.length;i++) {
+                         infoWindows[i].close();
+                        }
+                }
+
+                var markerCluster= new MarkerClusterer(map, markers,
+                                  {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+                                  maxZoom:14}
+                                  );
+
+                var input = document.getElementById('map_search_box');
+                var searchBox = new google.maps.places.SearchBox(input);
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+                map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(map.getBounds());
+                    });
+
+                    var locationMarkers=[];
+                    searchBox.addListener('places_changed',function(){
+                            var places=searchBox.getPlaces();
+                            if (places.length==0){return;}
+
+                        locationMarkers.forEach(function(marker) {
+                            marker.setMap(null);
+                          });
+                          locationMarkers = [];
+
+                        var bounds = new google.maps.LatLngBounds();
+                        places.forEach(function(place) {
+                                if (!place.geometry) {
+                                  console.log("Returned place contains no geometry");
+                                  return;
+                                }
+
+                            if (place.geometry.viewport) {
+                                  // Only geocodes have viewport.
+                                  bounds.union(place.geometry.viewport);
+                            } else {
+                                  bounds.extend(place.geometry.location);
+                            }
+                          });
+                        map.fitBounds(bounds);
+                        map.setZoom(15);
+                        map.setCenter(place.geometry.location);
+                    });
+
+        {% endif %}
+
+    }
+    </script>
+
+    <script src="../../static/js/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap-select.min.js"></script>
+
+</body>
+</html>
