@@ -42,10 +42,20 @@ def routes_dict(stop_dict):
 
 if __name__ == "__main__":
 	stop_dict = data.get_pickle_file("stop_dict.p")
-	r_dict = routes_dict(stop_dict)
-	for weekday in r_dict:
-		for time_unit in r_dict[weekday]:
-			for route in r_dict[weekday][time_unit]:
-				print(weekday, time_unit, route)
-				print(r_dict[weekday][time_unit][route])
-				print("")
+	for weekday in stop_dict:
+		for time_unit in stop_dict[weekday]:
+			for item in stop_dict[weekday][time_unit]:
+				if item == 3097:
+					print(item)
+					print(stop_dict[weekday][time_unit][item])
+					print("")
+			# for item in stop_dict[weekday][time_unit]:
+			# 	if item == 3097:
+			# 		print(item)
+	# r_dict = routes_dict(stop_dict)
+	# for weekday in r_dict:
+	# 	for time_unit in r_dict[weekday]:
+			# for route in r_dict[weekday][time_unit]:
+			# 	print(weekday, time_unit, route)
+			# 	print(r_dict[weekday][time_unit][route])
+			# 	print("")
