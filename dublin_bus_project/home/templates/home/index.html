@@ -203,7 +203,7 @@
                 var journeyInfoHTML="";
                 for(var key in returned_stops){
                     var route=key.slice(0,4).replace(/^0+/, '');
-                    journeyInfoHTML+="Take the <b>"+route+"</b> bus from "+"<br><b>Stop "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br>to <b>Stop "+returned_stops[key][returned_stops[key].length-1]+"</b><br>"+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+"<br><br>";
+                    journeyInfoHTML+="Take the <b>"+route+"</b> bus from "+"<br><b>Stop "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br>to <b>Stop "+returned_stops[key][returned_stops[key].length-1]+"</b><br>("+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+")<br><br>";
                 }
                 document.getElementById('leap_fare').innerHTML='<t>'+'€'+journey_costs['leap'];
                 document.getElementById('cash_fare').innerHTML='<t>'+'€'+journey_costs['cash'];

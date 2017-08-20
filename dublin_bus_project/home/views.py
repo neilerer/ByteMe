@@ -8,10 +8,7 @@ import pandas as pd
 import urllib.request
 import datetime
 import _1_route_mapping as rm
-import _3_route_connections as rc
-import _4_shortest_paths as sp
-import _5_pathfinder as pf
-
+import _3_stop_dijkstra as sd
 def index(request): #called from home urls.py file
 
     # hardcoded list of currently available routes, needs to be generated for all routes later
@@ -84,22 +81,27 @@ def get_route(request):
         selected_hour=int(selected_hour)
 
         """PATHFINDER START"""
-        with open("ctt_dict.p",'rb') as ctt_dict_pkl:
-            ctt_dict=pkl.load(ctt_dict_pkl)
 
         with open("stop_dict.p",'rb') as stop_dict_pkl:
             stop_dict=pkl.load(stop_dict_pkl)
 
         r_dict = rm.routes_dict(stop_dict)
+        sp = sd.the_shortest_path(stop_dict, r_dict, selected_day, selected_hour, selected_origin, selected_destination)
 
-        grc_dict = rc.get_route_connections(stop_dict, ctt_dict, r_dict, selected_day, selected_hour, selected_origin, selected_destination)
+        print(sp)
+        total_journey_time = int(round(sp[1][0]/60))
+        print(total_journey_time)
+        pathfinder_dict={}
+        for route in sp[0]:
+            pathfinder_dict[route]=[]
 
-        pp_dict = sp.possible_paths_dictionary(grc_dict, selected_origin, selected_destination)
-
-        clean_pp_dict = sp.clean_possible_paths_dicitonary(pp_dict)
-
-        pathfinder_dict = pf.pathfinder(clean_pp_dict, ctt_dict, selected_day, selected_hour)
-
+        for point_to_point in sp[1][1]:
+            if point_to_point[0] not in pathfinder_dict[point_to_point[3]]:
+                pathfinder_dict[point_to_point[3]].append(point_to_point[0])
+            if point_to_point[1] not in pathfinder_dict[point_to_point[3]]:
+                pathfinder_dict[point_to_point[3]].append(point_to_point[1])
+        returned_stops=pathfinder_dict
+        print(returned_stops)
         # possibilities=[pathfinder_dict]
         #
         # print(possibilities)
@@ -160,19 +162,14 @@ def get_route(request):
         # """PATHFINDER END"""
 
         # #journey time calc
-        for trip in pathfinder_dict:
-            total_journey_time=float(trip)
-            journey_info=pathfinder_dict[trip]
-            break
-        total_journey_time=int(round(total_journey_time)/60)
 
-        returned_stops={}
-        for trip in journey_info:
-            jpid=trip+"001"
-            stops_on_jpid=stops_on_routes[jpid]
-            start_point=stops_on_jpid.index(str(journey_info[trip][0]))
-            end_point=stops_on_jpid.index(str(journey_info[trip][1]))
-            returned_stops[jpid]=stops_on_jpid[start_point:end_point+1]
+        # returned_stops={}
+        # for trip in journey_info:
+        #     jpid=trip+"001"
+        #     stops_on_jpid=stops_on_routes[jpid]
+        #     start_point=stops_on_jpid.index(str(journey_info[trip][0]))
+        #     end_point=stops_on_jpid.index(str(journey_info[trip][1]))
+        #     returned_stops[jpid]=stops_on_jpid[start_point:end_point+1]
 
         """JOURNEY COST START"""
 
@@ -217,8 +214,8 @@ def get_route(request):
             icon=parsed_json.get('current_observation').get('icon')
         )
         """APIS END"""
-        print(journey_info)
-        context = {'suggested_route':journey_info,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
+        # print(journey_info)
+        context = {'suggested_route':returned_stops,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 
