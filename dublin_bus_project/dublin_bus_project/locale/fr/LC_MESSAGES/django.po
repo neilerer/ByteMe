@@ -1,0 +1,217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-21 17:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\dublin_bus_project\settings.py:115
+msgid "English"
+msgstr ""
+
+#: .\dublin_bus_project\settings.py:116
+msgid "Italian"
+msgstr ""
+
+#: .\dublin_bus_project\settings.py:117
+msgid "French"
+msgstr ""
+
+#: .\dublin_bus_project\settings.py:118
+msgid "German"
+msgstr ""
+
+#: .\dublin_bus_project\settings.py:119
+msgid "Spanish"
+msgstr ""
+
+#: .\dublin_bus_project\settings.py:120
+msgid "Irish"
+msgstr ""
+
+#: .\home\templates\home\index.html:134
+#: .\home\templates\home\timetable.html:104
+msgid "Home"
+msgstr "Accueil"
+
+#: .\home\templates\home\index.html:135
+#: .\home\templates\home\timetable.html:105
+msgid "About"
+msgstr "Qui sommes-nous?"
+
+#: .\home\templates\home\index.html:139
+#: .\home\templates\home\timetable.html:109
+msgid ""
+"A big welcome to our journey predicting web app from Team ByteMe.</h3>\n"
+"        We are happy you chose us, and only hope that after using our "
+"service you feel the same way.\n"
+"        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we "
+"started out on this project\n"
+"        two long months ago.<br>\n"
+"        Our main objective in building this app, was to put the commuter "
+"first. We drew upon our past\n"
+"        experiences as commuters ourselves, and asked ourselves the "
+"question, \"what would make our\n"
+"        commuting experience better?\"<br>\n"
+"        The answer to that question is what you see before you in the form "
+"of this intuitive and informative\n"
+"        app.<br>\n"
+"        We hope you have as much fun using it as we did building it."
+msgstr ""
+
+#: .\home\templates\home\index.html:153
+#: .\home\templates\home\timetable.html:123
+msgid "Timetables"
+msgstr "Horaires"
+
+#: .\home\templates\home\index.html:158
+#: .\home\templates\home\timetable.html:128
+msgid "Languages"
+msgstr "Langues"
+
+#: .\home\templates\home\index.html:180
+msgid "Select your journey"
+msgstr "Selectionnez votre voyage"
+
+#: .\home\templates\home\index.html:202
+msgid "Leap Fare: "
+msgstr "Prix en carte Leap: "
+
+#: .\home\templates\home\index.html:203
+msgid "Cash Fare: "
+msgstr "Prix en espèces: "
+
+#: .\home\templates\home\index.html:211
+msgid "Take the "
+msgstr "Prendre la ligne "
+
+#: .\home\templates\home\index.html:211
+msgid "bus from"
+msgstr "de"
+
+#: .\home\templates\home\index.html:211
+msgid "Stop"
+msgstr "l'arrêt de bus"
+
+#: .\home\templates\home\index.html:211
+msgid "to"
+msgstr "à"
+
+#: .\home\templates\home\index.html:215
+msgid "Total Journey Time: "
+msgstr "Temps total de voyage: "
+
+#: .\home\templates\home\index.html:215
+msgid "mins"
+msgstr "minutes"
+
+#: .\home\templates\home\index.html:220
+msgid "Origin (select on map)"
+msgstr "Départ (Sélectionnez sur la carte)"
+
+#: .\home\templates\home\index.html:221
+msgid "Destination (select on map)"
+msgstr "Arrivée (Sélectionnez sur la carte)"
+
+#: .\home\templates\home\index.html:222
+msgid "Select Custom Day and Time"
+msgstr "Sélectionnez le jour et l'heure"
+
+#: .\home\templates\home\index.html:223 .\home\templates\home\index.html:437
+msgid "Show Journey Time"
+msgstr "Montrer le Temps de Trajet"
+
+#: .\home\templates\home\index.html:235
+msgid "Search Location"
+msgstr "Recherche par Lieu"
+
+#: .\home\templates\home\index.html:244
+msgid "Upcoming Events"
+msgstr "Évènements"
+
+#: .\home\templates\home\index.html:254
+msgid "Traffic Updates"
+msgstr "Information de Circulation"
+
+#: .\home\templates\home\index.html:265
+msgid "Current Weather"
+msgstr "Météo"
+
+#: .\home\templates\home\index.html:427
+msgid "Select Day"
+msgstr "Sélectionnez le Jour"
+
+#: .\home\templates\home\index.html:428
+msgid "Monday"
+msgstr "Lundi"
+
+#: .\home\templates\home\index.html:428
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: .\home\templates\home\index.html:428
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: .\home\templates\home\index.html:428
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: .\home\templates\home\index.html:428
+msgid "Friday"
+msgstr "Vendredi"
+
+#: .\home\templates\home\index.html:428
+#: .\home\templates\home\timetable.html:218
+msgid "Saturday"
+msgstr "Samedi"
+
+#: .\home\templates\home\index.html:428
+#: .\home\templates\home\timetable.html:231
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: .\home\templates\home\index.html:432
+msgid "Select Time"
+msgstr "Sélectionnez l'Heure"
+
+#: .\home\templates\home\timetable.html:158
+msgid "Search Timetables"
+msgstr "Sélectionnez le Horaire"
+
+#: .\home\templates\home\timetable.html:164
+msgid "Route Number"
+msgstr "Ligne"
+
+#: .\home\templates\home\timetable.html:166
+msgid "Search"
+msgstr "Recherche"
+
+#: .\home\templates\home\timetable.html:188
+msgid "Timetable for Route"
+msgstr "Horaire de la Ligne"
+
+#: .\home\templates\home\timetable.html:192
+msgid "From stop"
+msgstr "De l'arrêt de bus"
+
+#: .\home\templates\home\timetable.html:192
+msgid "to stop"
+msgstr "à l'arrêt de bus"
+
+#: .\home\templates\home\timetable.html:205
+msgid "Monday - Friday"
+msgstr "Lundi - Vendredi"
