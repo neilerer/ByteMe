@@ -223,7 +223,7 @@ def get_route(request):
 
 #TIMETABLE LANDING PAGE
 def timetable(request):
-
+    print("timetable called")
     with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
 
@@ -251,7 +251,7 @@ def timetable(request):
 
 #TIMETABLE RESULTS PAGE
 def get_timetable(request):
-
+        print("get_timetable called")
         with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
             stop_coordinates = json.load(stop_file)
 
@@ -264,15 +264,18 @@ def get_timetable(request):
         #
         # for key, value in jpids_and_stops.items():
 
+
         if request.method=="GET":
             routeNumberTT=str(request.GET.get('routeNumber'))
 
-        fileNum= "tt0" + str(routeNumberTT) + "0001"
-        print(fileNum)
-        path= "home/" + str(fileNum) + ".json"
+        # fileNum= "tt0" + str(routeNumberTT) + "0001"
+        # print(fileNum)
+        # path= "home/" + str(fileNum) + ".json"
         # CHOSEN ROUTE DICT
         #tt015B0001
-        with open(path, 'r') as filename:
+        # route_dict={}
+        # for file in glob.glob("home/timetable_results/tt015B")
+        with open("home/timetable_results/tt015B0001.json", 'r') as filename:
             for line in filename:
                 tt_dict = json.loads(line)
 
@@ -282,7 +285,8 @@ def get_timetable(request):
                 weekday=tt_dict.get('Weekday'),
                 sat=tt_dict.get('Sat'),
                 sun=tt_dict.get('Sun')
-            )
+                )
+                # route_dict[]=tt_data
 
         context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates, 'tt_data': tt_data}
         template = loader.get_template('home/timetable.html')
