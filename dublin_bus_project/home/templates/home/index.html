@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load staticfiles %}
+    {% load i18n %}
     {% load keyvalue_lat %} <!-- activating filter functions for accessing dictionary values, used below -->
     {% load keyvalue_long %}
     {% load keyvalue_startpoint %}
@@ -29,6 +30,7 @@
         }
         .navbar {
           background-color: navy;
+          box-shadow: 0 0 10px black;
         }
         .navbar-inverse .navbar-nav > li > a {
           color : yellow;
@@ -40,7 +42,13 @@
           background-color: navy;
           color: yellow;
           padding: 20px;
+          box-shadow: 0 0 10px black;
         }
+
+        .panel-default {
+            box-shadow: 0 0 10px black;
+        }
+
          .panel-default > .panel-heading {
             color: yellow;
             background-color: navy;
@@ -108,6 +116,11 @@
             width:85%;
         }
 
+        body {
+            background-image: url('../static/images/dublin_background_6.jpg');
+            background-attachment:fixed;
+        }
+
 
 
     </style>
@@ -126,12 +139,12 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+        <li class="active"><a href="#">{% trans "Home" %}</a></li>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %} <span class="caret"></span></a>
             <div class="dropdown-menu" style="width: 300px;">
     <div id="about">
 
-  <h3> A big welcome to our journey predicting web app from Team ByteMe.</h3>
+  <h3> {% blocktrans %}A big welcome to our journey predicting web app from Team ByteMe.</h3>
         We are happy you chose us, and only hope that after using our service you feel the same way.
         Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
         two long months ago.<br>
@@ -140,24 +153,24 @@
         commuting experience better?"<br>
         The answer to that question is what you see before you in the form of this intuitive and informative
         app.<br>
-        We hope you have as much fun using it as we did building it.<br>
+        We hope you have as much fun using it as we did building it.{% endblocktrans %}<br>
         Team ByteMe
 
     </div>
   </div>
-        <li><a href="timetable.html">Timetables</a></li>
+        <li><a href="timetable.html">{% trans "Timetables" %}</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSel">ENG</span> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">  Languages<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-            	        <li><a id="navIta" href="#" class="language"> <img id="imgNavIta" src="http://www.roemheld.de/IT/DATA/Images/Address/Italien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavIta">Italiano</span></a></li>
-                        <li><a id="navDeu" href="#" class="language"> <img id="imgNavDeu" src="http://www.roemheld.de/IT/DATA/Images/Address/Deutschland.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavDeu">Deutsch</span></a></li>
-        			    <li><a id="navFra" href="#" class="language"><img id="imgNavFra" src="http://www.roemheld.de/IT/DATA/Images/Address/Frankreich.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavFra">Francais</span></a></li>
-        			    <li><a id="navEng" href="#" class="language"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavEng">English</span></a></li>
-                        <li><a id="navSpa" href="#" class="language"> <img id="imgNavSpa" src="http://www.roemheld.de/IT/DATA/Images/Address/Spanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSpa">Español</span></a></li>
-
+                        <li><a id="navDeu" href="http://127.0.0.1:8000/de/" class="language"> <img id="imgNavDeu" src="../static/32/Germany.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavDeu">Deutsch</span></a></li>
+        			    <li><a id="navEng" href="http://127.0.0.1:8000/en/" class="language"><img id="imgNavEng" src="../static/32/United Kingdom(Great Britain).png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavEng">English</span></a></li>
+                        <li><a id="navSpa" href="http://127.0.0.1:8000/es/" class="language"> <img id="imgNavSpa" src="../static/32/Spain.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavSpa">Español</span></a></li>
+        			    <li><a id="navFra" href="http://127.0.0.1:8000/fr/" class="language"><img id="imgNavFra" src="../static/32/France.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavFra">Francais</span></a></li>
+                        <li><a id="navIre" href="http://127.0.0.1:8000/ga/" class="language"> <img id="imgNavIre" src="../static/32/Ireland.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavIre">Gaeilge</span></a></li>
+                        <li><a id="navIta" href="http://127.0.0.1:8000/it/" class="language"> <img id="imgNavIta" src="../static/32/Italy.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavIta">Italiano</span></a></li>
         	        </ul>
                 </li>
       </ul>
@@ -172,7 +185,7 @@
     <div class="col-sm-3 sidenav">
         <div class = "panel panel-default">
             <div class = "panel-heading text-center">
-                <h3 class = "panel-title" id="form_heading">Select your journey</h3>
+                <h3 class = "panel-title" id="form_heading">{% trans "Select your journey" %}</h3>
             </div>
             <div class = "panel-body">
         <script>
@@ -194,8 +207,8 @@
                 <p id="est_time">
                 </p>
                 <table id="cost_table">
-                    <tr><td>Leap Fare: </td><td id="leap_fare"></td></tr>
-                    <tr><td>Cash Fare: </td><td id="cash_fare"></td></tr>
+                    <tr><td>{% trans "Leap Fare: " %}</td><td id="leap_fare"></td></tr>
+                    <tr><td>{% trans "Cash Fare: " %}</td><td id="cash_fare"></td></tr>
                 </table>
             </div>
             <script>
@@ -203,21 +216,21 @@
                 var journeyInfoHTML="";
                 for(var key in returned_stops){
                     var route=key.slice(0,4).replace(/^0+/, '');
-                    journeyInfoHTML+="Take the <b>"+route+"</b> bus from "+"<br><b>Stop "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br>to <b>Stop "+returned_stops[key][returned_stops[key].length-1]+"</b><br>("+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+")<br><br>";
+                    journeyInfoHTML+="{% trans 'Take the ' %}<b>"+route+"</b> {% trans 'bus from' %} "+"<br><b>{% trans 'Stop' %} "+returned_stops[key][0]+"</b><br>"+"("+stop_coordinates[returned_stops[key][0]][2]+")"+"<br> {% trans 'to' %} <b>{% trans 'Stop' %} "+returned_stops[key][returned_stops[key].length-1]+"</b><br>("+stop_coordinates[returned_stops[key][returned_stops[key].length-1]][2]+")<br><br>";
                 }
                 document.getElementById('leap_fare').innerHTML='<t>'+'€'+journey_costs['leap'];
                 document.getElementById('cash_fare').innerHTML='<t>'+'€'+journey_costs['cash'];
-                document.getElementById('est_time').innerHTML+=journeyInfoHTML+"Total Journey Time: <b>"+journey_time+" mins</b>";
+                document.getElementById('est_time').innerHTML+=journeyInfoHTML+"{% trans 'Total Journey Time: ' %}<b>"+journey_time+" {% trans 'mins' %}</b>";
 
 
             </script>
         {% else %}
                     <div id="">
                         <form id="select_journey_form" method="get" action="select_journey"> {% csrf_token %}
-                            <input type="text" id="origin" placeholder="Origin (select on map)" name="origin" onchange="googleMap.checkOriginInput()"><br>
-                            <input type="text" id="destination" placeholder="Destination (select on map)" name="destination" onchange="googleMap.checkDestinationInput()"><br>
-                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">Select Custom Day and Time &darr;</button>
-                            <input onclick="googleMap.enable()" type="submit" name="input_form" id="pathfinder_submit" value="Show Journey Time">
+                            <input type="text" id="origin" placeholder="{% trans 'Origin (select on map)' %}" name="origin" onchange="googleMap.checkOriginInput()"><br>
+                            <input type="text" id="destination" placeholder="{% trans 'Destination (select on map)' %}" name="destination" onchange="googleMap.checkDestinationInput()"><br>
+                            <button type="button" onclick="googleMap.selectDayTime()" value="0" id="time_date_btn">{% trans "Select Custom Day and Time" %} &darr;</button>
+                            <input onclick="googleMap.enable()" type="submit" name="input_form" id="pathfinder_submit" value="{% trans 'Show Journey Time' %}">
                         </form>
                     </div>
 
@@ -229,7 +242,7 @@
     <div class="col-sm-9">
         <div class = "panel panel-default">
 
-        <input id="map_search_box" class="controls" type="text" placeholder="Search Location" style=width:33%;height:4%;">
+        <input id="map_search_box" class="controls" type="text" placeholder="{% trans 'Search Location' %}" style=width:33%;height:4%;">
         <div id="map" style="width:100%; height:500px;"></div>
         </div>
     </div>
@@ -239,11 +252,11 @@
       <div class="col-sm-4">
           <div class = "panel panel-default">
             <div class = "panel-heading text-center">
-                <h3 class = "panel-title">What's on!</h3>
+                <h3 class = "panel-title">{% trans "Upcoming Events" %}</h3>
             </div>
 
             <div class = "panel-body">
-                <img src="static/images/events_dublin.png" alt="dublin_events" class="center-block" width="304" height="236">
+                <a class="twitter-timeline" data-lang="en" data-width="440" data-height="230" href="https://twitter.com/dublineventg">Tweets by dublineventguide</a>
             </div>
           </div>
       </div>
@@ -251,11 +264,11 @@
       <div class="col-sm-4">
           <div class = "panel panel-default">
             <div class = "panel-heading text-center">
-                <h3 class = "panel-title">Twitter feed</h3>
+                <h3 class = "panel-title">{% trans "Traffic Updates" %}</h3>
             </div>
 
             <div class = "panel-body">
-                <a class="twitter-timeline" data-lang="en" data-width="440" data-height="230" href="https://twitter.com/dublinbusnews">Tweets by dublinbusnews</a>
+                <a class="twitter-timeline" data-lang="en" data-width="440" data-height="230" href="https://twitter.com/DCCTraffic">Tweets by DCCTraffic</a>
 
                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
@@ -265,14 +278,14 @@
       <div class="col-sm-4">
           <div class = "panel panel-default">
               <div class = "panel-heading text-center">
-                  <h3 class = "panel-title">Current Weather</h3>
+                  <h3 class = "panel-title">{% trans "Current Weather" %}</h3>
               </div>
 
               <div class = "panel-body">
                   <div id="weather">
                       {% if weather_data.items %}
                       <div id="iconImg">
-                          <img src="static/css/icons/black/png/128x128/{{ weather_data.icon }}.png" alt="Weather Icon" style="display:block;vertical-align:middle;margin:auto;" class="center-block" width="304" height="176"/>
+                          <img src="../static/css/icons/black/png/128x128/{{ weather_data.icon }}.png" alt="Weather Icon" style="display:block;vertical-align:middle;margin:auto;" class="center-block" width="304" height="176"/>
                       </div>
                       <div id="wData" style="display:block;vertical-align:middle;margin:auto;">
                           <p style="text-align:center">{{ weather_data.weather}}</p>
@@ -438,17 +451,17 @@
                         var selectedDestination=document.getElementById("destination").value;
 
                         var formHTML=document.getElementById("select_journey_form").innerHTML;
-                        var newOptionsHTML="<select id='weekday' name='day'><option selected disabled>Select Day</option>";
-                        var weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+                        var newOptionsHTML="<select id='weekday' name='day'><option selected disabled>{% trans "Select Day" %}</option>";
+                        var weekdays=["{% trans 'Monday' %}","{% trans 'Tuesday' %}","{% trans 'Wednesday' %}","{% trans 'Thursday' %}","{% trans 'Friday' %}","{% trans 'Saturday' %}","{% trans 'Sunday' %}"];
                         for(i=0; i<weekdays.length; i++){
                             newOptionsHTML+="<option value='"+String(i)+"'>"+weekdays[i]+"</option>";
                         }
-                        newOptionsHTML+="</select><select id='hour' name='hour'><option selected disabled>Select Time</option>"
+                        newOptionsHTML+="</select><select id='hour' name='hour'><option selected disabled>{% trans "Select Time" %}</option>"
                         for (i=6; i<24; i++){
                             newOptionsHTML+="<option value='"+i+"'>"+i+":00";
                             newOptionsHTML+="</option>";
                         }
-                        newOptionsHTML+="</select><input type='submit' name='input_form' id='pathfinder_submit' value='Show Journey Time'>"
+                        newOptionsHTML+="</select><input type='submit' name='input_form' id='pathfinder_submit' value='{% trans "Show Journey Time" %}'>"
                         formHTML+=newOptionsHTML;
                         document.getElementById("select_journey_form").innerHTML=formHTML;
 
@@ -582,8 +595,8 @@
     <script src="../../static/js/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN7EfuGN0aiw97d-KPFwWCBDF6GJjRDDM&callback=googleMap&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/bootstrap-select.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap-select.min.js"></script>
 
 </body>
 </html>

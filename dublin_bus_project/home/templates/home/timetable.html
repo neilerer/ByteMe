@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% load staticfiles %}
+    {% load i18n %}
 
     <script>
         var jpids_and_stops={{ jpids_and_stops|safe }};
@@ -22,6 +23,7 @@
     <style>
         .navbar {
           background-color: navy;
+          box-shadow: 0 0 10px black;
         }
         .navbar-inverse .navbar-nav > li > a {
           color : yellow;
@@ -33,6 +35,7 @@
           background-color: navy;
           color: yellow;
           padding: 20px;
+          box-shadow: 0 0 10px black;
         }
          .panel-default > .panel-heading {
             color: yellow;
@@ -78,6 +81,10 @@
             min-width:250px;
             max-width:330px;
         }
+        .panel-default {
+            box-shadow: 0 0 10px black;
+        }
+
 
     </style>
 </head>
@@ -95,12 +102,12 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="home/index.html">Home</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+        <li class="active"><a href="home/index.html">{% trans "Home" %}</a></li>
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %} <span class="caret"></span></a>
             <div class="dropdown-menu" style="width: 300px;">
     <div id="about">
 
-  <h3> A big welcome to our journey predicting web app from Team ByteMe.</h3>
+  <h3> {% blocktrans %}A big welcome to our journey predicting web app from Team ByteMe.</h3>
         We are happy you chose us, and only hope that after using our service you feel the same way.
         Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
         two long months ago.<br>
@@ -109,24 +116,24 @@
         commuting experience better?"<br>
         The answer to that question is what you see before you in the form of this intuitive and informative
         app.<br>
-        We hope you have as much fun using it as we did building it.<br>
+        We hope you have as much fun using it as we did building it.{% endblocktrans %}<br>
         Team ByteMe
 
     </div>
   </div>
-        <li><a href="#">Timetables</a></li>
+        <li><a href="#">{% trans "Timetables" %}</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSel">ENG</span> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">  Languages <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-            	        <li><a id="navIta" href="#" class="language"> <img id="imgNavIta" src="http://www.roemheld.de/IT/DATA/Images/Address/Italien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavIta">Italiano</span></a></li>
-                        <li><a id="navDeu" href="#" class="language"> <img id="imgNavDeu" src="http://www.roemheld.de/IT/DATA/Images/Address/Deutschland.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavDeu">Deutsch</span></a></li>
-        			    <li><a id="navFra" href="#" class="language"><img id="imgNavFra" src="http://www.roemheld.de/IT/DATA/Images/Address/Frankreich.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavFra">Francais</span></a></li>
-        			    <li><a id="navEng" href="#" class="language"><img id="imgNavEng" src="http://www.roemheld.de/IT/DATA/Images/Address/Grossbritanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavEng">English</span></a></li>
-                        <li><a id="navSpa" href="#" class="language"> <img id="imgNavSpa" src="http://www.roemheld.de/IT/DATA/Images/Address/Spanien.gif" alt="..." class="img-thumbnail icon-small">  <span id="lanNavSpa">Español</span></a></li>
-
+                        <li><a id="navDeu" href="http://127.0.0.1:8000/de/" class="language"> <img id="imgNavDeu" src="../static/32/Germany.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavDeu">Deutsch</span></a></li>
+        			    <li><a id="navEng" href="http://127.0.0.1:8000/en/" class="language"><img id="imgNavEng" src="../static/32/United Kingdom(Great Britain).png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavEng">English</span></a></li>
+                        <li><a id="navSpa" href="http://127.0.0.1:8000/es/" class="language"> <img id="imgNavSpa" src="../static/32/Spain.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavSpa">Español</span></a></li>
+        			    <li><a id="navFra" href="http://127.0.0.1:8000/fr/" class="language"><img id="imgNavFra" src="../static/32/France.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavFra">Francais</span></a></li>
+                        <li><a id="navIre" href="http://127.0.0.1:8000/ga/" class="language"> <img id="imgNavIre" src="../static/32/Ireland.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavIre">Gaeilge</span></a></li>
+                        <li><a id="navIta" href="http://127.0.0.1:8000/it/" class="language"> <img id="imgNavIta" src="../static/32/Italy.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavIta">Italiano</span></a></li>
         	        </ul>
                 </li>
       </ul>
@@ -145,20 +152,20 @@
       <div class="col-xs-6 col-centered col-min" style="background-color:white;">
           <div class = "panel panel-default" style="background-color:blue;">
             <div class = "panel-heading text-center">
-                <h3 class = "panel-title">Search Timetables</h3>
+                <h3 class = "panel-title">{% trans "Search Timetables" %}</h3>
             </div>
             <div class = "panel-body" style="background-color:white;">
                 <div id="" >
                     <form id="select_timetable" method="get" action="select_timetable">
-                        <label> Route Number </label>
+                        <label> {% trans "Route Number" %} </label>
                         <input id="routeNumber" type="text" name="routeNumber">
-                        <input id="tt_submit" type="submit" name="input_form" value="Search">
+                        <input id="tt_submit" type="submit" name="input_form" value="{% trans 'Search' %}">
                     </form>
                 </div>
             </div>
           </div>
       </div>
-         </div>
+    </div>
 
     <!--ROUTE DESCRIPTION-->
     <div class="row row-centered">
@@ -173,11 +180,11 @@
                         <script>
 
                         </script>
-                        <h3 class = "panel-title">Timetable for Route {{ tt_data.jpid.0 }}</h3>
+                        <h3 class = "panel-title">{% trans "Timetable for Route" %} {{ tt_data.jpid.0 }}</h3>
                     </div>
                     <div class = "panel-body schedule" style="background-color:white;text-align:left;">
                         <p>{% if tt_data.stops%}
-                            From stop {{tt_data.stops.0}} to stop {{tt_data.stops.1}}
+                            {% trans "From stop" %} {{tt_data.stops.0}} {% trans "to stop" %} {{tt_data.stops.1}}
                         {% endif %}</p></div>
                   </div>
               </div>
@@ -190,7 +197,7 @@
               <div class="col-sm-4" style="background-color:white;">
                   <div class = "panel panel-default" style="background-color:white;">
                     <div class = "panel-heading text-center">
-                        <h3 class = "panel-title">Monday - Friday</h3>
+                        <h3 class = "panel-title">{% trans "Monday - Friday" %}</h3>
                     </div>
                     <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
                         <p>{% for x in tt_data.weekday%}
@@ -203,7 +210,7 @@
                 <div class="col-sm-4" style="background-color:white;">
                   <div class = "panel panel-default" style="background-color:blue;">
                     <div class = "panel-heading text-center">
-                        <h3 class = "panel-title">Saturday</h3></div>
+                        <h3 class = "panel-title">{% trans "Saturday" %}</h3></div>
                     <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
                         <p>{% for x in tt_data.sat%}
                             {{x}}
@@ -216,7 +223,7 @@
                 <div class="col-sm-4" style="background-color:white;">
                       <div class = "panel panel-default" style="background-color:blue;">
                         <div class = "panel-heading text-center">
-                            <h3 class = "panel-title">Sunday</h3>
+                            <h3 class = "panel-title">{% trans "Sunday" %}</h3>
                         </div>
                         <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
                             <p>{% for x in tt_data.sun%}
