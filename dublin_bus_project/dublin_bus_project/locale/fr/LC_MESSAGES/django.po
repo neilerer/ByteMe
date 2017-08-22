@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-21 17:40+0100\n"
+"POT-Creation-Date: 2017-08-22 14:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,8 +79,8 @@ msgstr "Horaires"
 
 #: .\home\templates\home\index.html:158
 #: .\home\templates\home\timetable.html:128
-msgid "Languages"
-msgstr "Langues"
+msgid "Language | English"
+msgstr "Langue | Francais"
 
 #: .\home\templates\home\index.html:180
 msgid "Select your journey"
@@ -215,3 +215,6 @@ msgstr "à l'arrêt de bus"
 #: .\home\templates\home\timetable.html:205
 msgid "Monday - Friday"
 msgstr "Lundi - Vendredi"
+
+#~ msgid "Languages"
+#~ msgstr "Langues"
