@@ -1,1 +1,1 @@
-{"jpid": ["025X1002"], "stops": ["7187", "760\n"], "Weekday": ["0755"], "Sat": [], "Sun": []}
+{"jpid": ["025X1002"], "start_stop": "7187", "end_stop": "760", "Weekday": ["0755"], "Sat": [], "Sun": []}

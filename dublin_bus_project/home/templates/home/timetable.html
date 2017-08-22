@@ -35,15 +35,25 @@
           color: yellow;
           padding: 20px;
           box-shadow: 0 0 10px black;
+
         }
          .panel-default > .panel-heading {
             color: yellow;
             background-color: navy;
+
         }
-        .panel body schedule{
-        font-size: 20px;
-        text-align:center;
+        .panel title{
+        font-size:22px;}
+        .panel panel-default timetable{
+        background-color:white;
         }
+        .col-sm-4 timetable{
+        background-color:white;
+        }
+        .row content timetable{
+                    display: table;
+                    width: 100%;
+                    }
          #form_container{}
          #form_containertt{
          text-align:center}
@@ -80,6 +90,11 @@
             min-width:250px;
             max-width:330px;
         }
+        .col-min timetable{
+            /* custom min width */
+            min-width:400px;
+            max-width:500px;
+        }
 
          .panel-default {
             box-shadow: 0 0 10px black;
@@ -101,7 +116,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="home/index.html">{% trans "Home" %}</a></li>
+        <li class="active"><a href="en/index.html">{% trans "Home" %}</a></li>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %} <span class="caret"></span></a>
             <div class="dropdown-menu" style="width: 300px;">
     <div id="about">
@@ -135,7 +150,7 @@
                         <li><a id="navIta" href="http://127.0.0.1:8000/it/" class="language"> <img id="imgNavIta" src="../static/32/Italy.png" alt="..." class="img-thumbnail icon-medium">  <span id="lanNavIta">Italiano</span></a></li>
         	        </ul>
                 </li>
-      </ul>
+        </ul>
 
     </div>
   </div>
@@ -145,14 +160,10 @@
 
     <script>
             var routeNumber;
-            <!--var routeList= {{ route_list|safe }};-->
-            <!--for(var key in routeList){-->
-                <!---->
-            <!--}-->
-        </script>
+    </script>
     <!--FORM CONTIANER, INPUT FIELD-->
     <div class="row row-centered">
-      <div class="col-xs-6 col-centered col-min" style="background-color:white;">
+      <div class="col-xs-9 col-centered col-min" style="background-color:white;padding-top:50px;padding-bottom:50px;">
           <div class = "panel panel-default" style="background-color:blue;">
             <div class = "panel-heading text-center">
                 <h3 class = "panel-title">{% trans "Search Timetables" %}</h3>
@@ -166,79 +177,78 @@
                         <input id="tt_submit" type="submit" name="input_form" value="{% trans 'Search' %}">
                     </form>
 
-
             </div>
           </div>
       </div>
          </div>
 
-    <!--ROUTE DESCRIPTION-->
-    <div class="row row-centered">
-        <script>
-            var tt_data ={{ tt_data|safe }};
-        </script>
+<!--{% trans "Timetable for Route" %}-->
+        <!--ROUTE DESCRIPTION-->
+        <div class="row row-centered">
+            <script>
+                var routeVariate_dict ={{ routeVariate_dict|safe }};
+                var route_stopsInfo =  {{ route_stopsInfo|safe }};
+            </script> <!--" {% trans "Route" %} + routeNumber;-->
+            <!--var routeNumber = document.getElementById("route_description").value=routeNumber;-->
+           {% for key, tt_data in routeVariate_dict.items %}
+                    {% if tt_data.items %}
+                <div id="results" style="self-align:center">
 
-        {% if tt_data.items %}
-              <div class="col-xs-6 col-centered col-min" style="background-color:white;">
-                  <div class = "panel panel-default" style="background-color:blue;">
-                    <div class = "panel-heading text-center">
-                        <script>
+                          <div class="col-md-9 col-centered col-min timetable" style="background-color:white;min-width:100%;">
+                              <div class = "panel panel-default">
+                                <div class = "panel-heading text-center">
+                                    <h3 id="route_description" class="panel-title" style="font-size:22px;"> {% trans "Route: " %} {{tt_data.jpid.1}} Direction: {{tt_data.jpid.2}}
+                                        <br>
+                                        {% trans "From stop" %} {{tt_data.start_stop}}<br> {% trans "to stop" %} {{tt_data.end_stop}}
+                                    </h3>
+                                </div>
+                              </div>
+                          </div>
 
-                        </script>
-                        <h3 class = "panel-title">{% trans "Timetable for Route" %} {{ tt_data.jpid.0 }}</h3>
-                    </div>
-                    <div class = "panel-body schedule" style="background-color:white;text-align:left;">
-                        <p>{% if tt_data.stops%}
-                            {% trans "From stop" %} {{tt_data.stops.0}} {% trans "to stop" %} {{tt_data.stops.1}}
-                        {% endif %}</p></div>
-                  </div>
-              </div>
-    </div>
+                <!--THIS IS THE THREE DISTINCT SECTIONS FOR DISPLAYING THE TIMETABLES-->
+                <div class="row content timetable">
+                          <!--MONDAY-->
+                          <div class="col-sm-4 timetable" >
+                              <div class = "panel panel-default timetable">
+                                <div class = "panel-heading text-center">
+                                    <h3 class = "panel-title">{% trans "Monday - Friday" %}</h3>
+                                </div>
+                                <div class = "panel-body schedule"  style="background-color:white;text-align:left;word-spacing:30px;">
+                                    <p><b>{% for x in tt_data.weekday%}
+                                    {{x}}
+                                    {% endfor %}</b></p></div>
+                              </div>
+                          </div>
 
+                            <!--SATURDAY-->
+                            <div class="col-sm-4 timetable">
+                              <div class = "panel panel-default timetable">
+                                <div class = "panel-heading text-center">
+                                    <h3 class = "panel-title">{% trans "Saturday" %}</h3></div>
+                                <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:30px;">
+                                    <p><b>{% for x in tt_data.sat%}
+                                        {{x}}
+                                       {% endfor %}</b></p>
+                                </div>
+                              </div>
+                            </div>
 
-    <!--THIS IS THE THREE DISTINCT SECTIONS FOR DISPLAYING THE TIMETABLES-->
-    <div class="row content">
-              <!--MONDAY-->
-              <div class="col-sm-4" style="background-color:white;">
-                  <div class = "panel panel-default" style="background-color:white;">
-                    <div class = "panel-heading text-center">
-                        <h3 class = "panel-title">{% trans "Monday - Friday" %}</h3>
-                    </div>
-                    <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
-                        <p>{% for x in tt_data.weekday%}
-                        {{x}}
-                        {% endfor %}</p></div>
-                  </div>
-              </div>
-
-                <!--SATURDAY-->
-                <div class="col-sm-4" style="background-color:white;">
-                  <div class = "panel panel-default" style="background-color:blue;">
-                    <div class = "panel-heading text-center">
-                        <h3 class = "panel-title">{% trans "Saturday" %}</h3></div>
-                    <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
-                        <p>{% for x in tt_data.sat%}
-                            {{x}}
-                           {% endfor %}</p>
-                    </div>
-                  </div>
+                            <!--SUNDAY-->
+                            <div class="col-sm-4 timetable">
+                                  <div class = "panel panel-default timetable">
+                                    <div class = "panel-heading text-center">
+                                        <h3 class = "panel-title">{% trans "Sunday" %}</h3>
+                                    </div>
+                                    <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:30px;">
+                                        <p><b>{% for x in tt_data.sun%}
+                                            {{x}}
+                                           {% endfor %}</b></p></div>
+                                    </div>
+                            </div>
                 </div>
-
-                <!--SUNDAY-->
-                <div class="col-sm-4" style="background-color:white;">
-                      <div class = "panel panel-default" style="background-color:blue;">
-                        <div class = "panel-heading text-center">
-                            <h3 class = "panel-title">{% trans "Sunday" %}</h3>
-                        </div>
-                        <div class = "panel-body schedule" style="background-color:white;text-align:left;word-spacing:20px;">
-                            <p>{% for x in tt_data.sun%}
-                                {{x}}
-                               {% endfor %}</p></div>
-                        </div>
-                </div>
-    </div>
-    {% endif %}
-
+            </div>
+        {% endif %}
+        {% endfor %}
 
 <footer class="footer text-center">
     <div class="container">
@@ -255,6 +265,18 @@
     </div>
 </footer>
  </div>
-<script></script>
+<!--<script>-->
+    <!--function check_timetableInput(){-->
+                    <!--var input=document.getElementById("routeNumber").value;-->
+                    <!--var indicator=false;-->
+                    <!--for (var key in stop_coordinates){-->
+                        <!--if(key==input){indicator=true;}-->
+                    <!--}-->
+                    <!--if (!indicator){-->
+                        <!--alert("Not valid origin input");-->
+                        <!--document.getElementById("routeNumber").value="";-->
+                    <!--}-->
+                <!--}-->
+<!--</script>-->
 </body>
 </html>
