@@ -164,7 +164,7 @@ def timetable(request):
     with open("home/jpids_and_stops.json") as jpids_and_stops:
         jpids_and_stops = json.load(jpids_and_stops)
 
-    context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates} #, 'tt_data':tt_data}
+    context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates}
     template = loader.get_template('home/timetable.html')
     return HttpResponse(template.render(context, request))
 
@@ -188,11 +188,11 @@ def get_timetable(request):
         routename_list = []
         # FORMAT QUERY STRING
         if len(inputRoute) == 1:
-            searchNum = "tt000" + str(inputRoute)
+            searchNum = "tt000" + str(inputRoute) #tt0001
         elif len(inputRoute) == 2:
-            searchNum = "tt00" + str(inputRoute)
+            searchNum = "tt00" + str(inputRoute) #tt0016
         elif len(inputRoute) == 3:
-            searchNum = "tt0" + str(inputRoute)
+            searchNum = "tt0" + str(inputRoute) #tt0140
 
         #FIND ALL FILES CONTAINING INPUT STRING, ADD TO LIST
         with open("home/tt_filenames.txt", "r") as tt_filenames:
@@ -207,13 +207,13 @@ def get_timetable(request):
         #CREATE NESTED DICT HOLDING DICTIONARY FOR EACH FILE IN LIST OF MATCHING FILES I.E. 150001, 150002
         count = 0
         routeVariate_dict = {}
-        route_stops = []
         route_stopsInfo = {}
+
         #CREATE PRELIM DICT FROM EACH FILE
         for file in routename_list:
-            print(os.getcwd())
+            #print(os.getcwd())
             path = "home/timetable_results/" + str(file)
-            print(path)
+            #print(path)
             with open(path, 'r') as filename:
                 for line in filename:
                     tt_dict = json.loads(line)
@@ -228,53 +228,27 @@ def get_timetable(request):
                         sun=tt_dict.get('Sun')
                     )
 
-                    #ADD STRING LOCATION NAME TO STOP KEYS
-                    for key2, value2 in stop_coordinates.items():
+                    #ADD STRING LOCATION NAME TO START AND END STOP KEY
+                    for key2, value2 in stop_coordinates.items(): #get string locations from this dict
                         if tt_data['start_stop'] == key2:
                             address_name = value2[2]  # string address
                             address_name = address_name.split(",")
                             final_address_name = address_name[2] + "," + address_name[3]
-                            # print(final_address_name)
                             tt_data['start_stop'] = tt_data['start_stop'] + ", " + final_address_name
 
                         if tt_data['end_stop'] == key2:
                             address_name = value2[2]  # string address
                             address_name = address_name.split(",")
                             final_address_name = address_name[2] + "," + address_name[3]
-                            # print(final_address_name)
                             tt_data['end_stop'] = tt_data['end_stop'] + ", " + final_address_name
 
                     #ADD VALUES TO JPID KEY TO DIFFERENTIATE FILE OUTPUTS FOR USER
-                    letters = ['a', 'b', 'c', 'd', 'e', 'f']
-                    bus_id = tt_data['jpid'][0][1:4]
-                    print(bus_id)
-                    direction = tt_data['jpid'][0][4:5]
-                    print(direction)
-                    tt_data['jpid'] = tt_data['jpid'],  str(bus_id),  str(direction) #015a0001, 15A, 0
-                    count+=1
+                    #letters = ['a', 'b', 'c', 'd', 'e', 'f']
+                    bus_id = tt_data['jpid'][0][1:4] #140
+                    direction = tt_data['jpid'][0][4:5] #0 or 1
+                    tt_data['jpid'] = tt_data['jpid'],  str(bus_id),  str(direction)
+                    #count+=1
                     routeVariate_dict[file] = tt_data
-                    # for value in tt_data['stops']:
-                    #     #print("value", value)
-                    #     value = value.rstrip("\n")
-
-                    # if tt_data['start_stop'] not in route_stops:
-                    #         route_stops.append(tt_data['start_stop'])
-                    # if tt_data['end_stop'] not in route_stops:
-                    #         route_stops.append(tt_data['end_stop'])
-                    # print(tt_data['jpid'])
-
-        #print(route_stops)
-        #AA LOCATION STRONG TO
-        # for routeStop in route_stops:
-        #         if routeStop not in route_stopsInfo:
-        #                 # route_stopsInfo[value] = []
-        #                 for key2, value2 in stop_coordinates.items():
-        #                         if key2 == routeStop:
-        #                                 address_name = value2[2] #string address
-        #                                 address_name = address_name.split(",")
-        #                                 final_address_name = address_name[0] #+ "," + address_name[1]
-        #                                 #print(final_address_name)
-        #                                 route_stopsInfo[routeStop] = final_address_name
 
 
         context = {'jpids_and_stops': jpids_and_stops, 'stop_coordinates': stop_coordinates, 'routeVariate_dict': routeVariate_dict, 'route_stopsInfo': route_stopsInfo} #'tt_data': tt_data,
