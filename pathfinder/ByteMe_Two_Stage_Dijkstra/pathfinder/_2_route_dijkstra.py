@@ -1,7 +1,7 @@
 # imports
 import _0_data as data
 import _1_route_mapping as rm
-# import time
+import time
 
 
 
@@ -81,23 +81,23 @@ def minimum_transfers(r_dict, weekday, time_unit, start_route, end_route):
 
 
 
-# if __name__ == "__main__":
-# 	stop_dict = data.get_pickle_file("stop_dict.p")
-# 	r_dict = rm.routes_dict(stop_dict)
+if __name__ == "__main__":
+	stop_dict = data.get_pickle_file("stop_dict.p")
+	r_dict = rm.routes_dict(stop_dict)
 
-# 	# inputs
-# 	weekday = 0
-# 	time_unit = 10
-# 	start_route = '00670'
-# 	end_route = '046A1'
+	# inputs
+	weekday = 0
+	time_unit = 10
+	start_route = '00081' #'00590'
+	end_route = '00130' #'00040'
 
-# 	start_time = time.time()
-# 	print(start_route, end_route)
-# 	end_time = time.time()
-# 	route_set = minimum_transfers(r_dict, weekday, time_unit, start_route, end_route)
-# 	for rs in route_set:
-# 		print(rs)
-# 	print("")
-# 	print(end_time - start_time)
+	start_time = time.time()
+	print(start_route, end_route)
+	end_time = time.time()
+	route_set = minimum_transfers(r_dict, weekday, time_unit, start_route, end_route)
+	for rs in route_set:
+		print(rs)
+	print("")
+	print(end_time - start_time)
 
 

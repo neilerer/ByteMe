@@ -2,7 +2,7 @@
 import _0_data as data
 import _1_route_mapping as rm
 import _2_route_dijkstra as rs
-# import time
+import time
 
 
 
@@ -183,33 +183,31 @@ def the_shortest_path(stop_dict, r_dict, weekday, time_unit, start_stop, end_sto
 
 
 
-# if __name__ == "__main__":
-# 	# data
-# 	print("Loading stop_dict . . .")
-# 	stop_dict = data.get_pickle_file("stop_dict.p")
-# 	print("Loading route_dict . . .")
-# 	r_dict = rm.routes_dict(stop_dict)
+if __name__ == "__main__":
+	# data
+	print("Loading stop_dict . . .")
+	stop_dict = data.get_pickle_file("stop_dict.p")
+	print("Loading route_dict . . .")
+	r_dict = rm.routes_dict(stop_dict)
 
-# 	# inputs
-# 	weekday = 0
-# 	time_unit = 10
-# 	start = 400
-# 	end = 4486
+	# inputs
+	weekday = 0
+	time_unit = 10
+	start = 3057
+	end = 327
 
-# 	start_time = time.time()
-# 	sp = False
-# 	while not sp:
-# 		sp = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
-# 	end_time = time.time() - start_time
+	start_time = time.time()
+	sp = the_shortest_path(stop_dict, r_dict, weekday, time_unit, start, end)
+	end_time = time.time() - start_time
 
-# 	print("")
-# 	print("Routes used")
-# 	print(sp[0])
-# 	print("")
-# 	print("Journey Time")
-# 	print(sp[1][0])
-# 	print("")
-# 	print("The Shortest Path")
-# 	for quadruple in sp[1][1]:
-# 		print(str(quadruple))
-# 	print("")
+	print("")
+	print("Routes used")
+	print(sp[0])
+	print("")
+	print("Journey Time")
+	print(sp[1][0])
+	print("")
+	print("The Shortest Path")
+	for quadruple in sp[1][1]:
+		print(str(quadruple))
+	print("")
