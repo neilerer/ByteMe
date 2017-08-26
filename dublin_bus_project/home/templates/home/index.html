@@ -43,6 +43,7 @@
           color: yellow;
           padding: 20px;
           box-shadow: 0 0 10px black;
+          bottom:0;
         }
         .panel-default {
             box-shadow: 0 0 10px black;
@@ -135,25 +136,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">{% trans "Home" %}</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %} <span class="caret"></span></a>
-            <div class="dropdown-menu" style="width: 300px;">
-    <div id="about">
-
-  <h3> {% blocktrans %}A big welcome to our journey predicting web app from Team ByteMe.</h3>
-        We are happy you chose us, and only hope that after using our service you feel the same way.
-        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
-        two long months ago.<br>
-        Our main objective in building this app, was to put the commuter first. We drew upon our past
-        experiences as commuters ourselves, and asked ourselves the question, "what would make our
-        commuting experience better?"<br>
-        The answer to that question is what you see before you in the form of this intuitive and informative
-        app.<br>
-        We hope you have as much fun using it as we did building it.{% endblocktrans %}<br>
-        Team ByteMe
-
-    </div>
-  </div>
+        <li class="active"><a href="http://127.0.0.1:8000">{% trans "Home" %}</a></li>
         <li><a href="timetable.html">{% trans "Timetables" %}</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -287,17 +270,7 @@
 </div>
 <!--Footer adapted from code at https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_webpage&stacked=h-->
 <footer class="footer text-center">
-    <div class="container">
-    <a href="#" class="btn btn-social-icon btn-twitter">
-        <i class="fa fa-twitter"></i>
-    </a>
-        <a href="#" class="btn btn-social-icon btn-facebook">
-        <i class="fa fa-facebook"></i>
-    </a>
-    <a class="btn btn-social-icon btn-google">
-        <i class="fa fa-google-plus"></i>
-    </a>
-    </div>
+    Team ByteMe 2017
 </footer>
     <script>
     function googleMap() {

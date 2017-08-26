@@ -20,6 +20,9 @@
     <title>Timetables</title>
 
     <style>
+    body{
+            font-family:Calibri, Arial;
+        }
         .navbar {
           background-color: navy;
           box-shadow: 0 0 10px black;
@@ -116,30 +119,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="https://safe-sea-28160.herokuapp.com/">Dublin Bus Journey Time Predictor</a>
+      <a class="navbar-brand" href="http://127.0.0.1:8000">Dublin Bus Journey Time Predictor</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="en/index.html">{% trans "Home" %}</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %} <span class="caret"></span></a>
-            <div class="dropdown-menu" style="width: 300px;">
-    <div id="about">
-
-  <h3> {% blocktrans %}A big welcome to our journey predicting web app from Team ByteMe.</h3>
-        We are happy you chose us, and only hope that after using our service you feel the same way.
-        Team ByteMe is made up of Cara, Conor, Neil, and Otto, and we started out on this project
-        two long months ago.<br>
-        Our main objective in building this app, was to put the commuter first. We drew upon our past
-        experiences as commuters ourselves, and asked ourselves the question, "what would make our
-        commuting experience better?"<br>
-        The answer to that question is what you see before you in the form of this intuitive and informative
-        app.<br>
-        We hope you have as much fun using it as we did building it.{% endblocktrans %}<br>
-        Team ByteMe
-
-    </div>
-  </div>
-        <li><a href="#">{% trans "Timetables" %}</a></li>
+        <li><a href="http://127.0.0.1:8000">{% trans "Home" %}</a></li>
+        <li class="active"><a href="#">{% trans "Timetables" %}</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           <!-- Flags and language adapted from code found at https://bootsnipp.com/snippets/mprMM-->
@@ -255,18 +240,7 @@
         {% endfor %}
 
 <footer class="footer text-center">
-    <div class="container">
-
-    <a href="#" class="btn btn-social-icon btn-twitter">
-        <i class="fa fa-twitter"></i>
-    </a>
-        <a href="#" class="btn btn-social-icon btn-facebook">
-        <i class="fa fa-facebook"></i>
-    </a>
-    <a class="btn btn-social-icon btn-google">
-        <i class="fa fa-google-plus"></i>
-    </a>
-    </div>
+    Team ByteMe 2017
 </footer>
  </div>
 <!--<script>-->
