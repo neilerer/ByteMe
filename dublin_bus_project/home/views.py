@@ -11,17 +11,14 @@ import _1_route_mapping as rm
 import _3_stop_dijkstra as sd
 def index(request): #called from home urls.py file
 
-    # hardcoded list of currently available routes, needs to be generated for all routes later
-    with open("../models/linear_model/route_list", "rb") as route_file:  # loading pickle file with routes
-        routes = pkl.load(route_file)
-        routes=sorted(routes)
-
+    """Loading the stop information and the ordered list of bus stops"""
     with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
 
     with open("home/jpids_and_stops.json") as jpids_and_stops:
         jpids_and_stops= json.load(jpids_and_stops)
 
+    """Current Weather API"""
     url = 'http://api.wunderground.com/api/'
 
     wu_key = 'fc74b20ed4eafd0b'
@@ -43,7 +40,8 @@ def index(request): #called from home urls.py file
         icon=parsed_json.get('current_observation').get('icon')
     )
 
-    context={'routes':routes, 'jpids_and_stops':jpids_and_stops,'stop_coordinates':stop_coordinates, 'weather_data':weather_data} #homepage requires only the routes for the dropdown menu
+    # variable to be rendered to the html page
+    context={'jpids_and_stops':jpids_and_stops,'stop_coordinates':stop_coordinates, 'weather_data':weather_data} #homepage requires only the routes for the dropdown menu
     template = loader.get_template('home/index.html')  # loading the html homepage
     return HttpResponse(template.render(context, request)) #rendering routes to index.html
 
@@ -54,10 +52,6 @@ def get_route(request):
         stops_on_routes = json.load(route_file)
     with open("home/stop_info.json") as stop_file:  # reading dictionary {key:value} = {stop:[lat,long]}
         stop_coordinates = json.load(stop_file)
-    with open("../models/linear_model/route_list", "rb") as route_file:  # loading pickle file with routes
-        routes = pkl.load(route_file)
-        routes=sorted(routes)
-
 
     # getting selected form values
     if request.method=="GET":
@@ -80,7 +74,6 @@ def get_route(request):
 
         selected_hour=int(selected_hour)
 
-        print(selected_origin,selected_destination,selected_day,selected_hour)
         """PATHFINDER START"""
 
         with open("stop_dict.p",'rb') as stop_dict_pkl:
@@ -105,12 +98,15 @@ def get_route(request):
                 pathfinder_dict[point_to_point[3]].append(point_to_point[1])
         returned_stops=pathfinder_dict
 
+        """PATHFINDER END"""
+
         """JOURNEY COST START"""
 
         with open("home/dublin_bus_fares.json") as price_file:
             prices = json.load(price_file)
         leap_fares = prices['leap_fares']
         cash_fares = prices['cash_fares']
+        # calculating journey cost
         journey_cost_leap,journey_cost_cash=0,0
         for key in returned_stops:
             if len(returned_stops[key])-1<4:
@@ -126,7 +122,7 @@ def get_route(request):
         journey_costs={'leap':journey_cost_leap,'cash':journey_cost_cash}
         """JOURNEY COST END"""
 
-        """APIS START"""
+        """WEATHER API START"""
         url = 'http://api.wunderground.com/api/'
 
         wu_key = 'fc74b20ed4eafd0b'
@@ -147,9 +143,9 @@ def get_route(request):
             iconURL=parsed_json.get('current_observation').get('icon_url'),
             icon=parsed_json.get('current_observation').get('icon')
         )
-        """APIS END"""
-        # print(journey_info)
-        context = {'suggested_route':returned_stops,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data,'routes':routes}
+        """WEATHER API END"""
+        #variable for rendering to html file
+        context = {'suggested_route':returned_stops,'returned_stops':returned_stops,'journey_time':total_journey_time,'journey_costs':journey_costs,'jpids_and_stops':stops_on_routes, 'stop_coordinates': stop_coordinates, 'weather_data':weather_data}
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
 

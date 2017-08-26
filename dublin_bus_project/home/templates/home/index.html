@@ -13,7 +13,6 @@
     {% load jpid_stops %}
 
     <script>
-        var routes={{ routes|safe }};
         var jpids_and_stops={{ jpids_and_stops|safe }};
         var stop_coordinates={{ stop_coordinates|safe }};
         var weather_data={{ weather_data|safe }};
@@ -25,9 +24,7 @@
     <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" type='text/css'/>
     <title>Dublin Bus Journey Time Predictor</title>
     <style>
-        body{
-            font-family:Calibri, Arial;
-        }
+
         .navbar {
           background-color: navy;
           box-shadow: 0 0 10px black;
@@ -191,6 +188,9 @@
                 </table>
             </div>
             <script>
+
+                <!--Code for displaying the user's journey-->
+
                 document.getElementById("form_heading").innerHTML="Your Journey";
                 var journeyInfoHTML="";
                 for(var key in returned_stops){
